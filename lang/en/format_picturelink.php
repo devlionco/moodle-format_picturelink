@@ -37,3 +37,4 @@ $string['page-course-view-topics-x'] = 'Any course page in topics format';
 $string['hidefromothers'] = 'Hide topic';
 $string['showfromothers'] = 'Show topic';
 $string['privacy:metadata'] = 'The Picturelink format plugin does not store any personal data.';
+$string['picturelinkimage_form_label'] = 'Background image for picturelink';

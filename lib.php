@@ -25,6 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot. '/course/format/lib.php');
+require_once($CFG->dirroot. '/course/format/lib.php');
+
 
 /**
  * Main class for the picturelink course format
@@ -218,6 +220,7 @@ class format_picturelink extends format_base {
      * picturelink format uses the following options:
      * - coursedisplay
      * - hiddensections
+     * - picturelinkimage
      *
      * @param bool $foreditform
      * @return array of options
@@ -234,6 +237,10 @@ class format_picturelink extends format_base {
                 'coursedisplay' => array(
                     'default' => $courseconfig->coursedisplay,
                     'type' => PARAM_INT,
+                ),
+                'picturelinkimage' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
                 ),
             );
         }
@@ -262,6 +269,12 @@ class format_picturelink extends format_base {
                     ),
                     'help' => 'coursedisplay',
                     'help_component' => 'moodle',
+                ),
+                'picturelinkimage' => array(
+                    'label' => new lang_string('picturelinkimage_form_label', 'format_picturelink'),
+                    'element_type' => 'filemanager',
+                    'element_attributes' => array(
+                    ),
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
@@ -297,6 +310,21 @@ class format_picturelink extends format_base {
             array_unshift($elements, $element);
         }
 
+        // SG - show already uploaded picturelink image in filemanager
+        $context = context_course::instance($COURSE->id);
+        $picturelinkimagedraftid = file_get_submitted_draft_itemid('picturelinkimage');
+        file_prepare_draft_area($picturelinkimagedraftid, $context->id, 'format_picturelink', 'picturelinkimage', $COURSE->id,
+                        array('subdirs' => false));
+        $mform->setDefault('picturelinkimage', $picturelinkimagedraftid); 
+        
+        // SG - allow only 1 file upload - ugly hack
+        foreach ($elements as $arr => $element) {
+            if (get_class($element) === 'MoodleQuickForm_filemanager'){
+                $element->setMaxfiles(1); 
+                $element->setSubdirs(false);   
+            }
+        }
+                        
         return $elements;
     }
 
@@ -312,6 +340,11 @@ class format_picturelink extends format_base {
      * @return bool whether there were any changes to the options values
      */
     public function update_course_format_options($data, $oldcourse = null) {
+        //save picturelink image
+        $context = context_course::instance($data->id);
+        file_save_draft_area_files($data->picturelinkimage, $context->id, 'format_picturelink', 'picturelinkimage',
+        $data->id, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 1));
+        
         $data = (array)$data;
         if ($oldcourse !== null) {
             $oldcourse = (array)$oldcourse;
@@ -429,4 +462,47 @@ function format_picturelink_inplace_editable($itemtype, $itemid, $newvalue) {
             array($itemid, 'picturelink'), MUST_EXIST);
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
+}
+
+/**
+ * Serve the files from the MYPLUGIN file areas
+ *
+ * @param stdClass $course the course object
+ * @param stdClass $cm the course module object
+ * @param stdClass $context the context
+ * @param string $filearea the name of the file area
+ * @param array $args extra arguments (itemid, path)
+ * @param bool $forcedownload whether or not force download
+ * @param array $options additional options affecting the file serving
+ * @return bool false if the file not found, just send the file otherwise and do not return anything
+ */
+function format_picturelink_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+ 
+    // Make sure the user is logged in and has access to the module (plugins that are not course modules should leave out the 'cm' part).
+    require_login($course, true, $cm);
+ 
+    // Leave this line out if you set the itemid to null in make_pluginfile_url (set $itemid to 0 instead).
+    $itemid = array_shift($args); // The first item in the $args array.
+ 
+    // Use the itemid to retrieve any relevant data records and perform any security checks to see if the
+    // user really does have access to the file in question.
+ 
+    // Extract the filename / filepath from the $args array.
+    $filename = array_pop($args); // The last item in the $args array.
+    if (!$args) {
+        $filepath = '/'; // $args is empty => the path is '/'
+    } else {
+        $filepath = '/'.implode('/', $args).'/'; // $args contains elements of the filepath
+    }
+ 
+    // Retrieve the file from the Files API.
+    $fs = get_file_storage();
+    $file = $fs->get_file($context->id, 'format_picturelink', $filearea, $itemid, $filepath, $filename);
+    if (!$file) {
+        return false; // The file does not exist.
+    }
+ 
+    // We can now send the file back to the browser - in this case with a cache lifetime of 1 day and no filtering. 
+    // From Moodle 2.3, use send_stored_file instead.
+    send_file($file, 86400, 0, $forcedownload, $options);
 }
