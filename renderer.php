@@ -35,6 +35,28 @@ require_once($CFG->dirroot.'/course/format/renderer.php');
  */
 class format_picturelink_renderer extends format_section_renderer_base {
 
+  //TODO
+    /**
+     * list of sections and activities on the course
+     *
+     * @return string HTML to output.
+     */
+    public function getcourseitems() {
+        $o = '';
+        $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'style' => 'background-item: '.$backgrounditem));
+        $o .= html_writer::link($url, '', array(
+          'class' => 'picturelink_item',
+          'data-id' => $id,
+          'data-mod_name' => $mod_name,
+          'data-name' => $name,
+          'data-status' => $mod_status,
+          'data-coordX' => $coordX,
+          'data-coordY' => $coordY
+        ));
+        $o .= html_writer::end_tag('div');
+        return $o;
+    }
+
     /**
      * Constructor method, calls the parent constructor
      *
@@ -54,7 +76,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
      * @return string HTML to output.
      */
     protected function start_section_list() {
-        return html_writer::start_tag('ul', array('class' => 'picturelink topics'));
+        return html_writer::start_tag('ul', array('class' => 'topics'));
     }
 
     /**
