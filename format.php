@@ -59,3 +59,4 @@ if (!empty($displaysection)) {
 
 // Include course format js module
 $PAGE->requires->js('/course/format/picturelink/format.js');
+$PAGE->requires->js_call_amd('format_picturelink/init', 'init', array());
