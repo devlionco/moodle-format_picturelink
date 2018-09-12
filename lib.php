@@ -279,6 +279,9 @@ class format_picturelink extends format_base {
                     'element_type' => 'filemanager',
                     'element_attributes' => array(
                     ),
+                ),
+                'picturelinkcoords' => array(
+                    'element_type' => 'hidden',
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
