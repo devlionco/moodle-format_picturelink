@@ -62,13 +62,14 @@ class format_picturelink_renderer extends format_section_renderer_base {
         foreach ($modinfo->cms as $cm) {
             $cmcompletiondata = $completion->get_data($cm);
 
+            $activeclass = $cmcompletiondata->completionstate ? ' completed' : '';
             //print_object($cm->getIterator());
             $o .= html_writer::link($cm->url, '', array(
-            'class' => 'picturelink_item drag',
+            'class' => 'picturelink_item drag'.$activeclass,
             'data-id' => $cm->id,
             'data-mod_name' => $cm->modname,
             // 'data-name' => $cm->name,
-            'data-status' => $cmcompletiondata->completionstate,
+            // 'data-status' => $cmcompletiondata->completionstate,
             'data-tooltip' => 'tooltip',
             'data-placement' => 'top',
             'data-original-title' => $cm->name,
@@ -82,8 +83,8 @@ class format_picturelink_renderer extends format_section_renderer_base {
     }
 
     /**
-     * Function gets image for picturelink background 
-     * @param $course 
+     * Function gets image for picturelink background
+     * @param $course
      * @return $picturelinkimage - link to background image
      */
     private function picturelink_get_image($course) {
@@ -105,7 +106,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
     /**
      * Function gets coordinates for balls, saved in format options table
      * @param $course
-     * @return array $coords - rearranged array with cm ids and coordinates 
+     * @return array $coords - rearranged array with cm ids and coordinates
      */
     private function picturelink_get_coords($course) {
         $rawcoords = json_decode($course->picturelinkcoords);

@@ -55,6 +55,9 @@ define(['format_picturelink/ajax'], function(ajax) {
       ball.parentNode.onmousemove = null;
       ball.onmouseup = null;
 
+      ball.dataset.coordx = ball.style.left.replace(/\D+/, '');
+      ball.dataset.coordy = ball.style.top.replace(/\D+/, '');
+
       ajax.data.coords = getAllCoords();
       ajax.send();
     };
