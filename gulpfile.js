@@ -10,12 +10,12 @@ var mqpacker = require("css-mqpacker");
 var csso = require("gulp-csso");
 var sequence = require("gulp-sequence");
 var del = require("del");
-// for min js
+var shell = require('gulp-shell');
 var jsmin = require('gulp-jsmin');
 
 
 gulp.task("clean", function() {
-  return  del("style.css");
+  return  del("styles.css");
 });
 
 gulp.task("style", function() {
@@ -31,6 +31,8 @@ gulp.task("style", function() {
 
 });
 
+gulp.task('purge_caches', shell.task('cd /var/www/nadav/admin/cli && php purge_caches.php'))
+
 // minify js
 gulp.task('clean_js', function() {
   return del('amd/build/*.js');
@@ -43,18 +45,19 @@ gulp.task('min', function() {
         .pipe(gulp.dest('amd/build'));
 });
 
-gulp.task('minjs', function(end) {
-  sequence('clean_js', 'min', end);
+gulp.task('minjs', function(cb) {
+  sequence('clean_js', 'min', cb);
 });
 
-gulp.watch("scss/**/*.{scss,sass}", ["style"]);
-gulp.watch("amd/src/*.js", ["minjs"]);
+gulp.watch("scss/**/*.{scss,sass}", ["style", 'purge_caches']);
+gulp.watch("amd/src/*.js", ["minjs", 'purge_caches']);
 
-gulp.task("build", function(fn) {
+gulp.task("build", function(cb) {
   sequence(
     "clean",
     "style",
     "minjs",
-    fn
+    "purge_caches",
+    cb
   );
 });

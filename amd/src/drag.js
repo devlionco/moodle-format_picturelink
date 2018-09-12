@@ -1,8 +1,22 @@
 define(['format_picturelink/ajax'], function(ajax) {
 `use strict`
 
-  const collectAllCoods = () => {
+  const getAllCoords = () => {
 
+    const items = Array.from(document.querySelectorAll(`.picturelink_item`));
+    let allCoords = [];
+    let itemCoords = {};
+
+    items.forEach((item)=>{
+      itemCoords = {
+        id: item.dataset.id,
+        coordx: item.dataset.coordx,
+        coordy: item.dataset.coordy
+      };
+      allCoords.push(itemCoords);
+    });
+    allCoords = JSON.stringify(allCoords);
+    return allCoords;
   }
 
   function getCoords(elem) {
@@ -13,6 +27,8 @@ define(['format_picturelink/ajax'], function(ajax) {
   }
 
   const dragBall = (e, ball) => {
+
+    ball.style.transition = 0 + 's';
 
     const coords = getCoords(ball);
     let shiftX = e.pageX - coords.left;
@@ -39,7 +55,7 @@ define(['format_picturelink/ajax'], function(ajax) {
       ball.parentNode.onmousemove = null;
       ball.onmouseup = null;
 
-      ajax.data.coords  = 'coords_atik';
+      ajax.data.coords = getAllCoords();
       ajax.send();
     };
   }

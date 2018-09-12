@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__.'/../../../config.php');
-include_once($CFG->dirroot . '/course/formta/picturelink/classes/classAjax.php');
+require_once(__DIR__.'/../../../../config.php');
+include_once($CFG->dirroot . '/course/format/picturelink/classes/classAjax.php');
 
 if (!defined('AJAX_SCRIPT')) {
     define('AJAX_SCRIPT', true);

@@ -20,5 +20,8 @@
   },
   "engines": {
     "node": ">=4"
+  },
+  "dependencies": {
+    "gulp-shell": "^0.6.5"
   }
 }

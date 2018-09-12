@@ -42,23 +42,35 @@ class format_picturelink_renderer extends format_section_renderer_base {
      * @return string HTML to output.
      */
     public function picturelink_get_cms($course, $modinfo) {
-       
+
         $picturelinkimage = $this->picturelink_get_image($course);
-        
+
         $o = '';
-        $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'style' => 'background:url('.$picturelinkimage.'); width: 100%; height: 100%;'));
-        
+        $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'style' => 'background-image:url('.$picturelinkimage.');'));
+        if (is_siteadmin()) {
+          $o .= html_writer::start_tag('button', array('id' => 'picturelink_admin', 'class'=>'picturelink_admin'));
+          $o .= html_writer::start_tag('div', array('class'=>'picturelink_toggle'));
+          $o .= html_writer::tag('div', '' ,array('class'=>'picturelink_pin'));
+          $o .= html_writer::end_tag('div');
+          $o .= html_writer::tag('div',  get_string('moveitems', 'format_picturelink') ,array('class'=>'picturelink_text'));
+          $o .= html_writer::end_tag('button');
+        }
         // iterate every cms
         foreach ($modinfo->cms as $cm) {
             //print_object($cm->getIterator());
             $o .= html_writer::link($cm->url, '', array(
-            'class' => 'picturelink_item',
+            'class' => 'picturelink_item drag',
             'data-id' => $cm->id,
             'data-mod_name' => $cm->modname,
-            'data-name' => $cm->name,
+            // 'data-name' => $cm->name,
             'data-status' => $cm->completion,
-            //'data-coordX' => $coordX,
-            //'data-coordY' => $coordY
+            'data-tooltip' => 'tooltip',
+            'data-placement' => 'top',
+            'data-original-title' => $cm->name,
+            //'data-coordx' => $coordX,
+            //'data-coordy' => $coordY
+            'data-coordx' => '',
+            'data-coordy' => ''
             ));
         }
 

@@ -3,18 +3,19 @@ define(['core/yui'], function(Y) {
 
   let ajax = {
 
-    url: '/filter/teamwork/ajax/ajax.php',
+    url: '/course/format/picturelink/ajax/ajax.php',
 
-    data: '',
+    data: {},
 
     sesskey: M.cfg.sesskey,
 
     send: function(){
 
       this.data.sesskey = this.sesskey;
+      this.data.method = `rewriteactivitiescoords`;
 
       Y.io(M.cfg.wwwroot + this.url, {
-          method: 'rewriteactivitiescoods',
+          method: 'POST',
           data: this.data,
           headers: {
               //'Content-Type': 'application/json'

@@ -20,7 +20,7 @@ class classAjax {
         }
     }
 
-    //rewrite all cords
+    //rewrite all coords
     private function rewriteactivitiescoords() {
         global $CFG, $USER, $PAGE, $OUTPUT, $DB;
 
