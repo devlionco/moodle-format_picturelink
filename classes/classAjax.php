@@ -1,5 +1,4 @@
 <?php
-include_once($CFG->dirroot . '/filter/teamwork/locallib.php');
 
 class classAjax {
 
@@ -25,7 +24,15 @@ class classAjax {
         global $CFG, $USER, $PAGE, $OUTPUT, $DB;
 
         $activitiescoords = optional_param('coords', '', PARAM_TEXT);
-
+        $options = array('picturelinkcoords' => $activitiescoords);
+        $jsondecoded = json_decode($activitiescoords);
+        if (isset($jsondecoded)) {
+            // to find out which course to process, we take first cmid from json
+            list($course, $cm) = get_course_and_cm_from_cmid($jsondecoded[0]->id);
+            return course_get_format($course)->update_coords_from_ajax($options);
+        } else {
+            return "no data or error in parsing";
+        }
     }
 
 

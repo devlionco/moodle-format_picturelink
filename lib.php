@@ -242,6 +242,10 @@ class format_picturelink extends format_base {
                     'default' => '',
                     'type' => PARAM_RAW,
                 ),
+                'picturelinkcoords' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                ),
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -280,6 +284,15 @@ class format_picturelink extends format_base {
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
         return $courseformatoptions;
+    }
+
+    /**
+     * Function saves balls coordinates in course format options table from ajax request
+     * @param array $options - options to save
+     * @return bool
+     */
+    public function update_coords_from_ajax($options) {
+        return $this->update_format_options($options);        
     }
 
     /**

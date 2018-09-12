@@ -26,6 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/format/renderer.php');
+require_once("{$CFG->libdir}/completionlib.php");
 
 /**
  * Basic renderer for picturelink format.
@@ -44,6 +45,8 @@ class format_picturelink_renderer extends format_section_renderer_base {
     public function picturelink_get_cms($course, $modinfo) {
 
         $picturelinkimage = $this->picturelink_get_image($course);
+        $coords = $this->picturelink_get_coords($course);
+        $completion = new completion_info($course);
 
         $o = '';
         $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'style' => 'background-image:url('.$picturelinkimage.');'));
@@ -57,20 +60,20 @@ class format_picturelink_renderer extends format_section_renderer_base {
         }
         // iterate every cms
         foreach ($modinfo->cms as $cm) {
+            $cmcompletiondata = $completion->get_data($cm);
+
             //print_object($cm->getIterator());
             $o .= html_writer::link($cm->url, '', array(
             'class' => 'picturelink_item drag',
             'data-id' => $cm->id,
             'data-mod_name' => $cm->modname,
             // 'data-name' => $cm->name,
-            'data-status' => $cm->completion,
+            'data-status' => $cmcompletiondata->completionstate,
             'data-tooltip' => 'tooltip',
             'data-placement' => 'top',
             'data-original-title' => $cm->name,
-            //'data-coordx' => $coordX,
-            //'data-coordy' => $coordY
-            'data-coordx' => '',
-            'data-coordy' => ''
+            'data-coordx' => isset($coords[$cm->id]->coordx) ? $coords[$cm->id]->coordx : '',
+            'data-coordy' => isset($coords[$cm->id]->coordy) ? $coords[$cm->id]->coordy : '',
             ));
         }
 
@@ -78,6 +81,11 @@ class format_picturelink_renderer extends format_section_renderer_base {
         return $o;
     }
 
+    /**
+     * Function gets image for picturelink background 
+     * @param $course 
+     * @return $picturelinkimage - link to background image
+     */
     private function picturelink_get_image($course) {
         $context = context_course::instance($course->id);
         $fs = get_file_storage();
@@ -92,6 +100,21 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $picturelinkimage = isset($picturelinkimage) ? $picturelinkimage : $defaultimageurl;
 
         return $picturelinkimage;
+    }
+
+    /**
+     * Function gets coordinates for balls, saved in format options table
+     * @param $course
+     * @return array $coords - rearranged array with cm ids and coordinates 
+     */
+    private function picturelink_get_coords($course) {
+        $rawcoords = json_decode($course->picturelinkcoords);
+        $coords = array();
+        // rearrange array keys for convenience
+        foreach ($rawcoords as $key => $value) {
+            $coords[$value->id] = $value;
+        }
+        return $coords;
     }
 
     /**
