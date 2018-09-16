@@ -90,7 +90,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
             $o .= html_writer::link($surl, '', array(
                 'class' => 'picturelink_item drag',
                 'title' => $sname,
-                'data-id' => $sinfo->id,        // SG - we could have issue here - ids of cms could repeat ids of sections
+                'data-id' => 's'.$sinfo->id,       
                 'data-mod_name' => 'section',
                 // 'data-name' => $cm->name,
                 // 'data-status' => $cmcompletiondata->completionstate,
