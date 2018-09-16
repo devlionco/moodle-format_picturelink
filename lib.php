@@ -246,6 +246,14 @@ class format_picturelink extends format_base {
                     'default' => '',
                     'type' => PARAM_RAW,
                 ),
+                'picturelinkvisibleitems' => array(
+                    'default' => 0,
+                    'type' => PARAM_RAW,
+                ),
+                'picturelinkpinnedsections' => array(
+                    'default' => 0,
+                    'type' => PARAM_RAW,
+                ),
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -282,6 +290,12 @@ class format_picturelink extends format_base {
                 ),
                 'picturelinkcoords' => array(
                     'element_type' => 'hidden',
+                ),
+                'picturelinkvisibleitems' => array(
+                    'element_type' => 'hidden',
+                ),
+                'picturelinkpinnedsections' => array(
+                    'element_type' => 'hidden',
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
@@ -290,11 +304,11 @@ class format_picturelink extends format_base {
     }
 
     /**
-     * Function saves balls coordinates in course format options table from ajax request
+     * Function saves ajax data in course format options table from ajax request
      * @param array $options - options to save
      * @return bool
      */
-    public function update_coords_from_ajax($options) {
+    public function update_options_from_ajax($options) {
         return $this->update_format_options($options);        
     }
 

@@ -29,7 +29,39 @@ class classAjax {
         if (isset($jsondecoded)) {
             // to find out which course to process, we take first cmid from json
             list($course, $cm) = get_course_and_cm_from_cmid($jsondecoded[0]->id);
-            return course_get_format($course)->update_coords_from_ajax($options);
+            return course_get_format($course)->update_options_from_ajax($options);
+        } else {
+            return "no data or error in parsing";
+        }
+    }
+
+    //rewrite visible items
+    private function rewritevisibleitems() {
+        global $CFG, $USER, $PAGE, $OUTPUT, $DB;
+
+        $visibleitems = optional_param('visibleitems', '', PARAM_TEXT);
+        $options = array('picturelinkvisibleitems' => $visibleitems);
+        $jsondecoded = json_decode($visibleitems);
+        if (isset($jsondecoded)) {
+            // to find out which course to process, we take first cmid from json
+            list($course, $cm) = get_course_and_cm_from_cmid($jsondecoded[0]->id);
+            return course_get_format($course)->update_options_from_ajax($options);
+        } else {
+            return "no data or error in parsing";
+        }
+    }
+
+    //rewrite pinnedsections
+    private function rewritepinnedsections() {
+        global $CFG, $USER, $PAGE, $OUTPUT, $DB;
+
+        $pinnedsections = optional_param('pinnedsections', '', PARAM_TEXT);
+        $options = array('picturelinkpinnedsections' => $pinnedsections);
+        $jsondecoded = json_decode($pinnedsections);
+        if (isset($jsondecoded)) {
+            // to find out which course to process, we take first cmid from json
+            list($course, $cm) = get_course_and_cm_from_cmid($jsondecoded[0]->id);
+            return course_get_format($course)->update_options_from_ajax($options);
         } else {
             return "no data or error in parsing";
         }

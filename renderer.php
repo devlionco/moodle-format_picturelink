@@ -46,6 +46,8 @@ class format_picturelink_renderer extends format_section_renderer_base {
 
         $picturelinkimage = $this->picturelink_get_image($course);
         $coords = $this->picturelink_get_coords($course);
+        $visibleitems = $this->picturelink_get_visible_items($sourse);
+        $pinnedsections = $this->picturelink_get_pinnedsections($course);
         $completion = new completion_info($course);
 
         $o = '';
@@ -65,16 +67,38 @@ class format_picturelink_renderer extends format_section_renderer_base {
             $activeclass = $cmcompletiondata->completionstate ? ' completed' : '';
             //print_object($cm->getIterator());
             $o .= html_writer::link($cm->url, '', array(
-            'class' => 'picturelink_item drag'.$activeclass,
-            'data-id' => $cm->id,
-            'data-mod_name' => $cm->modname,
-            // 'data-name' => $cm->name,
-            // 'data-status' => $cmcompletiondata->completionstate,
-            'data-tooltip' => 'tooltip',
-            'data-placement' => 'top',
-            'data-original-title' => $cm->name,
-            'data-coordx' => isset($coords[$cm->id]->coordx) ? $coords[$cm->id]->coordx : '',
-            'data-coordy' => isset($coords[$cm->id]->coordy) ? $coords[$cm->id]->coordy : '',
+                'class' => 'picturelink_item drag'.$activeclass,
+                'data-id' => $cm->id,
+                'data-mod_name' => $cm->modname,
+                // 'data-name' => $cm->name,
+                // 'data-status' => $cmcompletiondata->completionstate,
+                'data-tooltip' => 'tooltip',
+                'data-placement' => 'top',
+                'data-visibility' => isset($visibleitems[$cm->id]) ? $visibleitems[$cm->id] : 0,
+                'data-original-title' => $cm->name,
+                'data-coordx' => isset($coords[$cm->id]->coordx) ? $coords[$cm->id]->coordx : '',
+                'data-coordy' => isset($coords[$cm->id]->coordy) ? $coords[$cm->id]->coordy : '',
+            ));
+        }
+        
+        // get sections
+        $cformat = course_get_format($course);
+        foreach ($modinfo->sections as $section => $scms) {
+            $surl = $cformat->get_view_url($section);
+            $sname = $cformat->get_section_name($section);
+            $sinfo = $cformat->get_section($section);
+            $o .= html_writer::link($surl, '', array(
+                'class' => 'picturelink_item drag',
+                'title' => $sname,
+                'data-id' => $sinfo->id,        // SG - we could have issue here - ids of cms could repeat ids of sections
+                'data-mod_name' => 'section',
+                // 'data-name' => $cm->name,
+                // 'data-status' => $cmcompletiondata->completionstate,
+                'data-tooltip' => 'tooltip',
+                'data-placement' => 'top',
+                'data-visibility' => isset($visibleitems[$sinfo->id]) ? $visibleitems[$sinfo->id] : 0,
+                'data-pinned' => isset($pinnedsections[$sinfo->id]) ? $visibleitems[$sinfo->id] : 0,
+                'data-original-title' => $sname,
             ));
         }
 
@@ -112,10 +136,40 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $rawcoords = json_decode($course->picturelinkcoords);
         $coords = array();
         // rearrange array keys for convenience
-        foreach ($rawcoords as $key => $value) {
+        foreach ($rawcoords as $id => $value) {
             $coords[$value->id] = $value;
         }
         return $coords;
+    }
+
+    /**
+     * Function gets custom visibility (defined from select) for balls, saved in format options table
+     * @param $course
+     * @return array $visibleitems - array wit ids of vivible items
+     */
+    private function picturelink_get_visible_items($course) {
+        $rawvisibleitems = json_decode($course->picturelinkvisibleitems);
+        $visibleitems = array();
+        // rearrange array keys for convenience
+        foreach ($rawvisibleitems as $id => $value) {
+            $visibleitems[$value->id] = $value;
+        }
+        return $visibleitems;
+    }
+
+    /**
+     * Function gets custom pinned section (defined from select), saved in format options table
+     * @param $course
+     * @return array $pinnedsections - array wit ids of pinned sections
+     */
+    private function picturelink_get_pinnedsections($course) {
+        $rawpinnedsections = json_decode($course->picturelinkpinnedsections);
+        $pinnedsections = array();
+        // rearrange array keys for convenience
+        foreach ($rawpinnedsections as $id => $value) {
+            $pinnedsections[$value->id] = $value;
+        }
+        return $pinnedsections;
     }
 
     /**
