@@ -93,15 +93,16 @@ class format_picturelink_renderer extends format_section_renderer_base {
 
               foreach ($modinfo->sections as $section => $scms) {
                 $sinfo = $cformat->get_section($section);
+                $sid = "s".$sinfo->id;
                 $sname = $cformat->get_section_name($section);
 
-                $visibleclass  = (isset($visibleitems[$cm->id]) ? $visibleitems[$cm->id] : 0) ? ' fa-eye' : ' fa-eye-slash';
-                $pinnedclass  = (isset($pinnedsections[$sinfo->id]) ? $pinnedsections[$sinfo->id] : 0) ? ' fa-unlock' : ' fa-lock';
+                $visibleclass  = (isset($visibleitems[$sid]) ? $visibleitems[$sid] : 0) ? ' fa-eye' : ' fa-eye-slash';
+                $pinnedclass  = (isset($pinnedsections[$sid]) ? $pinnedsections[$sid] : 0) ? ' fa-unlock' : ' fa-lock';
                 $visibletag = html_writer::tag('i', '' ,array('id'=> 'visibility', 'class'=>'far'.$visibleclass));
                 $pinnedtag = html_writer::tag('i', '' ,array('id'=> 'pinned', 'class'=>'fas'.$pinnedclass));
                 $o .= html_writer::tag('div', $sname.$visibletag.$pinnedtag ,array(
                   'class'=>'section-item',
-                  'data-topid'=>'s'.$sinfo->id,
+                  'data-topid'=> $sid,
                 ));
                 // $o .= html_writer::tag('i', '' ,array('class'=>'far fa-eye'));
               }
@@ -128,8 +129,6 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $visibleitems = $this->picturelink_get_visible_items($course);
         $pinnedsections = $this->picturelink_get_pinnedsections($course);
         $completion = new completion_info($course);
-        print_object($visibleitems);
-        print_object($pinnedsections);
 
         
         $o = '';
