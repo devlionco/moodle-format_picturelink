@@ -36,22 +36,104 @@ require_once("{$CFG->libdir}/completionlib.php");
  */
 class format_picturelink_renderer extends format_section_renderer_base {
 
-  //TODO
+
+    //TODO
+      /**
+       * Function gets coordinates for balls, saved in format options table
+       * @param $course
+       * @return array $coords - rearranged array with cm ids and coordinates
+       */
+      public function activitiesselection($modinfo) {
+
+        $o = '';
+        $o .= html_writer::start_tag('div', array('id'=>'allactivities' , 'class'=>'allactivities-wrapper picturelink_admin'));
+          $o .= html_writer::start_tag('div', array('class'=>'allactivities'));
+            $o .= html_writer::tag('span', 'activities' ,array('class'=>'section-name'));
+            $o .= html_writer::tag('span', '' ,array('class'=>'select-icon'));
+          $o .= html_writer::end_tag('div');
+
+          $o .= html_writer::start_tag('div', array('id'=>'activities', 'class'=>'section-wrap'));
+            $o .= html_writer::start_tag('div', array('class'=>'section-items'));
+
+            foreach ($modinfo->cms as $cm) {
+              $visibleclass  = (isset($visibleitems[$cm->id]) ? $visibleitems[$cm->id] : 0) ? ' fa-eye' : ' fa-eye-slash';
+              $visibletag = html_writer::tag('i', '' ,array('id'=> 'visibility', 'class'=>'far'.$visibleclass));
+              $o .= html_writer::tag('div', $cm->name.$visibletag ,array(
+                'class'=>'section-item',
+                'data-topid'=>$cm->id
+              ));
+              // $o .= html_writer::tag('i', '' ,array('class'=>'far fa-eye'));
+            }
+
+            $o .= html_writer::end_tag('div');
+          $o .= html_writer::end_tag('div');
+
+        $o .= html_writer::end_tag('div');
+
+        return $o;
+      }
+
+      //TODO
+        /**
+         * Function gets coordinates for balls, saved in format options table
+         * @param $course
+         * @return array $coords - rearranged array with cm ids and coordinates
+         */
+        public function sectionselection($modinfo ,$cformat) {
+
+          $o = '';
+          $o .= html_writer::start_tag('div', array('id'=>'allsections' , 'class'=>'allsection-wrapper picturelink_admin'));
+            $o .= html_writer::start_tag('div', array('class'=>'allactivities'));
+              $o .= html_writer::tag('span', 'sections' ,array('class'=>'section-name'));
+              $o .= html_writer::tag('span', '' ,array('class'=>'select-icon'));
+            $o .= html_writer::end_tag('div');
+
+            $o .= html_writer::start_tag('div', array('id'=>'sections', 'class'=>'section-wrap'));
+              $o .= html_writer::start_tag('div', array('class'=>'section-items'));
+
+              foreach ($modinfo->sections as $section => $scms) {
+                $sinfo = $cformat->get_section($section);
+                $sname = $cformat->get_section_name($section);
+
+                $visibleclass  = (isset($visibleitems[$cm->id]) ? $visibleitems[$cm->id] : 0) ? ' fa-eye' : ' fa-eye-slash';
+                $pinnedclass  = (isset($pinnedsections[$sinfo->id]) ? $pinnedsections[$sinfo->id] : 0) ? ' fa-unlock' : ' fa-lock';
+                $visibletag = html_writer::tag('i', '' ,array('id'=> 'visibility', 'class'=>'far'.$visibleclass));
+                $pinnedtag = html_writer::tag('i', '' ,array('id'=> 'pinned', 'class'=>'fas'.$pinnedclass));
+                $o .= html_writer::tag('div', $sname.$visibletag.$pinnedtag ,array(
+                  'class'=>'section-item',
+                  'data-topid'=>'s'.$sinfo->id,
+                ));
+                // $o .= html_writer::tag('i', '' ,array('class'=>'far fa-eye'));
+              }
+
+              $o .= html_writer::end_tag('div');
+            $o .= html_writer::end_tag('div');
+
+          $o .= html_writer::end_tag('div');
+
+          return $o;
+        }
+
+
     /**
      * list of sections and activities on the course
      *
      * @return string HTML to output.
      */
     public function picturelink_get_cms($course, $modinfo) {
-
+        // get sections
+        $cformat = course_get_format($course);
         $picturelinkimage = $this->picturelink_get_image($course);
         $coords = $this->picturelink_get_coords($course);
         $visibleitems = $this->picturelink_get_visible_items($sourse);
         $pinnedsections = $this->picturelink_get_pinnedsections($course);
         $completion = new completion_info($course);
 
+
+
         $o = '';
-        $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'style' => 'background-image:url('.$picturelinkimage.');'));
+        $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
+        // add button to remove items
         if (is_siteadmin()) {
           $o .= html_writer::start_tag('button', array('id' => 'picturelink_admin', 'class'=>'picturelink_admin'));
           $o .= html_writer::start_tag('div', array('class'=>'picturelink_toggle'));
@@ -60,6 +142,13 @@ class format_picturelink_renderer extends format_section_renderer_base {
           $o .= html_writer::tag('div',  get_string('moveitems', 'format_picturelink') ,array('class'=>'picturelink_text'));
           $o .= html_writer::end_tag('button');
         }
+
+        // add select to add properties to all activities
+        $o .= $this->activitiesselection($modinfo);
+
+        // add select to add properties to all sections
+        $o .= $this->sectionselection($modinfo, $cformat);
+
         // iterate every cms
         foreach ($modinfo->cms as $cm) {
             $cmcompletiondata = $completion->get_data($cm);
@@ -80,24 +169,23 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 'data-coordy' => isset($coords[$cm->id]->coordy) ? $coords[$cm->id]->coordy : '',
             ));
         }
-        
-        // get sections
-        $cformat = course_get_format($course);
+
         foreach ($modinfo->sections as $section => $scms) {
             $surl = $cformat->get_view_url($section);
             $sname = $cformat->get_section_name($section);
             $sinfo = $cformat->get_section($section);
-            $o .= html_writer::link($surl, '', array(
-                'class' => 'picturelink_item drag',
+
+            $o .= html_writer::link($surl, $sname, array(
+                'class' => 'picturelink_item picturelink_section drag',
                 'title' => $sname,
-                'data-id' => 's'.$sinfo->id,       
+                'data-id' => 's'.$sinfo->id,
                 'data-mod_name' => 'section',
                 // 'data-name' => $cm->name,
                 // 'data-status' => $cmcompletiondata->completionstate,
                 'data-tooltip' => 'tooltip',
                 'data-placement' => 'top',
                 'data-visibility' => isset($visibleitems[$sinfo->id]) ? $visibleitems[$sinfo->id] : 0,
-                'data-pinned' => isset($pinnedsections[$sinfo->id]) ? $visibleitems[$sinfo->id] : 0,
+                'data-pinned' => isset($pinnedsections[$sinfo->id]) ? $pinnedsections[$sinfo->id] : 0,
                 'data-original-title' => $sname,
             ));
         }

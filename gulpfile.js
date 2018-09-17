@@ -31,7 +31,7 @@ gulp.task("style", function() {
 
 });
 
-gulp.task('purge_caches', shell.task('cd /var/www/nadav/admin/cli && php purge_caches.php'))
+gulp.task('purge_caches', shell.task('cd /var/www/davidson/admin/cli && php purge_caches.php'))
 
 // minify js
 gulp.task('clean_js', function() {

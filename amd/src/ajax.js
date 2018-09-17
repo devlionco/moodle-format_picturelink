@@ -9,10 +9,13 @@ define(['core/yui'], function(Y) {
 
     sesskey: M.cfg.sesskey,
 
+    courseid: document.querySelector(`.picturelink`).dataset.courseid,
+
     send: function(){
 
       this.data.sesskey = this.sesskey;
-      this.data.method = `rewriteactivitiescoords`;
+      this.data.courseid = this.courseid;
+      // this.data.method = `rewriteactivitiescoords`;
 
       Y.io(M.cfg.wwwroot + this.url, {
           method: 'POST',
