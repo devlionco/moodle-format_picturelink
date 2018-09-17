@@ -125,12 +125,13 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $cformat = course_get_format($course);
         $picturelinkimage = $this->picturelink_get_image($course);
         $coords = $this->picturelink_get_coords($course);
-        $visibleitems = $this->picturelink_get_visible_items($sourse);
+        $visibleitems = $this->picturelink_get_visible_items($course);
         $pinnedsections = $this->picturelink_get_pinnedsections($course);
         $completion = new completion_info($course);
+        print_object($visibleitems);
+        print_object($pinnedsections);
 
-
-
+        
         $o = '';
         $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
         // add button to remove items
@@ -174,6 +175,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
             $surl = $cformat->get_view_url($section);
             $sname = $cformat->get_section_name($section);
             $sinfo = $cformat->get_section($section);
+            $sid = "s".$sinfo->id;
 
             $o .= html_writer::link($surl, $sname, array(
                 'class' => 'picturelink_item picturelink_section drag',
@@ -184,9 +186,11 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 // 'data-status' => $cmcompletiondata->completionstate,
                 'data-tooltip' => 'tooltip',
                 'data-placement' => 'top',
-                'data-visibility' => isset($visibleitems[$sinfo->id]) ? $visibleitems[$sinfo->id] : 0,
-                'data-pinned' => isset($pinnedsections[$sinfo->id]) ? $pinnedsections[$sinfo->id] : 0,
+                'data-visibility' => isset($visibleitems[$sid]) ? $visibleitems[$sid] : 0,
+                'data-pinned' => isset($pinnedsections[$sid]) ? $pinnedsections[$sid] : 0,
                 'data-original-title' => $sname,
+                'data-coordx' => isset($coords[$sid]->coordx) ? $coords[$sid]->coordx : '',
+                'data-coordy' => isset($coords[$sid]->coordy) ? $coords[$sid]->coordy : '',
             ));
         }
 
@@ -240,7 +244,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $visibleitems = array();
         // rearrange array keys for convenience
         foreach ($rawvisibleitems as $id => $value) {
-            $visibleitems[$value->id] = $value;
+            $visibleitems[$value[0]] = $value[1];
         }
         return $visibleitems;
     }
@@ -255,7 +259,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $pinnedsections = array();
         // rearrange array keys for convenience
         foreach ($rawpinnedsections as $id => $value) {
-            $pinnedsections[$value->id] = $value;
+            $pinnedsections[$value[0]] = $value[1];
         }
         return $pinnedsections;
     }

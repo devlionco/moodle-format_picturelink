@@ -1,4 +1,5 @@
 <?php
+require_once($CFG->dirroot.'/course/format/lib.php');
 
 class classAjax {
 
@@ -23,13 +24,12 @@ class classAjax {
     private function rewriteactivitiescoords() {
         global $CFG, $USER, $PAGE, $OUTPUT, $DB;
 
+        $courseid = required_param('courseid', PARAM_INT);
         $activitiescoords = optional_param('coords', '', PARAM_TEXT);
         $options = array('picturelinkcoords' => $activitiescoords);
         $jsondecoded = json_decode($activitiescoords);
         if (isset($jsondecoded)) {
-            // to find out which course to process, we take first cmid from json
-            list($course, $cm) = get_course_and_cm_from_cmid($jsondecoded[0]->id);
-            return course_get_format($course)->update_options_from_ajax($options);
+            return course_get_format($courseid)->update_options_from_ajax($options);
         } else {
             return "no data or error in parsing";
         }
@@ -39,13 +39,12 @@ class classAjax {
     private function rewritevisibleitems() {
         global $CFG, $USER, $PAGE, $OUTPUT, $DB;
 
+        $courseid = required_param('courseid', PARAM_INT);
         $visibleitems = optional_param('visibleitems', '', PARAM_TEXT);
         $options = array('picturelinkvisibleitems' => $visibleitems);
         $jsondecoded = json_decode($visibleitems);
         if (isset($jsondecoded)) {
-            // to find out which course to process, we take first cmid from json
-            list($course, $cm) = get_course_and_cm_from_cmid($jsondecoded[0]->id);
-            return course_get_format($course)->update_options_from_ajax($options);
+            return course_get_format($courseid)->update_options_from_ajax($options);
         } else {
             return "no data or error in parsing";
         }
@@ -55,13 +54,12 @@ class classAjax {
     private function rewritepinnedsections() {
         global $CFG, $USER, $PAGE, $OUTPUT, $DB;
 
+        $courseid = required_param('courseid', PARAM_INT);
         $pinnedsections = optional_param('pinnedsections', '', PARAM_TEXT);
         $options = array('picturelinkpinnedsections' => $pinnedsections);
         $jsondecoded = json_decode($pinnedsections);
         if (isset($jsondecoded)) {
-            // to find out which course to process, we take first cmid from json
-            list($course, $cm) = get_course_and_cm_from_cmid($jsondecoded[0]->id);
-            return course_get_format($course)->update_options_from_ajax($options);
+            return course_get_format($courseid)->update_options_from_ajax($options);
         } else {
             return "no data or error in parsing";
         }
