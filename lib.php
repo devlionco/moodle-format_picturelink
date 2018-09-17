@@ -254,6 +254,67 @@ class format_picturelink extends format_base {
                     'default' => 0,
                     'type' => PARAM_RAW,
                 ),
+                'displayunits' => array(
+                    'label' => get_string('displayunits', 'format_picturelink'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('yes'),
+                            0 => new lang_string('no'),
+                        )
+                    ),
+                    'help' => "displayunitsdesc",
+                    'help_component' => 'format_picturelink',
+                ),
+                'displaymessages' => array(
+                    'label' => get_string('displaymessages', 'format_picturelink'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('yes'),
+                            0 => new lang_string('no'),
+                        )
+                    ),
+                    'help' =>"displaymessagesdesc",
+                    'help_component' => 'format_picturelink',
+                ),
+                'displaygrades' => array(
+                    'label' => get_string('displaygrades', 'format_picturelink'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('yes'),
+                            0 => new lang_string('no'),
+                        )
+                    ),
+                    'help' => "displaygradesdesc",
+                    'help_component' => 'format_picturelink',
+                ),
+                'showbagestag' => array(
+                    'label' => get_string('showbagestag', 'format_picturelink'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('yes'),
+                            0 => new lang_string('no'),
+                        )
+                    ),
+                    'help' => "showbagestagdesc",
+                    'help_component' => 'format_picturelink',
+                ),
+                'showcertificatestag' => array(
+                    'label' => get_string('showcertificatestag', 'format_picturelink'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('yes'),
+                            0 => new lang_string('no'),
+                        )
+                    ),
+                    'help' => "showcertificatestagdesc",
+                    'help_component' => 'format_picturelink',
+                )
+    
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
