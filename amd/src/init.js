@@ -61,7 +61,7 @@ define([
         item.dataset.id,
         item.dataset.pinned
       ]
-        pinned.push(item.dataset.id);
+        pinned.push(pinnedItem);
       // }
     });
     pinned = JSON.stringify(pinned);
