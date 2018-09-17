@@ -48,7 +48,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $o = '';
         $o .= html_writer::start_tag('div', array('id'=>'allactivities' , 'class'=>'allactivities-wrapper picturelink_admin'));
           $o .= html_writer::start_tag('div', array('class'=>'allactivities'));
-            $o .= html_writer::tag('span', 'activities' ,array('class'=>'section-name'));
+            $o .= html_writer::tag('span', get_string('activities', 'format_picturelink') ,array('class'=>'section-name'));
             $o .= html_writer::tag('span', '' ,array('class'=>'select-icon'));
           $o .= html_writer::end_tag('div');
 
@@ -84,7 +84,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
           $o = '';
           $o .= html_writer::start_tag('div', array('id'=>'allsections' , 'class'=>'allsection-wrapper picturelink_admin'));
             $o .= html_writer::start_tag('div', array('class'=>'allactivities'));
-              $o .= html_writer::tag('span', 'sections' ,array('class'=>'section-name'));
+              $o .= html_writer::tag('span', get_string('sections', 'format_picturelink')  ,array('class'=>'section-name'));
               $o .= html_writer::tag('span', '' ,array('class'=>'select-icon'));
             $o .= html_writer::end_tag('div');
 

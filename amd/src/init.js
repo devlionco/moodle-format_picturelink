@@ -64,7 +64,7 @@ define([
         pinned.push(item.dataset.id);
       // }
     });
-    pinned = JSON.stringify(visible);
+    pinned = JSON.stringify(pinned);
     return pinned;
   }
 
@@ -83,6 +83,7 @@ define([
             if (!dragIsOn) window.open(target.href,'_blank');
             return;
           }
+          if (target.id === `activities` || target.id === `sections`) return
 
           if (target.id === `allactivities`) {
             $('#activities').slideToggle();

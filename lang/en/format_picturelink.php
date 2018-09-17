@@ -40,3 +40,5 @@ $string['privacy:metadata'] = 'The Picturelink format plugin does not store any 
 $string['picturelinkimage_form_label'] = 'Background image for picturelink';
 
 $string['moveitems'] = 'Move items';
+$string['sections'] = 'Sections';
+$string['activities'] = 'Activities';

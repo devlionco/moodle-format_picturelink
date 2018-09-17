@@ -57,6 +57,15 @@
   -ms-flex-pack: center;
       justify-content: center; }
 
+.format-picturelink .picturelink_item[data-pinned="1"]:nth-child(1) {
+  left: 100px !important; }
+
+.format-picturelink .picturelink_item[data-pinned="1"]:nth-child(2) {
+  left: 400px !important; }
+
+.format-picturelink .picturelink_item[data-pinned="1"]:nth-child(3) {
+  left: 700px !important; }
+
 .format-picturelink .picturelink {
   position: relative;
   width: 100%;

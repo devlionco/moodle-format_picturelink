@@ -39,3 +39,5 @@ $string['showfromothers'] = 'Show topic';
 $string['privacy:metadata'] = 'The Picturelink format plugin does not store any personal data.';
 
 $string['moveitems'] = 'העבר פריטים';
+$string['sections'] = 'יחידות הוראה';
+$string['activities'] = 'פעילויות';
