@@ -41,3 +41,21 @@ $string['privacy:metadata'] = 'The Picturelink format plugin does not store any 
 $string['moveitems'] = 'העבר פריטים';
 $string['sections'] = 'יחידות הוראה';
 $string['activities'] = 'פעילויות';
+
+// header blocks settings
+$string['displayunits'] = 'משבצת יחידות';
+$string['displayunitsdesc'] = 'משבצת יחידות';
+$string['displayunitsdesc_help'] = 'משבצת יחידות';
+$string['displaymessages'] = 'משבצת הודעות';
+$string['displaymessagesdesc'] = 'משבצת הודעות';
+$string['displaymessagesdesc_help'] = 'משבצת הודעות';
+$string['displaygrades'] = 'משבצת צלמיות';
+$string['displaygradesdesc'] = 'משבצת צלמיות';
+$string['displaygradesdesc_help'] = 'משבצת צלמיות';
+
+$string['showbagestag'] = 'צלמית מדליות';
+$string['showbagestagdesc'] = 'צלמית מדליות';
+$string['showbagestagdesc_help'] = 'צלמית מדליות';
+$string['showcertificatestag'] = 'צלמית תעודות';
+$string['showcertificatestagdesc'] = 'צלמית תעודות';
+$string['showcertificatestagdesc_help'] = 'צלמית תעודות';

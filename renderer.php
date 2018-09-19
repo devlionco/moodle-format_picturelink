@@ -43,8 +43,9 @@ class format_picturelink_renderer extends format_section_renderer_base {
        * @param $course
        * @return array $coords - rearranged array with cm ids and coordinates
        */
-      public function activitiesselection($modinfo) {
+      public function activitiesselection($modinfo, $course) {
         $visibleitems = $this->picturelink_get_visible_items($course);
+
 
         $o = '';
         $o .= html_writer::start_tag('div', array('id'=>'allactivities' , 'class'=>'allactivities-wrapper picturelink_admin'));
@@ -80,8 +81,10 @@ class format_picturelink_renderer extends format_section_renderer_base {
          * @param $course
          * @return array $coords - rearranged array with cm ids and coordinates
          */
-        public function sectionselection($modinfo ,$cformat) {
-          $visibleitems = $this->picturelink_get_visible_items($course);
+        public function sectionselection($modinfo, $cformat, $course) {
+            $visibleitems = $this->picturelink_get_visible_items($course);
+            $pinnedsections = $this->picturelink_get_pinnedsections($course);
+
 
           $o = '';
           $o .= html_writer::start_tag('div', array('id'=>'allsections' , 'class'=>'allsection-wrapper picturelink_admin'));
@@ -146,10 +149,10 @@ class format_picturelink_renderer extends format_section_renderer_base {
         }
 
         // add select to add properties to all activities
-        $o .= $this->activitiesselection($modinfo);
+        $o .= $this->activitiesselection($modinfo, $course);
 
         // add select to add properties to all sections
-        $o .= $this->sectionselection($modinfo, $cformat);
+        $o .= $this->sectionselection($modinfo, $cformat, $course);
 
         // iterate every cms
         foreach ($modinfo->cms as $cm) {
