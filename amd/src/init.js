@@ -21,8 +21,16 @@ define([
     }
 
     items.forEach((item)=>{
-      let coordx = item.dataset.coordx ? item.dataset.coordx : getRandomInt(0,maxWidth);
-      let coordy = item.dataset.coordy ? item.dataset.coordy : getRandomInt(0,maxHeight);
+      // set random coords to new items
+      // let coordx = item.dataset.coordx ? item.dataset.coordx : getRandomInt(0,maxWidth);
+      // let coordy = item.dataset.coordy ? item.dataset.coordy : getRandomInt(0,maxHeight);
+
+      // put new items on the right top angkle of the window
+      let coordx = item.dataset.coordx ? item.dataset.coordx : 10;
+      let coordy = item.dataset.coordy ? item.dataset.coordy : 10;
+      if (!item.dataset.coordx || !item.dataset.coordy) {
+        item.style.background = `red`;
+      }
 
       item.dataset.coordx = coordx;
       item.dataset.coordy = coordy;

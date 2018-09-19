@@ -4,32 +4,37 @@
     position: relative;
     width: 100%;
     height: 75vh;
-
+    margin-top: 90px;
     .far,
     .fas {
       font-family: FontAwesome;
       padding-left: 10px;
       transition: .2s;
+      margin-left: auto;
       &:hover {
         color: #0096db;
       }
     }
-    .picturelink_item[data-visibility="0"] {
-      opacity: 0 !important;
+    .fas {
+      margin-left: inherit;
+      padding-left: 20px;
     }
-    .picturelink_item[data-visibility="1"] {
-      opacity: 1 !important;
-    }
-    .picturelink_item[data-pinned="1"] {
-      opacity: 1 !important;
-      background-color: #1928af !important;
-      border-radius: 24px;
-      top: 40px !important;
-      min-width: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    // .picturelink_item[data-visibility="0"] {
+    //   opacity: 0 !important;
+    // }
+    // .picturelink_item[data-visibility="1"] {
+    //   opacity: 1 !important;
+    // }
+    // .picturelink_item[data-pinned="1"] {
+    //   opacity: 1 !important;
+    //   background-color: #1928af !important;
+    //   border-radius: 24px;
+    //   top: 40px !important;
+    //   min-width: 100px;
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    // }
 
     &_item {
       opacity: 0;
@@ -153,6 +158,12 @@
             padding: 0 1rem;
             font-size: 18px;
             line-height: 40px;
+            &-text {
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              width: 160px;
+            }
             a {
               transition: .2s;
               padding-left: 20px;
@@ -176,6 +187,22 @@
     }
 
   }
+  .picturelink_item[data-visibility="0"] {
+    opacity: 0 !important;
+  }
+  .picturelink_item[data-visibility="1"] {
+    opacity: 1 !important;
+  }
+  .picturelink_item[data-pinned="1"] {
+    opacity: 1 !important;
+    background-color: #1928af !important;
+    border-radius: 24px;
+    top: 40px !important;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 
 
@@ -190,7 +217,7 @@
 .format-picturelink.editing {
 
   .picturelink {
-    display: none;
+    // display: none;
   }
   .completionprogressid,
   .topics {

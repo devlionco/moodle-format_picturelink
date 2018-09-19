@@ -59,3 +59,4 @@ $string['showbagestagdesc_help'] = 'צלמית מדליות';
 $string['showcertificatestag'] = 'צלמית תעודות';
 $string['showcertificatestagdesc'] = 'צלמית תעודות';
 $string['showcertificatestagdesc_help'] = 'צלמית תעודות';
+$string['new'] = ' (חדש) ';

@@ -62,3 +62,4 @@ $string['showbagestagdesc_help'] = 'Show or hide block';
 $string['showcertificatestag'] = 'Display Certificates block';
 $string['showcertificatestagdesc'] = 'Show or hide block';
 $string['showcertificatestagdesc_help'] = 'Show or hide block';
+$string['new'] = ' (new) ';

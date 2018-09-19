@@ -45,7 +45,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
        */
       public function activitiesselection($modinfo, $course) {
         $visibleitems = $this->picturelink_get_visible_items($course);
-
+        $coords = $this->picturelink_get_coords($course);
 
         $o = '';
         $o .= html_writer::start_tag('div', array('id'=>'allactivities' , 'class'=>'allactivities-wrapper picturelink_admin'));
@@ -60,7 +60,8 @@ class format_picturelink_renderer extends format_section_renderer_base {
             foreach ($modinfo->cms as $cm) {
               $visibleclass  = (isset($visibleitems[$cm->id]) ? $visibleitems[$cm->id] : 0) ? ' fa-eye' : ' fa-eye-slash';
               $visibletag = html_writer::tag('i', '' ,array('id'=> 'visibility', 'class'=>'far'.$visibleclass));
-              $o .= html_writer::tag('div', $cm->name.$visibletag ,array(
+              $newitem = !isset($coords[$cm->id]->coordx) ?  html_writer::tag('span', get_string('new', 'format_picturelink') ,array('style'=>'color:red;')) : '';
+              $o .= html_writer::tag('div', '<span class = "section-item-text">'.$cm->name.'</span>'.$newitem.$visibletag ,array(
                 'class'=>'section-item',
                 'data-topid'=>$cm->id
               ));
@@ -84,7 +85,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
         public function sectionselection($modinfo, $cformat, $course) {
             $visibleitems = $this->picturelink_get_visible_items($course);
             $pinnedsections = $this->picturelink_get_pinnedsections($course);
-
+            $coords = $this->picturelink_get_coords($course);
 
           $o = '';
           $o .= html_writer::start_tag('div', array('id'=>'allsections' , 'class'=>'allsection-wrapper picturelink_admin'));
@@ -105,7 +106,9 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 $pinnedclass  = (isset($pinnedsections[$sid]) ? $pinnedsections[$sid] : 0) ? ' fa-unlock' : ' fa-lock';
                 $visibletag = html_writer::tag('i', '' ,array('id'=> 'visibility', 'class'=>'far'.$visibleclass));
                 $pinnedtag = html_writer::tag('i', '' ,array('id'=> 'pinned', 'class'=>'fas'.$pinnedclass));
-                $o .= html_writer::tag('div', $sname.$visibletag.$pinnedtag ,array(
+                $newitem = !isset($coords[$sid]->coordx) ?  html_writer::tag('span', get_string('new', 'format_picturelink') ,array('style'=>'color:red;')) : '';
+
+                $o .= html_writer::tag('div', '<span class = "section-item-text">'.$sname.'</span>'.$newitem.$visibletag.$pinnedtag ,array(
                   'class'=>'section-item',
                   'data-topid'=> $sid,
                 ));
