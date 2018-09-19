@@ -134,25 +134,23 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $visibleitems = $this->picturelink_get_visible_items($course);
         $pinnedsections = $this->picturelink_get_pinnedsections($course);
         $completion = new completion_info($course);
-
+        $context = context_course::instance($course->id);
 
         $o = '';
         $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
         // add button to remove items
-        if (is_siteadmin()) {
+        if (has_capability('moodle/course:update', $context)) {
           $o .= html_writer::start_tag('button', array('id' => 'picturelink_admin', 'class'=>'picturelink_admin'));
           $o .= html_writer::start_tag('div', array('class'=>'picturelink_toggle'));
           $o .= html_writer::tag('div', '' ,array('class'=>'picturelink_pin'));
           $o .= html_writer::end_tag('div');
           $o .= html_writer::tag('div',  get_string('moveitems', 'format_picturelink') ,array('class'=>'picturelink_text'));
           $o .= html_writer::end_tag('button');
+          // add select to add properties to all activities
+          $o .= $this->activitiesselection($modinfo, $course);
+          // add select to add properties to all sections
+          $o .= $this->sectionselection($modinfo, $cformat, $course);
         }
-
-        // add select to add properties to all activities
-        $o .= $this->activitiesselection($modinfo, $course);
-
-        // add select to add properties to all sections
-        $o .= $this->sectionselection($modinfo, $cformat, $course);
 
         // iterate every cms
         foreach ($modinfo->cms as $cm) {
