@@ -44,6 +44,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
        * @return array $coords - rearranged array with cm ids and coordinates
        */
       public function activitiesselection($modinfo) {
+        $visibleitems = $this->picturelink_get_visible_items($course);
 
         $o = '';
         $o .= html_writer::start_tag('div', array('id'=>'allactivities' , 'class'=>'allactivities-wrapper picturelink_admin'));
@@ -80,6 +81,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
          * @return array $coords - rearranged array with cm ids and coordinates
          */
         public function sectionselection($modinfo ,$cformat) {
+          $visibleitems = $this->picturelink_get_visible_items($course);
 
           $o = '';
           $o .= html_writer::start_tag('div', array('id'=>'allsections' , 'class'=>'allsection-wrapper picturelink_admin'));
@@ -130,7 +132,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $pinnedsections = $this->picturelink_get_pinnedsections($course);
         $completion = new completion_info($course);
 
-        
+
         $o = '';
         $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
         // add button to remove items
