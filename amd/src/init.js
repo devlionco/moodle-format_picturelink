@@ -30,6 +30,7 @@ define([
       let coordy = item.dataset.coordy ? item.dataset.coordy : 10;
       if (!item.dataset.coordx || !item.dataset.coordy) {
         item.style.background = `red`;
+        item.style.color = `red`;
       }
 
       item.dataset.coordx = coordx;
@@ -37,8 +38,9 @@ define([
 
       item.style.left = coordx + 'px';
       item.style.top = coordy + 'px';
-      item.style.opacity = 1;
+      // item.style.opacity = 1;
     });
+    mainBlock.classList.remove(`picturelink_hide`);
   }
 
   const getAllVisibleItems = () => {
@@ -76,6 +78,26 @@ define([
     return pinned;
   }
 
+  // const setCoordsPinned = (targetActivity) => {
+  //   let allPinned = Array.from(mainBlock.querySelectorAll(`a[data-pinned="1"]`));
+  //
+  //   if (targetActivity.dataset.pinned) {
+  //     let coordx = 100 + Number(allPinned.length -1) * 240;
+  //     let coordy = -90;
+  //     targetActivity.style.left = coordx + 'px';
+  //     targetActivity.dataset.coordx = coordx;
+  //     targetActivity.dataset.coordy = coordy;
+  //   }else {
+  //     allPinned.forEach((item)=>{
+  //       item.style.left = item.style.left.replace(\/D+\, '') - 170 +'px';
+  //       item.dataset.coordx = Number(item.dataset.coordx) - 170;
+  //       item.dataset.coordy = -90;
+  //     });
+  //   }
+  // }
+
+
+
 
   return {
     init: function() {
@@ -94,11 +116,13 @@ define([
           if (target.id === `activities` || target.id === `sections`) return
 
           if (target.id === `allactivities`) {
+            $('#sections').slideUp();
             $('#activities').slideToggle();
             return;
           }
 
           if (target.id === `allsections`) {
+            $('#activities').slideUp();
             $('#sections').slideToggle();
             return;
           }
@@ -135,7 +159,9 @@ define([
             targetActivity = mainBlock.querySelector(`[data-id="${targetid}"]`);
             targetActivity.dataset.pinned = Number(targetActivity.dataset.pinned) ? 0 : 1;
 
-            ajax.data.coords = '';
+            // setCoordsPinned(targetActivity);
+
+            // ajax.data.coords = '';
             ajax.data.pinnedsections = getAllPinnedItems();
             ajax.data.method = `rewritepinnedsections`;
             ajax.send();

@@ -33,13 +33,16 @@
   position: relative;
   width: 100%;
   height: 75vh;
-  margin-top: 90px; }
+  margin-top: 100px; }
+  .format-picturelink .picturelink_hide > .picturelink_item {
+    opacity: 0 !important; }
   .format-picturelink .picturelink .far,
   .format-picturelink .picturelink .fas {
     font-family: FontAwesome;
     padding-left: 10px;
     transition: .2s;
-    margin-left: auto; }
+    margin-left: auto;
+    font-style: normal; }
     .format-picturelink .picturelink .far:hover,
     .format-picturelink .picturelink .fas:hover {
       color: #0096db; }
@@ -56,21 +59,26 @@
     border-radius: 50%;
     transition: .5s; }
   .format-picturelink .picturelink_section {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
     color: #fff; }
   .format-picturelink .picturelink .completed {
     background: url([[pix:format_picturelink|completed]]) no-repeat center; }
-  .format-picturelink .picturelink .picturelink_admin {
+  .format-picturelink .picturelink .picturelink_settings {
     position: absolute;
+    display: -ms-flexbox;
+    display: flex;
     top: -34px;
-    left: 0;
+    left: 0; }
+  .format-picturelink .picturelink .picturelink_admin {
+    position: relative;
+    margin-right: 2rem;
     line-height: 2rem;
     cursor: pointer;
     display: -ms-flexbox;
     display: flex;
-    padding: 0 5px;
+    padding: 0 1rem;
     border: 1px solid #ddd;
     -ms-flex-align: center;
         align-items: center;
@@ -99,120 +107,121 @@
       border-radius: 50%;
       transition: .2s;
       transform: translateX(0); }
-  .format-picturelink .picturelink .allactivities-wrapper,
-  .format-picturelink .picturelink .allsection-wrapper {
-    left: 160px !important; }
-    .format-picturelink .picturelink .allactivities-wrapper .select-icon,
-    .format-picturelink .picturelink .allsection-wrapper .select-icon {
-      transition: .2s;
-      border: none;
-      width: 36px;
-      height: 36px;
-      background: url([[pix:format_picturelink|open-blue]]) no-repeat center;
-      background-size: 36px;
-      position: absolute;
-      right: 0;
-      margin: 0;
-      top: 50%;
-      transform: translate(0, -50%); }
-    .format-picturelink .picturelink .allactivities-wrapper .allactivities,
-    .format-picturelink .picturelink .allactivities-wrapper .allsections,
-    .format-picturelink .picturelink .allsection-wrapper .allactivities,
-    .format-picturelink .picturelink .allsection-wrapper .allsections {
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-      border: none;
-      background: none;
-      border: none;
-      font-size: 18px;
-      font-weight: bold;
-      line-height: 2rem;
-      color: #0096db;
-      padding-right: 40px;
+  .format-picturelink .picturelink .allactivities-wrapper .select-icon,
+  .format-picturelink .picturelink .allsection-wrapper .select-icon {
+    transition: .2s;
+    border: none;
+    width: 36px;
+    height: 36px;
+    background: url([[pix:format_picturelink|open-blue]]) no-repeat center;
+    background-size: 36px;
+    position: absolute;
+    right: 0;
+    margin: 0;
+    top: 50%;
+    transform: translate(0, -50%); }
+  .format-picturelink .picturelink .allactivities-wrapper .allactivities,
+  .format-picturelink .picturelink .allactivities-wrapper .allsections,
+  .format-picturelink .picturelink .allsection-wrapper .allactivities,
+  .format-picturelink .picturelink .allsection-wrapper .allsections {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 2rem;
+    color: #0096db;
+    padding-right: 40px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center; }
+    .format-picturelink .picturelink .allactivities-wrapper .allactivities .section-name,
+    .format-picturelink .picturelink .allactivities-wrapper .allsections .section-name,
+    .format-picturelink .picturelink .allsection-wrapper .allactivities .section-name,
+    .format-picturelink .picturelink .allsection-wrapper .allsections .section-name {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden; }
+    .format-picturelink .picturelink .allactivities-wrapper .allactivities:active .select-icon,
+    .format-picturelink .picturelink .allactivities-wrapper .allsections:active .select-icon,
+    .format-picturelink .picturelink .allsection-wrapper .allactivities:active .select-icon,
+    .format-picturelink .picturelink .allsection-wrapper .allsections:active .select-icon {
+      top: 60%; }
+  .format-picturelink .picturelink .allactivities-wrapper .section-wrap,
+  .format-picturelink .picturelink .allsection-wrapper .section-wrap {
+    top: 2rem;
+    left: 0;
+    background-color: #fff;
+    display: none;
+    margin-top: 5px;
+    z-index: 1000;
+    position: absolute;
+    max-height: 40vh;
+    overflow: auto;
+    border: 1px solid #ddd; }
+    .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items,
+    .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items {
       display: -ms-flexbox;
       display: flex;
-      -ms-flex-align: center;
-          align-items: center; }
-      .format-picturelink .picturelink .allactivities-wrapper .allactivities .section-name,
-      .format-picturelink .picturelink .allactivities-wrapper .allsections .section-name,
-      .format-picturelink .picturelink .allsection-wrapper .allactivities .section-name,
-      .format-picturelink .picturelink .allsection-wrapper .allsections .section-name {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden; }
-      .format-picturelink .picturelink .allactivities-wrapper .allactivities:active .select-icon,
-      .format-picturelink .picturelink .allactivities-wrapper .allsections:active .select-icon,
-      .format-picturelink .picturelink .allsection-wrapper .allactivities:active .select-icon,
-      .format-picturelink .picturelink .allsection-wrapper .allsections:active .select-icon {
-        top: 60%; }
-    .format-picturelink .picturelink .allactivities-wrapper .section-wrap,
-    .format-picturelink .picturelink .allsection-wrapper .section-wrap {
-      top: 2rem;
-      background-color: #fff;
-      display: none;
-      margin-top: 5px;
-      z-index: 1000;
-      position: absolute;
-      max-height: 40vh;
-      overflow: auto; }
-      .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items,
-      .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items {
+      -ms-flex-direction: column;
+          flex-direction: column;
+      box-shadow: 0 0 7px #9c9c9c; }
+      .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item,
+      .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item {
         display: -ms-flexbox;
         display: flex;
-        -ms-flex-direction: column;
-            flex-direction: column;
-        box-shadow: 0 0 7px #9c9c9c; }
-        .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item,
-        .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item {
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-pack: justify;
-              justify-content: space-between;
-          padding: 0 1rem;
-          font-size: 18px;
-          line-height: 40px; }
-          .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item-text,
-          .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item-text {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 160px; }
-          .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item a,
-          .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item a {
-            transition: .2s;
-            padding-left: 20px;
-            display: block;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden; }
-          .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item a:hover,
-          .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item a:hover {
-            color: #fff;
-            cursor: pointer;
-            text-decoration: none;
-            background-color: #0096db; }
-  .format-picturelink .picturelink .allsection-wrapper {
-    left: 400px !important; }
-
-.format-picturelink .picturelink_item[data-visibility="0"] {
-  opacity: 0 !important; }
-
-.format-picturelink .picturelink_item[data-visibility="1"] {
-  opacity: 1 !important; }
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+        padding: 0 1rem;
+        font-size: 18px;
+        line-height: 40px; }
+        .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item-text,
+        .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item-text {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          width: 160px; }
+        .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item a,
+        .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item a {
+          transition: .2s;
+          padding-left: 20px;
+          display: block;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden; }
+        .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item a:hover,
+        .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item a:hover {
+          color: #fff;
+          cursor: pointer;
+          text-decoration: none;
+          background-color: #0096db; }
 
 .format-picturelink .picturelink_item[data-pinned="1"] {
-  opacity: 1 !important;
-  background-color: #1928af !important;
-  border-radius: 24px;
-  top: 40px !important;
-  min-width: 100px;
+  opacity: 1;
+  background-color: #19284f !important;
+  border-radius: 14px;
+  top: -90px !important;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
       align-items: center;
   -ms-flex-pack: center;
-      justify-content: center; }
+      justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  height: 55px;
+  line-height: 55px;
+  width: 170px; }
+
+.format-picturelink .picturelink_item[data-visibility="0"] {
+  opacity: 0; }
+
+.format-picturelink .picturelink_item[data-visibility="1"] {
+  opacity: 1; }
 
 .format-picturelink .completionprogressid,
 .format-picturelink .topics {

@@ -102,10 +102,10 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 $sid = "s".$sinfo->id;
                 $sname = $cformat->get_section_name($section);
 
-                $visibleclass  = (isset($visibleitems[$sid]) ? $visibleitems[$sid] : 0) ? ' fa-eye' : ' fa-eye-slash';
-                $pinnedclass  = (isset($pinnedsections[$sid]) ? $pinnedsections[$sid] : 0) ? ' fa-unlock' : ' fa-lock';
-                $visibletag = html_writer::tag('i', '' ,array('id'=> 'visibility', 'class'=>'far'.$visibleclass));
-                $pinnedtag = html_writer::tag('i', '' ,array('id'=> 'pinned', 'class'=>'fas'.$pinnedclass));
+                $visibleclass  = (isset($visibleitems[$sid]) ? $visibleitems[$sid] : 0) ? 'fa-eye' : 'fa-eye-slash';
+                $pinnedclass  = (isset($pinnedsections[$sid]) ? $pinnedsections[$sid] : 0) ? 'fa-lock' : 'fa-unlock';
+                $visibletag = html_writer::tag('i', '' ,array('id'=> 'visibility', 'class'=>'far '.$visibleclass));
+                $pinnedtag = html_writer::tag('i', '' ,array('id'=> 'pinned', 'class'=>'fas '.$pinnedclass));
                 $newitem = !isset($coords[$sid]->coordx) ?  html_writer::tag('span', get_string('new', 'format_picturelink') ,array('style'=>'color:red;')) : '';
 
                 $o .= html_writer::tag('div', '<span class = "section-item-text">'.$sname.'</span>'.$newitem.$visibletag.$pinnedtag ,array(
@@ -140,19 +140,21 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $context = context_course::instance($course->id);
 
         $o = '';
-        $o .= html_writer::start_tag('div', array('class' => 'picturelink', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
+        $o .= html_writer::start_tag('div', array('class' => 'picturelink picturelink_hide', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
         // add button to remove items
         if (has_capability('moodle/course:update', $context)) {
-          $o .= html_writer::start_tag('button', array('id' => 'picturelink_admin', 'class'=>'picturelink_admin'));
-          $o .= html_writer::start_tag('div', array('class'=>'picturelink_toggle'));
-          $o .= html_writer::tag('div', '' ,array('class'=>'picturelink_pin'));
+          $o .= html_writer::start_tag('div', array('class'=>'picturelink_settings'));
+            $o .= html_writer::start_tag('button', array('id' => 'picturelink_admin', 'class'=>'picturelink_admin'));
+            $o .= html_writer::start_tag('div', array('class'=>'picturelink_toggle'));
+            $o .= html_writer::tag('div', '' ,array('class'=>'picturelink_pin'));
+            $o .= html_writer::end_tag('div');
+            $o .= html_writer::tag('div',  get_string('moveitems', 'format_picturelink') ,array('class'=>'picturelink_text'));
+            $o .= html_writer::end_tag('button');
+            // activities settings
+            $o .= $this->activitiesselection($modinfo, $course);
+            // sections settings
+            $o .= $this->sectionselection($modinfo, $cformat, $course);
           $o .= html_writer::end_tag('div');
-          $o .= html_writer::tag('div',  get_string('moveitems', 'format_picturelink') ,array('class'=>'picturelink_text'));
-          $o .= html_writer::end_tag('button');
-          // add select to add properties to all activities
-          $o .= $this->activitiesselection($modinfo, $course);
-          // add select to add properties to all sections
-          $o .= $this->sectionselection($modinfo, $cformat, $course);
         }
 
         // iterate every cms
