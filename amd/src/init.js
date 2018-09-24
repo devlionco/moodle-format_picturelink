@@ -186,6 +186,7 @@ define([
         let target = e.target;
         while (target != mainBlock) {
           if (target.classList.contains(`drag`)) {
+            if (target.dataset.pinned == 1) return
             dragBall(e, target)
             return;
           }
