@@ -160,11 +160,13 @@ class format_picturelink_renderer extends format_section_renderer_base {
         // iterate every cms
         foreach ($modinfo->cms as $cm) {
             $cmcompletiondata = $completion->get_data($cm);
-
             $activeclass = $cmcompletiondata->completionstate ? ' completed' : '';
+            $corevisibleclass = ($cm->visible) ? '' : ' p_hide';;
+            $availableclass = ($cm->available) ? '' : ' p_locked';
+
             //print_object($cm->getIterator());
             $o .= html_writer::link($cm->url, '', array(
-                'class' => 'picturelink_item drag'.$activeclass,
+                'class' => 'picturelink_item drag'.$activeclass.$corevisibleclass.$availableclass,
                 'data-id' => $cm->id,
                 'data-mod_name' => $cm->modname,
                 // 'data-name' => $cm->name,
@@ -263,6 +265,9 @@ class format_picturelink_renderer extends format_section_renderer_base {
      */
     private function picturelink_get_pinnedsections($course) {
         $rawpinnedsections = json_decode($course->picturelinkpinnedsections);
+        if (empty($rawpinnedsections)) {
+            return null;
+        }
         $pinnedsections = array();
         // rearrange array keys for convenience
         foreach ($rawpinnedsections as $id => $value) {
