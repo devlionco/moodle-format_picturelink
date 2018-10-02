@@ -5,6 +5,12 @@
     width: 100%;
     height: 75vh;
     margin-top: 100px;
+    .picturelink_pinned {
+      position: relative;
+      top: -94px;
+      display: flex;
+      justify-content: space-evenly;
+    }
     &_hide > .picturelink_item {
       opacity: 0!important;
     }
@@ -34,6 +40,9 @@
       border-radius: 50%;
       transition: .5s;
     }
+    a[data-visibility="0"] {
+      display: none;
+    }
     &_section {
       width: 40px;
       height: 40px;
@@ -42,6 +51,14 @@
     }
     & .completed {
       background: url([[pix:format_picturelink|completed]]) no-repeat center;
+    }
+    & .p_hide {
+      // background: url([[pix:format_picturelink|p_hide]]) no-repeat center;
+      background-color: #19284F;
+    }
+    & .p_locked {
+      background: url([[pix:format_picturelink|lock]]) no-repeat center;
+      background-size: cover;
     }
     .picturelink_settings {
       position: absolute;
@@ -150,6 +167,9 @@
             padding: 0 1rem;
             font-size: 18px;
             line-height: 40px;
+            &:hover {
+              background-color: #cfdcfd;
+            }
             &-text {
               text-overflow: ellipsis;
               white-space: nowrap;
@@ -179,16 +199,21 @@
   .picturelink_item[data-pinned="1"] {
     opacity: 1;
     background-color: #19284f !important;
+    background-image: url([[pix:format_picturelink|pushpin]]);
+    background-position: 10px;
+    background-repeat: no-repeat;
     border-radius: 14px;
-    top: -90px !important;
+    // top: -90px !important;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     font-size: 18px;
     height: 55px;
-    line-height: 55px;
+    line-height: 22px;
+    padding: 0 44px;
     width: 170px;
+    position: static;
   }
   .picturelink_item[data-visibility="0"] {
     opacity: 0;

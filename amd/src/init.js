@@ -7,6 +7,7 @@ define([
 
   const PARENTCLASS = `picturelink`;
   const mainBlock = document.querySelector(`.${PARENTCLASS}`);
+  const pinnedBlock = mainBlock.querySelector(`.picturelink_pinned`);
   let dragIsOn = 0;
 
   const setCoordsToItems = () => {
@@ -29,8 +30,8 @@ define([
       let coordx = item.dataset.coordx ? item.dataset.coordx : 10;
       let coordy = item.dataset.coordy ? item.dataset.coordy : 10;
       if (!item.dataset.coordx || !item.dataset.coordy) {
-        item.style.background = `red`;
-        item.style.color = `red`;
+        item.style.background = `green`;
+        item.style.color = `green`;
       }
 
       item.dataset.coordx = coordx;
@@ -158,6 +159,11 @@ define([
             targetid = target.parentNode.dataset.topid;
             targetActivity = mainBlock.querySelector(`[data-id="${targetid}"]`);
             targetActivity.dataset.pinned = Number(targetActivity.dataset.pinned) ? 0 : 1;
+            if (Number(targetActivity.dataset.pinned)) {
+              pinnedBlock.appendChild(targetActivity);
+            }else {
+              mainBlock.appendChild(targetActivity);
+            }
 
             // setCoordsPinned(targetActivity);
 
@@ -186,8 +192,26 @@ define([
         let target = e.target;
         while (target != mainBlock) {
           if (target.classList.contains(`drag`)) {
-            if (target.dataset.pinned == 1) return
+            if (Number(target.dataset.pinned) || !Number(target.dataset.visibility)) return
             dragBall(e, target)
+            return;
+          }
+          target = target.parentNode;
+        }
+      });
+
+      // by hover on admin menu light items
+      mainBlock.addEventListener('mouseover', function(e){
+
+        let target = e.target;
+        while (!target.classList.contains(PARENTCLASS)) {
+          if (target.classList.contains(`section-item`)) {
+            targetid = target.dataset.topid;
+            targetActivity = mainBlock.querySelector(`[data-id="${targetid}"]`);
+            targetActivity.style.border = '2px solid red';
+            target.addEventListener('mouseleave', function(e){
+              targetActivity.style.border = '';
+            });
             return;
           }
           target = target.parentNode;

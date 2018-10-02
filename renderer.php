@@ -141,6 +141,32 @@ class format_picturelink_renderer extends format_section_renderer_base {
 
         $o = '';
         $o .= html_writer::start_tag('div', array('class' => 'picturelink picturelink_hide', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
+        // pinned sections
+        $o .= html_writer::start_tag('div', array('class'=>'picturelink_pinned'));
+        foreach ($modinfo->sections as $section => $scms) {
+
+            $surl = $cformat->get_view_url($section);
+            $sname = $cformat->get_section_name($section);
+            $sinfo = $cformat->get_section($section);
+            $sid = "s".$sinfo->id;
+            if (!(isset($pinnedsections[$sid]) ? $pinnedsections[$sid] : 0)) continue;
+            $o .= html_writer::link($surl, $sname, array(
+                'class' => 'picturelink_item picturelink_section drag',
+                'title' => $sname,
+                'data-id' => 's'.$sinfo->id,
+                'data-mod_name' => 'section',
+                // 'data-name' => $cm->name,
+                // 'data-status' => $cmcompletiondata->completionstate,
+                'data-tooltip' => 'tooltip',
+                'data-placement' => 'top',
+                'data-visibility' => isset($visibleitems[$sid]) ? $visibleitems[$sid] : 0,
+                'data-pinned' => isset($pinnedsections[$sid]) ? $pinnedsections[$sid] : 0,
+                'data-original-title' => $sname,
+                'data-coordx' => isset($coords[$sid]->coordx) ? $coords[$sid]->coordx : '',
+                'data-coordy' => isset($coords[$sid]->coordy) ? $coords[$sid]->coordy : '',
+            ));
+        }
+        $o .= html_writer::end_tag('div');
         // add button to remove items
         if (has_capability('moodle/course:update', $context)) {
           $o .= html_writer::start_tag('div', array('class'=>'picturelink_settings'));
@@ -179,13 +205,14 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 'data-coordy' => isset($coords[$cm->id]->coordy) ? $coords[$cm->id]->coordy : '',
             ));
         }
-
+        // show only unpinned section
         foreach ($modinfo->sections as $section => $scms) {
+
             $surl = $cformat->get_view_url($section);
             $sname = $cformat->get_section_name($section);
             $sinfo = $cformat->get_section($section);
             $sid = "s".$sinfo->id;
-
+            if (isset($pinnedsections[$sid]) ? $pinnedsections[$sid] : 0) continue;
             $o .= html_writer::link($surl, $sname, array(
                 'class' => 'picturelink_item picturelink_section drag',
                 'title' => $sname,

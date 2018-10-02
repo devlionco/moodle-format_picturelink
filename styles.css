@@ -34,6 +34,13 @@
   width: 100%;
   height: 75vh;
   margin-top: 100px; }
+  .format-picturelink .picturelink .picturelink_pinned {
+    position: relative;
+    top: -94px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: space-evenly;
+        justify-content: space-evenly; }
   .format-picturelink .picturelink_hide > .picturelink_item {
     opacity: 0 !important; }
   .format-picturelink .picturelink .far,
@@ -58,6 +65,8 @@
     height: 30px;
     border-radius: 50%;
     transition: .5s; }
+  .format-picturelink .picturelink a[data-visibility="0"] {
+    display: none; }
   .format-picturelink .picturelink_section {
     width: 40px;
     height: 40px;
@@ -65,6 +74,11 @@
     color: #fff; }
   .format-picturelink .picturelink .completed {
     background: url([[pix:format_picturelink|completed]]) no-repeat center; }
+  .format-picturelink .picturelink .p_hide {
+    background-color: #19284F; }
+  .format-picturelink .picturelink .p_locked {
+    background: url([[pix:format_picturelink|lock]]) no-repeat center;
+    background-size: cover; }
   .format-picturelink .picturelink .picturelink_settings {
     position: absolute;
     display: -ms-flexbox;
@@ -179,6 +193,9 @@
         padding: 0 1rem;
         font-size: 18px;
         line-height: 40px; }
+        .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item:hover,
+        .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item:hover {
+          background-color: #cfdcfd; }
         .format-picturelink .picturelink .allactivities-wrapper .section-wrap .section-items .section-item-text,
         .format-picturelink .picturelink .allsection-wrapper .section-wrap .section-items .section-item-text {
           text-overflow: ellipsis;
@@ -203,8 +220,10 @@
 .format-picturelink .picturelink_item[data-pinned="1"] {
   opacity: 1;
   background-color: #19284f !important;
+  background-image: url([[pix:format_picturelink|pushpin]]);
+  background-position: 10px;
+  background-repeat: no-repeat;
   border-radius: 14px;
-  top: -90px !important;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -214,8 +233,10 @@
   font-weight: bold;
   font-size: 18px;
   height: 55px;
-  line-height: 55px;
-  width: 170px; }
+  line-height: 22px;
+  padding: 0 44px;
+  width: 170px;
+  position: static; }
 
 .format-picturelink .picturelink_item[data-visibility="0"] {
   opacity: 0; }
