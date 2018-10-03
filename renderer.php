@@ -98,6 +98,11 @@ class format_picturelink_renderer extends format_section_renderer_base {
               $o .= html_writer::start_tag('div', array('class'=>'section-items'));
 
               foreach ($modinfo->sections as $section => $scms) {
+                // remove general section (0) from select list
+                if ($section == 0) {
+                    continue;
+                }
+                
                 $sinfo = $cformat->get_section($section);
                 $sid = "s".$sinfo->id;
                 $sname = $cformat->get_section_name($section);
@@ -262,6 +267,9 @@ class format_picturelink_renderer extends format_section_renderer_base {
      */
     private function picturelink_get_coords($course) {
         $rawcoords = json_decode($course->picturelinkcoords);
+        if (empty($rawcoords)) {
+            return null;
+        }
         $coords = array();
         // rearrange array keys for convenience
         foreach ($rawcoords as $id => $value) {
@@ -277,6 +285,9 @@ class format_picturelink_renderer extends format_section_renderer_base {
      */
     private function picturelink_get_visible_items($course) {
         $rawvisibleitems = json_decode($course->picturelinkvisibleitems);
+        if (empty($rawvisibleitems)) {
+            return null;
+        }
         $visibleitems = array();
         // rearrange array keys for convenience
         foreach ($rawvisibleitems as $id => $value) {
