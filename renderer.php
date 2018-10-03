@@ -190,13 +190,24 @@ class format_picturelink_renderer extends format_section_renderer_base {
 
         // iterate every cms
         foreach ($modinfo->cms as $cm) {
+            $link = $cm->url;
             $cmcompletiondata = $completion->get_data($cm);
             $activeclass = $cmcompletiondata->completionstate ? ' completed' : '';
-            $corevisibleclass = ($cm->visible) ? '' : ' p_hide';;
-            $availableclass = ($cm->available) ? '' : ' p_locked';
+            if ($cm->visible) {
+                $corevisibleclass = '';
+            } else {
+                $corevisibleclass = ' p_hide';
+                $link = 'javascript:void(0);';
+            }
+            if ($cm->available) {
+                $availableclass = '';
+            } else {
+                $availableclass = ' p_locked';
+                $link = 'javascript:void(0);';
+            }
 
             //print_object($cm->getIterator());
-            $o .= html_writer::link($cm->url, '', array(
+            $o .= html_writer::link($link, '', array(
                 'class' => 'picturelink_item drag'.$activeclass.$corevisibleclass.$availableclass,
                 'data-id' => $cm->id,
                 'data-mod_name' => $cm->modname,
