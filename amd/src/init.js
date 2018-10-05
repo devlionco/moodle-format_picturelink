@@ -30,7 +30,7 @@ define([
       let coordx = item.dataset.coordx ? item.dataset.coordx : 10;
       let coordy = item.dataset.coordy ? item.dataset.coordy : 10;
       if (!item.dataset.coordx || !item.dataset.coordy) {
-        item.style.background = `green`;
+        item.style.backgroundColor = `green`;
         item.style.color = `green`;
       }
 

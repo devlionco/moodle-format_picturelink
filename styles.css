@@ -219,6 +219,7 @@
 
 .format-picturelink .picturelink_item[data-pinned="1"] {
   opacity: 1;
+  color: #fff !important;
   background-color: #19284f !important;
   background-image: url([[pix:format_picturelink|pushpin]]);
   background-size: 10%;
