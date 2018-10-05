@@ -37,9 +37,11 @@ define([
       item.dataset.coordx = coordx;
       item.dataset.coordy = coordy;
 
-      item.style.left = coordx + 'px';
+      // item.style.left = coordx + 'px';
+      // set y coords by %
+      item.style.left = coordx + '%';
       item.style.top = coordy + 'px';
-      // item.style.opacity = 1;
+
     });
     mainBlock.classList.remove(`picturelink_hide`);
   }
@@ -79,30 +81,12 @@ define([
     return pinned;
   }
 
-  // const setCoordsPinned = (targetActivity) => {
-  //   let allPinned = Array.from(mainBlock.querySelectorAll(`a[data-pinned="1"]`));
-  //
-  //   if (targetActivity.dataset.pinned) {
-  //     let coordx = 100 + Number(allPinned.length -1) * 240;
-  //     let coordy = -90;
-  //     targetActivity.style.left = coordx + 'px';
-  //     targetActivity.dataset.coordx = coordx;
-  //     targetActivity.dataset.coordy = coordy;
-  //   }else {
-  //     allPinned.forEach((item)=>{
-  //       item.style.left = item.style.left.replace(\/D+\, '') - 170 +'px';
-  //       item.dataset.coordx = Number(item.dataset.coordx) - 170;
-  //       item.dataset.coordy = -90;
-  //     });
-  //   }
-  // }
-
-
-
-
   return {
     init: function() {
 
+      // testing wirth of picturelink_img
+      let picturelinkImg = mainBlock.querySelector(`.picturelink_img`);
+      picturelinkImg.style.height = picturelinkImg.offsetWidth * picturelinkImg.naturalHeight / picturelinkImg.naturalWidth + 'px';
       setCoordsToItems();
 
       mainBlock.addEventListener('click', function(e){
@@ -148,6 +132,10 @@ define([
           }
 
           if (target.id === `pinned`) {
+            // check how pinned section appears on the page
+            let allPinnedSection = Array.from(mainBlock.querySelectorAll(`a[data-pinned="1"]`));
+            if (allPinnedSection.length > 3 && target.classList.contains(`fa-unlock`)) return;
+
             if (target.classList.contains(`fa-lock`)) {
               target.classList.remove(`fa-lock`);
               target.classList.add(`fa-unlock`);

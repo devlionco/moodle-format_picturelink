@@ -102,7 +102,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 if ($section == 0) {
                     continue;
                 }
-                
+
                 $sinfo = $cformat->get_section($section);
                 $sid = "s".$sinfo->id;
                 $sname = $cformat->get_section_name($section);
@@ -145,7 +145,9 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $context = context_course::instance($course->id);
 
         $o = '';
-        $o .= html_writer::start_tag('div', array('class' => 'picturelink picturelink_hide', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
+        // $o .= html_writer::start_tag('div', array('class' => 'picturelink picturelink_hide', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
+        $o .= html_writer::start_tag('div', array('class' => 'picturelink picturelink_hide', 'data-courseid'=>$course->id,));
+
         // pinned sections
         $o .= html_writer::start_tag('div', array('class'=>'picturelink_pinned'));
         foreach ($modinfo->sections as $section => $scms) {
@@ -172,6 +174,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
             ));
         }
         $o .= html_writer::end_tag('div');
+        $o .= html_writer::tag('img', '' ,array('src' => $picturelinkimage, 'class'=>'picturelink_img')); // background image
         // add button to remove items
         if (has_capability('moodle/course:update', $context)) {
           $o .= html_writer::start_tag('div', array('class'=>'picturelink_settings'));

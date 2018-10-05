@@ -55,7 +55,12 @@ define(['format_picturelink/ajax'], function(ajax) {
       ball.parentNode.onmousemove = null;
       ball.onmouseup = null;
 
-      ball.dataset.coordx = ball.style.left.replace(/\D+/, '');
+      // old coords
+      // ball.dataset.coordx = ball.style.left.replace(/\D+/, '');
+      // convert coordinates to percents
+      let coordxByAbsolute = ball.style.left.replace(/\D+/, '');
+      ball.dataset.coordx = (coordxByAbsolute/ ball.parentNode.offsetWidth)*100; // on procents
+      ball.style.left = (coordxByAbsolute/ ball.parentNode.offsetWidth)*100 + '%'; // on procents
       ball.dataset.coordy = ball.style.top.replace(/\D+/, '');
 
       ajax.data.method = `rewriteactivitiescoords`;

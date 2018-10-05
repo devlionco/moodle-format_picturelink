@@ -30,10 +30,16 @@
   white-space: nowrap; }
 
 .format-picturelink .picturelink {
+  border: 1px solid #ddd;
   position: relative;
   width: 100%;
-  height: 75vh;
-  margin-top: 100px; }
+  min-height: 75vh;
+  margin-top: 100px;
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat; }
+  .format-picturelink .picturelink .picturelink_img {
+    width: 100%; }
   .format-picturelink .picturelink .picturelink_pinned {
     position: relative;
     top: -94px;
@@ -147,7 +153,7 @@
     font-size: 18px;
     font-weight: bold;
     line-height: 2rem;
-    color: #0096db;
+    color: #19284f;
     padding-right: 40px;
     display: -ms-flexbox;
     display: flex;
@@ -249,6 +255,9 @@
 .format-picturelink .completionprogressid,
 .format-picturelink .topics {
   display: none; }
+
+[dir="rtl"] .format-picturelink .picturelink .picturelink_admin.active .picturelink_pin {
+  transform: translateX(-8px); }
 
 .format-picturelink.editing .completionprogressid,
 .format-picturelink.editing .topics {
