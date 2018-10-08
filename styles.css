@@ -256,6 +256,12 @@
 .format-picturelink .topics {
   display: none; }
 
+.format-picturelink .single-section {
+  -ms-flex-direction: column-reverse;
+      flex-direction: column-reverse; }
+  .format-picturelink .single-section .topics {
+    display: block; }
+
 [dir="rtl"] .format-picturelink .picturelink .picturelink_admin.active .picturelink_pin {
   transform: translateX(-8px); }
 

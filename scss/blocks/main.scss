@@ -203,6 +203,8 @@
     }
   } // end picturelink
 
+
+
   .picturelink_item[data-pinned="1"] {
     opacity: 1;
     color: #fff !important;
@@ -238,6 +240,12 @@
   .completionprogressid,
   .topics {
     display: none;
+  }
+  .single-section {
+    flex-direction: column-reverse;
+    .topics {
+      display: block;
+    }
   }
 }
 //rtl mode
