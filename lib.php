@@ -237,7 +237,7 @@ class format_picturelink extends format_base {
                     'type' => PARAM_INT,
                 ),
                 'coursedisplay' => array(
-                    'default' => $courseconfig->coursedisplay,
+                    'default' => 1,             // SG -- force - 1 - COURSE_DISPLAY_MULTIPAGE - split pages into a page per section
                     'type' => PARAM_INT,
                 ),
                 'picturelinkimage' => array(
