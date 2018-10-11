@@ -473,6 +473,16 @@ class format_picturelink_renderer extends format_section_renderer_base {
 
         $context = context_course::instance($course->id);
 
+        // SG -20181011 - render general section before the picturelink image
+        $section0 = $modinfo->get_section_info(0);
+        if ($section0 = $modinfo->get_section_info(0)) {
+            echo $this->section_header($section0, $course, false, 0);
+            echo $this->courserenderer->course_section_cm_list($course, $section0, 0);
+            echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
+            echo $this->section_footer();
+        }
+
+
         // Render here the picturelink image with cms above all course format
         echo $this->picturelink_get_cms($course, $modinfo);
 
@@ -489,16 +499,23 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $numsections = course_get_format($course)->get_last_section_number();
 
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
+            // SG - 20181011 -- hide sec0 here, as we show it upper
+            // if ($section == 0) {
+            //     // 0-section is displayed a little different then the others
+            //     
+            //     if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
+            //         echo $this->section_header($thissection, $course, false, 0);
+            //         echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
+            //         echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
+            //         echo $this->section_footer();
+            //     }
+            //     continue;
+            // }
+            // skip sec0
             if ($section == 0) {
-                // 0-section is displayed a little different then the others
-                if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
-                    echo $this->section_header($thissection, $course, false, 0);
-                    echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
-                    echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
-                    echo $this->section_footer();
-                }
                 continue;
             }
+
             if ($section > $numsections) {
                 // activities inside this section are 'orphaned', this section will be printed as 'stealth' below
                 continue;
