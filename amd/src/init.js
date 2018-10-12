@@ -92,7 +92,7 @@ define([
 
           if (target.classList.contains(`drag`)) {
             e.preventDefault();
-            if (!dragIsOn && target.href != `javascript:void(0);`) window.open(target.href,'_blank');
+            if (!dragIsOn || target.href != `javascript:void(0);` || !target.href) window.open(target.href,'_blank');
             return;
           }
           if (target.id === `activities` || target.id === `sections`) return
