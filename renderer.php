@@ -473,6 +473,15 @@ class format_picturelink_renderer extends format_section_renderer_base {
 
         $context = context_course::instance($course->id);
 
+        /*
+        * Course format color options render for frontend
+        */
+        $csscoloroptions = "";
+        $csscoloroptions .= ":root{";
+        $csscoloroptions .= "--picturelink-bg-color: ".$course->picturelinkbgcolor.";";
+        $csscoloroptions .= "}";
+        echo html_writer::tag('style', $csscoloroptions);
+
         // SG -20181011 - render general section before the picturelink image
         $section0 = $modinfo->get_section_info(0);
         if ($section0 = $modinfo->get_section_info(0)) {
@@ -481,7 +490,6 @@ class format_picturelink_renderer extends format_section_renderer_base {
             echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
             echo $this->section_footer();
         }
-
 
         // Render here the picturelink image with cms above all course format
         echo $this->picturelink_get_cms($course, $modinfo);

@@ -57,6 +57,8 @@ $string['displaymessagesdesc_help'] = 'Show or hide block';
 $string['displaygrades'] = 'Display grades';
 $string['displaygradesdesc'] = 'Show or hide block';
 $string['displaygradesdesc_help'] = 'Show or hide block';
+$string['picturelinkbgcolor'] = 'Background color';
+$string['picturelinkbgcolor_help'] = 'Choose background color';
 
 
 $string['showbagestag'] = 'Display Badges block';

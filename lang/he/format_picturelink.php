@@ -55,6 +55,8 @@ $string['displaymessagesdesc_help'] = 'משבצת הודעות';
 $string['displaygrades'] = 'משבצת צלמיות';
 $string['displaygradesdesc'] = 'משבצת צלמיות';
 $string['displaygradesdesc_help'] = 'משבצת צלמיות';
+$string['picturelinkbgcolor'] = 'Background color';
+$string['picturelinkbgcolor_help'] = 'Choose background color';
 
 $string['showbagestag'] = 'צלמית מדליות';
 $string['showbagestagdesc'] = 'צלמית מדליות';

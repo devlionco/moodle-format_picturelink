@@ -240,6 +240,10 @@ class format_picturelink extends format_base {
                     'default' => 1,             // SG -- force - 1 - COURSE_DISPLAY_MULTIPAGE - split pages into a page per section
                     'type' => PARAM_INT,
                 ),
+                'picturelinkbgcolor' => array(
+                    'default' => '#fff',
+                    'type' => PARAM_RAW,
+                ),
                 'picturelinkimage' => array(
                     'default' => '',
                     'type' => PARAM_RAW,
@@ -362,6 +366,12 @@ class format_picturelink extends format_base {
                     'help' => 'coursedisplay',
                     'help_component' => 'moodle',
                 ),
+                'picturelinkbgcolor' => array(
+                    'label' => new lang_string('picturelinkbgcolor', 'format_picturelink'),
+                    'element_type' => 'gfcolourpopup',
+                    'help' => 'picturelinkbgcolor',
+                    'help_component' => 'format_picturelink',
+                ),
                 'picturelinkimage' => array(
                     'label' => new lang_string('picturelinkimage_form_label', 'format_picturelink'),
                     'element_type' => 'filemanager',
@@ -402,7 +412,11 @@ class format_picturelink extends format_base {
      * @return array array of references to the added form elements.
      */
     public function create_edit_form_elements(&$mform, $forsection = false) {
-        global $COURSE;
+        global $COURSE, $CFG;
+        // import colorpicker form element
+        MoodleQuickForm::registerElementType('gfcolourpopup', "$CFG->dirroot/course/format/picturelink/js/gf_colourpopup.php",
+        'MoodleQuickForm_gfcolourpopup');
+
         $elements = parent::create_edit_form_elements($mform, $forsection);
 
         if (!$forsection && (empty($COURSE->id) || $COURSE->id == SITEID)) {
