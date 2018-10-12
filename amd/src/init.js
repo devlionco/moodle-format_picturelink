@@ -22,9 +22,6 @@ define([
     }
 
     items.forEach((item)=>{
-      // set random coords to new items
-      // let coordx = item.dataset.coordx ? item.dataset.coordx : getRandomInt(0,maxWidth);
-      // let coordy = item.dataset.coordy ? item.dataset.coordy : getRandomInt(0,maxHeight);
 
       // put new items on the right top angkle of the window
       let coordx = item.dataset.coordx ? item.dataset.coordx : 10;
@@ -95,7 +92,7 @@ define([
 
           if (target.classList.contains(`drag`)) {
             e.preventDefault();
-            if (!dragIsOn) window.open(target.href,'_blank');
+            if (!dragIsOn && target.href != `javascript:void(0);`) window.open(target.href,'_blank');
             return;
           }
           if (target.id === `activities` || target.id === `sections`) return
