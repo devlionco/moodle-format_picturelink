@@ -403,6 +403,8 @@ class format_picturelink_renderer extends format_section_renderer_base {
             return array();
         }
 
+        $sectionreturn = $onsectionpage ? $section->section : null;
+
         $coursecontext = context_course::instance($course->id);
 
         if ($onsectionpage) {
@@ -432,6 +434,33 @@ class format_picturelink_renderer extends format_section_renderer_base {
                                                'pixattr' => array('class' => '', 'alt' => $markthistopic),
                                                'attr' => array('class' => 'editing_highlight', 'title' => $markthistopic,
                                                    'data-action' => 'setmarker'));
+            }
+        }
+        
+        // SG - add show/hide eye control for sec0
+        if ($section->section == 0) {
+            if (has_capability('moodle/course:sectionvisibility', $coursecontext)) {
+                if ($section->visible) { // Show the hide/show eye.
+                    $strhidefromothers = get_string('hidefromothers', 'format_'.$course->format);
+                    $url->param('hide', $section->section);
+                    $controls['visiblity'] = array(
+                        'url' => $url,
+                        'icon' => 'i/hide',
+                        'name' => $strhidefromothers,
+                        'pixattr' => array('class' => '', 'alt' => $strhidefromothers),
+                        'attr' => array('class' => 'icon editing_showhide', 'title' => $strhidefromothers,
+                            'data-sectionreturn' => $sectionreturn, 'data-action' => 'hide'));
+                } else {
+                    $strshowfromothers = get_string('showfromothers', 'format_'.$course->format);
+                    $url->param('show',  $section->section);
+                    $controls['visiblity'] = array(
+                        'url' => $url,
+                        'icon' => 'i/show',
+                        'name' => $strshowfromothers,
+                        'pixattr' => array('class' => '', 'alt' => $strshowfromothers),
+                        'attr' => array('class' => 'icon editing_showhide', 'title' => $strshowfromothers,
+                            'data-sectionreturn' => $sectionreturn, 'data-action' => 'show'));
+                }
             }
         }
 

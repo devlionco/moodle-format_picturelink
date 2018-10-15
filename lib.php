@@ -550,8 +550,37 @@ class format_picturelink extends format_base {
             return null;
         }
 
-        // For show/hide actions call the parent method and return the new content for .section_availability element.
-        $rv = parent::section_action($section, $action, $sr);
+        // SG - rewrite format core function section_action, to allow hide/show for sec0
+        $course = $this->get_course();
+        $coursecontext = context_course::instance($course->id);
+        switch($action) {
+            case 'hide':
+            case 'show':
+                require_capability('moodle/course:sectionvisibility', $coursecontext);
+                $visible = ($action === 'hide') ? 0 : 1;
+                course_update_section($course, $section, array('visible' => $visible));
+                break;
+            default:
+                throw new moodle_exception('sectionactionnotsupported', 'core', null, s($action));
+        }
+
+        $modules = [];
+
+        $modinfo = get_fast_modinfo($course);
+        $coursesections = $modinfo->sections;
+        if (array_key_exists($section->section, $coursesections)) {
+            $courserenderer = $PAGE->get_renderer('core', 'course');
+            $completioninfo = new completion_info($course);
+            foreach ($coursesections[$section->section] as $cmid) {
+                $cm = $modinfo->get_cm($cmid);
+                $modules[] = $courserenderer->course_section_cm_list_item($course, $completioninfo, $cm, $sr);
+            }
+        }
+
+        $rv = ['modules' => $modules];
+        // SG - do not call parent section_action. Rewrite it right here
+        // // For show/hide actions call the parent method and return the new content for .section_availability element.
+        // $rv = parent::section_action($section, $action, $sr);
         $renderer = $PAGE->get_renderer('format_picturelink');
         $rv['section_availability'] = $renderer->section_availability($this->get_section($section));
         return $rv;
