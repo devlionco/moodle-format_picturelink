@@ -146,6 +146,8 @@ class format_picturelink_renderer extends format_section_renderer_base {
 
         $o = '';
         // $o .= html_writer::start_tag('div', array('class' => 'picturelink picturelink_hide', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
+
+        $o .= html_writer::start_tag('div', array('class' => 'picturelink-wrapper'));
         $o .= html_writer::start_tag('div', array('class' => 'picturelink picturelink_hide', 'data-courseid'=>$course->id,));
 
         // pinned sections
@@ -249,7 +251,9 @@ class format_picturelink_renderer extends format_section_renderer_base {
             ));
         }
 
-        $o .= html_writer::end_tag('div');
+        $o .= html_writer::end_tag('div'); // end picturelink
+        $o .= html_writer::end_tag('div'); // end wrapper
+
         return $o;
     }
 
@@ -436,7 +440,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
                                                    'data-action' => 'setmarker'));
             }
         }
-        
+
         // SG - add show/hide eye control for sec0
         if ($section->section == 0) {
             if (has_capability('moodle/course:sectionvisibility', $coursecontext)) {
