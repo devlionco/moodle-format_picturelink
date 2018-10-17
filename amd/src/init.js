@@ -34,9 +34,9 @@ define([
       item.dataset.coordx = coordx;
       item.dataset.coordy = coordy;
 
-      // item.style.left = coordx + 'px';
-      // set y coords by %
-      item.style.left = coordx + '%';
+      // set y coords onprocents
+      // item.style.left = coordx + '%';
+      item.style.left = coordx + 'px';
       item.style.top = coordy + 'px';
 
     });
