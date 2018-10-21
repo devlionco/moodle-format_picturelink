@@ -517,7 +517,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
 
         // SG -20181011 - render general section (sec0) before the picturelink image
         $section0 = $modinfo->get_section_info(0);
-        if ($section0 && $section0->visible) {
+        if ($section0 && $section0->uservisible) {
             echo $this->section_header($section0, $course, false, 0);
             echo $this->courserenderer->course_section_cm_list($course, $section0, 0);
             echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
