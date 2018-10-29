@@ -135,6 +135,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
      * @return string HTML to output.
      */
     public function picturelink_get_cms($course, $modinfo) {
+        global $USER, $DB, $CFG;
         // get sections
         $cformat = course_get_format($course);
         $picturelinkimage = $this->picturelink_get_image($course);
@@ -143,6 +144,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
         $pinnedsections = $this->picturelink_get_pinnedsections($course);
         $completion = new completion_info($course);
         $context = context_course::instance($course->id);
+        $weekagotime = new DateTime("-7 days", core_date::get_server_timezone_object());
 
         $o = '';
         // $o .= html_writer::start_tag('div', array('class' => 'picturelink picturelink_hide', 'data-courseid'=>$course->id, 'style' => 'background-image:url('.$picturelinkimage.');'));
@@ -211,9 +213,26 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 $link = 'javascript:void(0);';
             }
 
+            $cmaddedtime = new DateTime("now", core_date::get_server_timezone_object());
+            $cmaddedtime->setTimestamp($cm->added);
+            if ($weekagotime < $cmaddedtime) {
+                $newclass = ' p_new'; // SG - new activity
+
+                // if assignment - check for submissions
+                if ($cm->modname == 'assign') {
+                    $submission = $DB->get_record('assign_submission', array('userid' => $USER->id, 'assignment' => $cm->instance));
+                    if ($submission && $submission->status === 'submitted') {
+                        $newclass = ''; // SG - if assignment is already submitted - cm is not new
+                    }
+                }
+
+            } else {
+                $newclass = ''; // SG - if created earlier than 7 days ago
+            }
+            
             //print_object($cm->getIterator());
             $o .= html_writer::link($link, '', array(
-                'class' => 'picturelink_item drag'.$activeclass.$corevisibleclass.$availableclass,
+                'class' => 'picturelink_item drag'.$activeclass.$corevisibleclass.$availableclass.$newclass,
                 'data-id' => $cm->id,
                 'data-mod_name' => $cm->modname,
                 // 'data-name' => $cm->name,
