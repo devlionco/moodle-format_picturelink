@@ -1,7 +1,5 @@
 .format-picturelink {
-  .p_new{
-    background-color:#83D3AE;
-  }
+
   .picturelink-wrapper {
     background-color:var(--picturelink-bg-color);
   }
@@ -47,7 +45,7 @@
       padding-left: 20px;
     }
 
-    &_item {
+    &_item{
       opacity: 0;
       position: absolute;
       background-color: #fff;
@@ -56,6 +54,20 @@
       height: 30px;
       border-radius: 50%;
       transition: .5s;
+      &.p_new{
+        background-color:#83D3AE;
+        &.p_hide {
+          // background: url([[pix:format_picturelink|p_hide]]) no-repeat center;
+          background-color: #19284F;
+        }
+        &.p_locked {
+          background: url([[pix:format_picturelink|lock]]) no-repeat center;
+          background-size: cover;
+        }
+        &.completed {
+          background: url([[pix:format_picturelink|completed]]) no-repeat center;
+        }
+      }
     }
     a[data-visibility="0"] {
       display: none;
