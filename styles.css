@@ -289,21 +289,19 @@
 .format-picturelink.editing .topics {
   display: block; }
 
-.format-picturelink .course-content .section-navigation.mdl-bottom,
-.format-grid .course-content .section-navigation.mdl-bottom {
+.format-picturelink .course-content .section-navigation.mdl-bottom {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap; }
-  .format-picturelink .course-content .section-navigation.mdl-bottom div.mdl-align,
-  .format-grid .course-content .section-navigation.mdl-bottom div.mdl-align {
+  .format-picturelink .course-content .section-navigation.mdl-bottom div.mdl-align
+  {
     -ms-flex-order: 1;
         order: 1;
     margin-right: 100%;
     margin-bottom: 10px; }
   .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left,
-  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right,
-  .format-grid .course-content .section-navigation.mdl-bottom span.mdl-left,
-  .format-grid .course-content .section-navigation.mdl-bottom span.mdl-right {
+  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right
+   {
     -ms-flex-order: 2;
         order: 2; }
