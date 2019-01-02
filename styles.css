@@ -289,19 +289,23 @@
 .format-picturelink.editing .topics {
   display: block; }
 
+.format-picturelink .course-content .section-navigation.navigationtitle .mdl-left,
+.format-picturelink .course-content .section-navigation.navigationtitle .mdl-right {
+  display: none; }
+
 .format-picturelink .course-content .section-navigation.mdl-bottom {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap; }
-  .format-picturelink .course-content .section-navigation.mdl-bottom div.mdl-align
-  {
+  .format-picturelink .course-content .section-navigation.mdl-bottom div.mdl-align {
     -ms-flex-order: 1;
         order: 1;
     margin-right: 100%;
     margin-bottom: 10px; }
-  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left,
-  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right
-   {
+  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left {
     -ms-flex-order: 2;
         order: 2; }
+  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right {
+    -ms-flex-order: 3;
+        order: 3; }

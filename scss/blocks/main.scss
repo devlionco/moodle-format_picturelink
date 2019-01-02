@@ -284,6 +284,12 @@
 
 .format-picturelink {
   .course-content {
+    .section-navigation.navigationtitle {
+      .mdl-left,
+      .mdl-right {
+        display: none;
+      }
+    }
     .section-navigation.mdl-bottom {
       display: flex;
       flex-wrap: wrap;
@@ -292,9 +298,11 @@
         margin-right: 100%;
         margin-bottom: 10px;
       }
-      span.mdl-left,
-      span.mdl-right {
+      span.mdl-left {
         order: 2;
+      }
+      span.mdl-right {
+        order: 3;
       }
     }
   }
