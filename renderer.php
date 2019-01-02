@@ -211,6 +211,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
             } else {
                 $availableclass = ' p_locked'; // restrictes access
                 $link = 'javascript:void(0);';
+                $availableinfo = $cm->availableinfo;
             }
 
             $cmaddedtime = new DateTime("now", core_date::get_server_timezone_object());
@@ -235,6 +236,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 'class' => 'picturelink_item drag'.$activeclass.$corevisibleclass.$availableclass.$newclass,
                 'data-id' => $cm->id,
                 'data-mod_name' => $cm->modname,
+                'data-description' => isset($cm->availableinfo) ? $cm->availableinfo : '',
                 // 'data-name' => $cm->name,
                 // 'data-status' => $cmcompletiondata->completionstate,
                 'data-tooltip' => 'tooltip',
