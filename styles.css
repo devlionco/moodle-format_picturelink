@@ -245,7 +245,7 @@
   background-color: #19284f !important;
   background-image: url([[pix:format_picturelink|pushpin]]);
   background-size: 10%;
-  background-position: 10px;
+  background-position: 5px;
   background-repeat: no-repeat;
   border-radius: 14px;
   display: -ms-flexbox;
@@ -254,13 +254,16 @@
       align-items: center;
   -ms-flex-pack: center;
       justify-content: center;
+  text-align: center;
   font-weight: bold;
   font-size: 18px;
   height: 55px;
   line-height: 22px;
-  padding: 0 44px;
+  padding: 0 22px;
   width: 170px;
-  position: static; }
+  position: static;
+  /*rtl:ignore*/
+  padding-right: 5px; }
 
 .format-picturelink .picturelink_item[data-visibility="0"] {
   opacity: 0; }
