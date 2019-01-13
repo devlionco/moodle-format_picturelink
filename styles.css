@@ -289,6 +289,10 @@
 .format-picturelink.editing .topics {
   display: block; }
 
+.format-picturelink .course-content .section-navigation.navigationtitle .mdl-left,
+.format-picturelink .course-content .section-navigation.navigationtitle .mdl-right {
+  display: none; }
+
 .format-picturelink .course-content .section-navigation.mdl-bottom {
   display: -ms-flexbox;
   display: flex;
@@ -299,6 +303,7 @@
         order: 1;
     margin-right: 100%;
     margin-bottom: 10px; }
+<<<<<<< HEAD
   .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left,
   .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right {
     -ms-flex-order: 2;
@@ -321,3 +326,11 @@
 
 .format-picturelink .descriptionPopup .button span {
   color: #ffffff !important; }
+=======
+  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left {
+    -ms-flex-order: 2;
+        order: 2; }
+  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right {
+    -ms-flex-order: 3;
+        order: 3; }
+>>>>>>> f5701051b5fcff73a86de2c8a3ea18cda610d0b7
