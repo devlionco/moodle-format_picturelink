@@ -28,6 +28,8 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/format/renderer.php');
 require_once("{$CFG->libdir}/completionlib.php");
 
+$PAGE->requires->js_call_amd('format_picturelink/descriptionPopup', 'init');
+
 /**
  * Basic renderer for picturelink format.
  *
