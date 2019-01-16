@@ -1,6 +1,9 @@
 .format-picturelink {
   .picturelink-wrapper {
     background-color: var(--picturelink-bg-color);
+    width: 100vw;
+    margin-left: calc(672px - 50vw);
+    // margin-left: calc(1344px/2 - 100vw/2);
   }
   .picturelink {
     border-top: 1px solid #ddd;
@@ -306,6 +309,15 @@
       span.mdl-right {
         order: 3;
       }
+    }
+  }
+}
+
+@media  (max-width : 1344px) {
+  .format-picturelink {
+    .picturelink-wrapper {
+      width: auto;
+      margin-left: auto;
     }
   }
 }
