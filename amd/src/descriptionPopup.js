@@ -12,23 +12,22 @@ define([
             var trigger = $('.p_locked');
             var descriptionText = trigger.attr("data-description");
 
-            str.get_strings([
-                {key: 'activity_is_limited', component: 'format_picturelink'}
-            ]).done(function(){
+            var titlerequests = [{key: 'activity_is_limited', component: 'format_picturelink'}];
+            var titlePromise = str.get_strings(titlerequests)
+            .then(function(titles) {
+                return M.util.get_string('activity_is_limited', 'format_picturelink');
+            })
 
-              title = M.util.get_string('activity_is_limited', 'format_picturelink');
-              ModalFactory
-                  .create({
-                      title: title,
-                      body: descriptionText,
-                      footer: '',
-                      type: ModalFactory.types.DEFAULT
-                  }, trigger)
-                  .done(function (modal) {
-                      modal.getRoot().addClass('descriptionPopup');
-              });
+            ModalFactory
+                .create({
+                    title: titlePromise,
+                    body: descriptionText,
+                    footer: '',
+                    type: ModalFactory.types.DEFAULT
+                }, trigger)
+                .done(function (modal) {
+                    modal.getRoot().addClass('descriptionPopup');
             });
-
 
             function closePopup() {
                 $(".modal").removeClass('show');
