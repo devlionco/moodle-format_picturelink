@@ -1,22 +1,33 @@
 define([
-    'jquery', 'core/modal_factory'
-], function ($, ModalFactory) {
+    'jquery',
+    'core/str',
+    'core/modal_factory'
+], function ($, str, ModalFactory) {
+
+    let title;
+
+
     return {
         init: function () {
             var trigger = $('.p_locked');
             var descriptionText = trigger.attr("data-description");
 
-            ModalFactory
-                .create({
-                    title: 'test title',
-                    body: descriptionText,
-                    footer: 'test footer content',
-                    type: ModalFactory.types.DEFAULT
-                }, trigger)
-                .done(function (modal) {
-                    modal.getRoot().addClass('descriptionPopup');
-                });
-            
+            str.get_strings([
+                {key: 'activity_is_limited', component: 'format_picturelink'}
+            ]).done(function(){
+
+              title = M.util.get_string('activity_is_limited', 'format_picturelink');
+              ModalFactory
+                  .create({
+                      title: title,
+                      body: descriptionText,
+                      footer: '',
+                      type: ModalFactory.types.DEFAULT
+                  }, trigger)
+                  .done(function (modal) {
+                      modal.getRoot().addClass('descriptionPopup');
+              });
+            });
 
 
             function closePopup() {
