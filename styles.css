@@ -330,7 +330,7 @@
   text-transform: uppercase;
   font-weight: bold; }
 
-.format-picturelink .descriptionPopup .button span {
+.format-picturelink .descriptionPopup .close span {
   color: #ffffff !important; }
 
 @media (max-width: 1344px) {
