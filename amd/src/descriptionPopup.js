@@ -1,11 +1,12 @@
 define([ 'jquery', 'core/str', 'core/modal_factory' ], function($, str, ModalFactory) {
 	let title;
-
 	return {
 		init: function() {
+			let bodyText;
 			$('.p_locked').click(function(e) {
-				var trigger = $(e.target);
-				var descriptionText = e.target.getAttribute('data-description');
+				var target = e.target;
+				bodyText = target.getAttribute('data-description');
+				var trigger = $('.p_locked');
 				var titlerequests = [
 					{
 						key: 'activity_is_limited',
@@ -18,25 +19,29 @@ define([ 'jquery', 'core/str', 'core/modal_factory' ], function($, str, ModalFac
 				ModalFactory.create(
 					{
 						title: titlePromise,
-						body: descriptionText,
+						body: '',
 						footer: '',
 						type: ModalFactory.types.DEFAULT
 					},
 					trigger
 				).done(function(modal) {
+					modal.hide();
+					modal.show();
 					modal.getRoot().addClass('descriptionPopup');
+					modal.setBody(bodyText);
 
 					$(document).keyup(function(e) {
 						if (e.keyCode == 27) {
 							modal.hide();
-							/*modal.destroy(); */
+							modal.destroy();
 						}
 					});
 					$(document).click(function(e) {
 						let targ = e.target;
-						if (targ.classList.contains('modal') || targ.classList.contains('close')) {
+						let close = $('.close').find('span');
+						if (targ.classList.contains('modal') || targ.classList.contains('close') || close) {
 							modal.hide();
-							/*modal.destroy(); */
+							modal.destroy();
 						}
 					});
 				});
