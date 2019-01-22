@@ -315,22 +315,22 @@
     -ms-flex-order: 3;
         order: 3; }
 
-.format-picturelink .descriptionPopup .modal-dialog {
-  margin-top: 300px; }
+.descriptionPopup .modal-dialog {
+  margin-top: 35vh;
+  max-width: 400px; }
 
-.format-picturelink .descriptionPopup .modal-content {
-  max-width: 50%;
+.descriptionPopup .modal-content {
   margin: 0 auto; }
 
-.format-picturelink .descriptionPopup .modal-header {
+.descriptionPopup .modal-header {
   background-color: #19284f; }
 
-.format-picturelink .descriptionPopup .modal-title {
+.descriptionPopup .modal-title {
   color: #ffffff;
   text-transform: uppercase;
   font-weight: bold; }
 
-.format-picturelink .descriptionPopup .close span {
+.descriptionPopup .close span {
   color: #ffffff !important; }
 
 @media (max-width: 1344px) {
