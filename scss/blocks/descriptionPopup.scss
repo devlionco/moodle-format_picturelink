@@ -1,0 +1,22 @@
+.format-picturelink {
+    .descriptionPopup {
+        .modal-dialog {
+            margin-top: 300px;
+        }
+        .modal-content{
+            max-width: 50%;
+            margin: 0 auto;
+        }
+        .modal-header{
+            background-color: #19284f;
+        }
+        .modal-title {
+            color: #ffffff;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .close span{
+            color: #ffffff !important;
+        }
+    }
+} 
