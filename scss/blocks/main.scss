@@ -1,6 +1,9 @@
 .format-picturelink {
   .picturelink-wrapper {
     background-color: var(--picturelink-bg-color);
+    width: 100vw;
+    margin-left: calc(672px - 50vw);
+    // margin-left: calc(1344px/2 - 100vw/2);
   }
   .picturelink {
     border-top: 1px solid #ddd;
@@ -229,20 +232,22 @@
     background-color: #19284f !important;
     background-image: url([[pix:format_picturelink|pushpin]]);
     background-size: 10%;
-    background-position: 10px;
+    background-position: 5px;
     background-repeat: no-repeat;
     border-radius: 14px;
-    // top: -90px !important;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     font-weight: bold;
     font-size: 18px;
     height: 55px;
     line-height: 22px;
-    padding: 0 44px;
+    padding: 0 22px;
     width: 170px;
     position: static;
+    /*rtl:ignore*/
+    padding-right: 5px;
   }
   .picturelink_item[data-visibility="0"] {
     opacity: 0;
@@ -304,6 +309,15 @@
       span.mdl-right {
         order: 3;
       }
+    }
+  }
+}
+
+@media  (max-width : 1344px) {
+  .format-picturelink {
+    .picturelink-wrapper {
+      width: auto;
+      margin-left: auto;
     }
   }
 }

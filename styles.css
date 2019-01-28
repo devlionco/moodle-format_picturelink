@@ -30,7 +30,9 @@
   white-space: nowrap; }
 
 .format-picturelink .picturelink-wrapper {
-  background-color: var(--picturelink-bg-color); }
+  background-color: var(--picturelink-bg-color);
+  width: 100vw;
+  margin-left: calc(672px - 50vw); }
 
 .format-picturelink .picturelink {
   border-top: 1px solid #ddd;
@@ -245,7 +247,7 @@
   background-color: #19284f !important;
   background-image: url([[pix:format_picturelink|pushpin]]);
   background-size: 10%;
-  background-position: 10px;
+  background-position: 5px;
   background-repeat: no-repeat;
   border-radius: 14px;
   display: -ms-flexbox;
@@ -254,13 +256,16 @@
       align-items: center;
   -ms-flex-pack: center;
       justify-content: center;
+  text-align: center;
   font-weight: bold;
   font-size: 18px;
   height: 55px;
   line-height: 22px;
-  padding: 0 44px;
+  padding: 0 22px;
   width: 170px;
-  position: static; }
+  position: static;
+  /*rtl:ignore*/
+  padding-right: 5px; }
 
 .format-picturelink .picturelink_item[data-visibility="0"] {
   opacity: 0; }
@@ -303,34 +308,45 @@
         order: 1;
     margin-right: 100%;
     margin-bottom: 10px; }
-<<<<<<< HEAD
-  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left,
-  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right {
-    -ms-flex-order: 2;
-        order: 2; }
 
-.format-picturelink .descriptionPopup .modal-dialog {
-  margin-top: 300px; }
+urelink .course-content .section-navigation.mdl-bottom span.mdl-right {
 
-.format-picturelink .descriptionPopup .modal-content {
-  max-width: 50%;
-  margin: 0 auto; }
-
-.format-picturelink .descriptionPopup .modal-header {
-  background-color: #19284f; }
-
-.format-picturelink .descriptionPopup .modal-title {
-  color: #ffffff;
-  text-transform: uppercase;
-  font-weight: bold; }
-
-.format-picturelink .descriptionPopup .button span {
-  color: #ffffff !important; }
-=======
   .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left {
+
     -ms-flex-order: 2;
         order: 2; }
   .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right {
     -ms-flex-order: 3;
         order: 3; }
->>>>>>> f5701051b5fcff73a86de2c8a3ea18cda610d0b7
+
+.descriptionPopup .modal-dialog {
+  margin-top: 35vh;
+  max-width: 400px; }
+
+.descriptionPopup .modal-content {
+  margin: 0 auto; }
+
+.descriptionPopup .modal-header {
+  background-color: #19284f; }
+
+.descriptionPopup .modal-title {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold; }
+
+.descriptionPopup .close span {
+  color: #ffffff !important; }
+
+  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left {
+    -ms-flex-order: 2;
+        order: 2; }
+  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right {
+    -ms-flex-order: 3;
+
+
+@media (max-width: 1344px) {
+
+  .format-picturelink .picturelink-wrapper {
+    width: auto;
+    margin-left: auto; } }
+

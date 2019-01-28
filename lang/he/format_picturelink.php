@@ -65,3 +65,4 @@ $string['showcertificatestag'] = 'צלמית תעודות';
 $string['showcertificatestagdesc'] = 'צלמית תעודות';
 $string['showcertificatestagdesc_help'] = 'צלמית תעודות';
 $string['new'] = ' (חדש) ';
+$string['activity_is_limited'] = 'הפעילות מוגבלת';
