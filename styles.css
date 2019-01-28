@@ -308,11 +308,7 @@
         order: 1;
     margin-right: 100%;
     margin-bottom: 10px; }
-
-urelink .course-content .section-navigation.mdl-bottom span.mdl-right {
-
   .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left {
-
     -ms-flex-order: 2;
         order: 2; }
   .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right {
@@ -320,8 +316,9 @@ urelink .course-content .section-navigation.mdl-bottom span.mdl-right {
         order: 3; }
 
 .descriptionPopup .modal-dialog {
-  margin-top: 35vh;
-  max-width: 400px; }
+  position: absolute;
+  /*         margin-top: 35vh;
+        max-width: 400px; */ }
 
 .descriptionPopup .modal-content {
   margin: 0 auto; }
@@ -337,16 +334,8 @@ urelink .course-content .section-navigation.mdl-bottom span.mdl-right {
 .descriptionPopup .close span {
   color: #ffffff !important; }
 
-  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-left {
-    -ms-flex-order: 2;
-        order: 2; }
-  .format-picturelink .course-content .section-navigation.mdl-bottom span.mdl-right {
-    -ms-flex-order: 3;
-
-
 @media (max-width: 1344px) {
 
   .format-picturelink .picturelink-wrapper {
     width: auto;
     margin-left: auto; } }
-
