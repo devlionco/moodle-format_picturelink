@@ -1,4 +1,7 @@
 .format-picturelink {
+  #region-main{
+    background-color: var(--picturelink-bg-color) !important;
+  }
   .picturelink-wrapper {
     background-color: var(--picturelink-bg-color);
     width: 100vw;
