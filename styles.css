@@ -295,7 +295,8 @@
 
 .format-picturelink.editing .completionprogressid,
 .format-picturelink.editing .topics {
-  display: block; }
+  display: block;
+  background-color: #fff; }
 
 .format-picturelink .course-content .section-navigation.navigationtitle .mdl-left,
 .format-picturelink .course-content .section-navigation.navigationtitle .mdl-right {
@@ -337,7 +338,21 @@
 .descriptionPopup .close span {
   color: #ffffff !important; }
 
-@media (max-width: 1344px) {
+.tooltipmodal {
+  position: absolute;
+  z-index: 9999;
+  background: #fff;
+  width: 300px;
+  height: 120px;
+  font: 400 18px 'assistant';
+  border-radius: 5px; }
+  .tooltipmodal .header {
+    background-color: #373a3c;
+    color: #fff;
+    padding: 5px; }
+  .tooltipmodal .content {
+    padding: 5px; }
+  @media (max-width: 1344px) {
 
   .format-picturelink .picturelink-wrapper {
     width: auto;

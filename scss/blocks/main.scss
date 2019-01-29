@@ -281,12 +281,10 @@
 
 // edit mode
 .format-picturelink.editing {
-  .picturelink {
-    // display: none;
-  }
   .completionprogressid,
   .topics {
     display: block;
+    background-color: #fff;
   }
 }
 
