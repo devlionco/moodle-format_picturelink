@@ -319,39 +319,22 @@
     -ms-flex-order: 3;
         order: 3; }
 
-.descriptionPopup .modal-dialog {
-  position: absolute;
-  /*         margin-top: 35vh;
-        max-width: 400px; */ }
-
-.descriptionPopup .modal-content {
-  margin: 0 auto; }
-
-.descriptionPopup .modal-header {
-  background-color: #19284f; }
-
-.descriptionPopup .modal-title {
-  color: #ffffff;
-  text-transform: uppercase;
-  font-weight: bold; }
-
-.descriptionPopup .close span {
-  color: #ffffff !important; }
-
 .tooltipmodal {
   position: absolute;
   z-index: 9999;
   background: #fff;
   width: 300px;
   height: 120px;
-  font: 400 18px 'assistant';
-  border-radius: 5px; }
+  font-weight: 400;
+  font-size: 18px;
+  font-family: inherit;
+  border: 1px solid #19284f; }
   .tooltipmodal .header {
     background-color: #373a3c;
     color: #fff;
-    padding: 5px; }
+    padding: 5px 10px; }
   .tooltipmodal .content {
-    padding: 5px; }
+    padding: 5px 10px; }
   @media (max-width: 1344px) {
 
   .format-picturelink .picturelink-wrapper {

@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/format/renderer.php');
 require_once("{$CFG->libdir}/completionlib.php");
-$PAGE->requires->js_call_amd('format_picturelink/descriptionPopup', 'init');
+// $PAGE->requires->js_call_amd('format_picturelink/tooltipmodal', 'init');
 /**
  * Basic renderer for picturelink format.
  *
@@ -230,7 +230,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
             } else {
                 $newclass = ''; // SG - if created earlier than 7 days ago
             }
-            
+
             //print_object($cm->getIterator());
             $o .= html_writer::link($link, '', array(
                 'class' => 'picturelink_item drag'.$activeclass.$corevisibleclass.$availableclass.$newclass,
