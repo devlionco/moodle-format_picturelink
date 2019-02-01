@@ -66,3 +66,4 @@ $string['showcertificatestagdesc'] = 'צלמית תעודות';
 $string['showcertificatestagdesc_help'] = 'צלמית תעודות';
 $string['new'] = ' (חדש) ';
 $string['activity_is_limited'] = 'הפעילות מוגבלת';
+$string['cm_is_hidden'] = 'This activity is hidden for you right now.';

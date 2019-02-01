@@ -205,6 +205,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
             } else {
                 $corevisibleclass = ' p_hide'; // visible for student
                 $link = 'javascript:void(0);';
+                $availableinfo = get_string('cm_is_hidden', 'format_picturelink');
             }
             if ($cm->available) {
                 $availableclass = '';
@@ -236,7 +237,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 'class' => 'picturelink_item drag'.$activeclass.$corevisibleclass.$availableclass.$newclass,
                 'data-id' => $cm->id,
                 'data-mod_name' => $cm->modname,
-                'data-description' => isset($cm->availableinfo) ? $cm->availableinfo : '',
+                'data-description' => isset($availableinfo) ? $availableinfo : '',
                 // 'data-name' => $cm->name,
                 // 'data-status' => $cmcompletiondata->completionstate,
                 'data-tooltip' => 'tooltip',

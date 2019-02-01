@@ -69,3 +69,4 @@ $string['showcertificatestagdesc'] = 'Show or hide block';
 $string['showcertificatestagdesc_help'] = 'Show or hide block';
 $string['new'] = ' (new) ';
 $string['activity_is_limited'] = 'Activity is limited';
+$string['cm_is_hidden'] = 'This activity is hidden for you right now.';
