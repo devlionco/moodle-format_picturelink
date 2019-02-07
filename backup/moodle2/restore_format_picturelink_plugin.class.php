@@ -112,7 +112,6 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
         $newvisibleitemsrecord->id = $visibleitemsraw->id;
         $newvisibleitemsrecord->value = json_encode($newvisibleitems);
         $DB->update_record('course_format_options', $newvisibleitemsrecord);
-        //var_dump($newvisibleitemsrecord);
 
         // Get picturelinkcoords from course_format_options.
         $plcoordsraw = $DB->get_record('course_format_options', array('courseid' => $courseid, 'format' => 'picturelink', 'name' => 'picturelinkcoords'));
@@ -137,7 +136,6 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
         $newplcoordsrecord->id = $plcoordsraw->id;
         $newplcoordsrecord->value = json_encode($newplcoords);
         $DB->update_record('course_format_options', $newplcoordsrecord);
-        //var_dump($newplcoordsrecord);
 
         // Get picturelinkpinnedsections from course_format_options.
         $psecsraw = $DB->get_record('course_format_options', array('courseid' => $courseid, 'format' => 'picturelink', 'name' => 'picturelinkpinnedsections'));
@@ -154,8 +152,6 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
         $newpsecsrecord->id = $psecsraw->id;
         $newpsecsrecord->value = json_encode($newpsecs);
         $DB->update_record('course_format_options', $newpsecsrecord);
-        //var_dump($newpsecsrecord);
-        //exit();
 
         if (!$this->need_restore_numsections()) {
             // Backup file was made in Moodle 3.3 or later, we don't need to process 'numsecitons'.
