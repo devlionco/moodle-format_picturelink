@@ -25,7 +25,8 @@ define([ 'jquery', 'core/str' ], function($, str) {
 
 	return {
 		init: function() {
-			$('.p_locked, .p_hide').hover(handlerIn, handlerOut);
+			$('.p_locked, .p_hide').on('click', handlerIn);
+			// $('.p_locked, .p_hide').hover(handlerIn, handlerOut);
 		}
 	};
 
