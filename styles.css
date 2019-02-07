@@ -323,8 +323,8 @@
   position: absolute;
   z-index: 9999;
   background: #fff;
-  width: 280px;
-  min-height: 100px;
+  width: 250px;
+  min-height: 90px;
   font-weight: 400;
   font-size: 18px;
   font-family: inherit;
