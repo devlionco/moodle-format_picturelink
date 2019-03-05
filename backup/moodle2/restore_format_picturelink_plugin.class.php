@@ -95,63 +95,69 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
 
         // Get visibleitems from course_format_options.
         $visibleitemsraw = $DB->get_record('course_format_options', array('courseid' => $courseid, 'format' => 'picturelink', 'name' => 'picturelinkvisibleitems'));
-        $visibleitems = json_decode($visibleitemsraw->value);
-        $newvisibleitems = array();
-        foreach ($visibleitems as $id => $item) {
-            if ($item[0][0] == 's') {
-                $newsectionid = $this->get_mappingid('course_section', substr($item[0], 1));
-                $newvisibleitems[$id][0] = (string) 's' . $newsectionid;
-                $newvisibleitems[$id][1] = (string) $item[1];
-            } else {
-                $newcmid = $this->get_mappingid('course_module', $item[0]);
-                $newvisibleitems[$id][0] = (string) $newcmid;
-                $newvisibleitems[$id][1] = (string) $item[1];
+        if ($visibleitemsraw) {
+            $visibleitems = json_decode($visibleitemsraw->value);
+            $newvisibleitems = array();
+            foreach ($visibleitems as $id => $item) {
+                if ($item[0][0] == 's') {
+                    $newsectionid = $this->get_mappingid('course_section', substr($item[0], 1));
+                    $newvisibleitems[$id][0] = (string) 's' . $newsectionid;
+                    $newvisibleitems[$id][1] = (string) $item[1];
+                } else {
+                    $newcmid = $this->get_mappingid('course_module', $item[0]);
+                    $newvisibleitems[$id][0] = (string) $newcmid;
+                    $newvisibleitems[$id][1] = (string) $item[1];
+                }
             }
+            $newvisibleitemsrecord = new stdClass();
+            $newvisibleitemsrecord->id = $visibleitemsraw->id;
+            $newvisibleitemsrecord->value = json_encode($newvisibleitems);
+            $DB->update_record('course_format_options', $newvisibleitemsrecord);
         }
-        $newvisibleitemsrecord = new stdClass();
-        $newvisibleitemsrecord->id = $visibleitemsraw->id;
-        $newvisibleitemsrecord->value = json_encode($newvisibleitems);
-        $DB->update_record('course_format_options', $newvisibleitemsrecord);
 
         // Get picturelinkcoords from course_format_options.
         $plcoordsraw = $DB->get_record('course_format_options', array('courseid' => $courseid, 'format' => 'picturelink', 'name' => 'picturelinkcoords'));
-        $plcoords = json_decode($plcoordsraw->value);
-        $newplcoords = array();
-        foreach ($plcoords as $id => $item) {
-            if ($item->id[0] == 's') {
-                $newsectionid = $this->get_mappingid('course_section', substr($item->id, 1));
-                $newplcoords[$id] = new stdClass();
-                $newplcoords[$id]->id = (string) 's' . $newsectionid;
-                $newplcoords[$id]->coordx = (string) $item->coordx;
-                $newplcoords[$id]->coordy= (string) $item->coordy;
-            } else {
-                $newcmid = $this->get_mappingid('course_module', $item->id);
-                $newplcoords[$id] = new stdClass();
-                $newplcoords[$id]->id = (string) $newcmid;
-                $newplcoords[$id]->coordx = (string) $item->coordx;
-                $newplcoords[$id]->coordy= (string) $item->coordy;
+        if ($plcoordsraw) {
+            $plcoords = json_decode($plcoordsraw->value);
+            $newplcoords = array();
+            foreach ($plcoords as $id => $item) {
+                if ($item->id[0] == 's') {
+                    $newsectionid = $this->get_mappingid('course_section', substr($item->id, 1));
+                    $newplcoords[$id] = new stdClass();
+                    $newplcoords[$id]->id = (string) 's' . $newsectionid;
+                    $newplcoords[$id]->coordx = (string) $item->coordx;
+                    $newplcoords[$id]->coordy= (string) $item->coordy;
+                } else {
+                    $newcmid = $this->get_mappingid('course_module', $item->id);
+                    $newplcoords[$id] = new stdClass();
+                    $newplcoords[$id]->id = (string) $newcmid;
+                    $newplcoords[$id]->coordx = (string) $item->coordx;
+                    $newplcoords[$id]->coordy= (string) $item->coordy;
+                }
             }
+            $newplcoordsrecord = new stdClass();
+            $newplcoordsrecord->id = $plcoordsraw->id;
+            $newplcoordsrecord->value = json_encode($newplcoords);
+            $DB->update_record('course_format_options', $newplcoordsrecord);
         }
-        $newplcoordsrecord = new stdClass();
-        $newplcoordsrecord->id = $plcoordsraw->id;
-        $newplcoordsrecord->value = json_encode($newplcoords);
-        $DB->update_record('course_format_options', $newplcoordsrecord);
 
         // Get picturelinkpinnedsections from course_format_options.
         $psecsraw = $DB->get_record('course_format_options', array('courseid' => $courseid, 'format' => 'picturelink', 'name' => 'picturelinkpinnedsections'));
-        $psecs = json_decode($psecsraw->value);
-        $newpsecs = array();
-        foreach ($psecs as $id => $item) {
-            if ($item[0][0] == 's') {
-                $newsectionid = $this->get_mappingid('course_section', substr($item[0], 1));
-                $newpsecs[$id][0] = (string) 's' . $newsectionid;
-                $newpsecs[$id][1] = (string) $item[1];
+        if ($psecsraw) {
+            $psecs = json_decode($psecsraw->value);
+            $newpsecs = array();
+            foreach ($psecs as $id => $item) {
+                if ($item[0][0] == 's') {
+                    $newsectionid = $this->get_mappingid('course_section', substr($item[0], 1));
+                    $newpsecs[$id][0] = (string) 's' . $newsectionid;
+                    $newpsecs[$id][1] = (string) $item[1];
+                }
             }
+            $newpsecsrecord = new stdClass();
+            $newpsecsrecord->id = $psecsraw->id;
+            $newpsecsrecord->value = json_encode($newpsecs);
+            $DB->update_record('course_format_options', $newpsecsrecord);
         }
-        $newpsecsrecord = new stdClass();
-        $newpsecsrecord->id = $psecsraw->id;
-        $newpsecsrecord->value = json_encode($newpsecs);
-        $DB->update_record('course_format_options', $newpsecsrecord);
 
         if (!$this->need_restore_numsections()) {
             // Backup file was made in Moodle 3.3 or later, we don't need to process 'numsecitons'.
