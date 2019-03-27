@@ -72,14 +72,51 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
         }
 
         // Dummy path element is needed in order for after_restore_course() to be called.
-        return [new restore_path_element('dummy_course', $this->get_pathfor('/dummycourse'))];
+        //return [new restore_path_element('dummy_course', $this->get_pathfor('/dummycourse'))];
+        
+        $paths = array();
+
+        // Add own format stuff.
+        $elename = 'picturelink'; // This defines the postfix of 'process_*' below.
+        /*
+         * This is defines the nested tag within 'plugin_format_grid_course' to allow '/course/plugin_format_grid_course' in
+         * the path therefore as a path structure representing the levels in section.xml in the backup file.
+         */
+        $elepath = $this->get_pathfor('/picturelink');
+        $paths[] = new restore_path_element($elename, $elepath);
+
+        return $paths; // And we return the interesting paths.
     }
 
     /**
-     * Dummy process method
+     * Process the 'plugin_format_grid_course' element within the 'course' element in the 'course.xml' file in the '/course'
+     * folder of the zipped backup 'mbz' file.
      */
-    public function process_dummy_course() {
+    public function process_picturelink($data) {
+        global $DB;
 
+        $data = (object) $data;
+        
+        /* We only process this information if the course we are restoring to
+           has '' format (target format can change depending of restore options). */
+        $format = $DB->get_field('course', 'format', array('id' => $this->task->get_courseid()));
+        if ($format != 'picturelink') {
+            return;
+        }
+
+        $data->courseid = $this->task->get_courseid();
+
+        /*
+        if (!$DB->insert_record('format_grid_summary', $data)) {
+            throw new moodle_exception('invalidrecordid', 'format_grid', '',
+            'Could not set summary status. Grid format database is not ready. An admin must visit the notifications section.');
+        }
+         */
+
+        if (!($course = $DB->get_record('course', array('id' => $data->courseid)))) {
+            print_error('invalidcourseid', 'error');
+        } // From /course/view.php.
+        // No need to annotate anything here.
     }
 
     /**
@@ -89,10 +126,13 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
      */
     public function after_restore_course() {
         global $DB;
-
+        
         // Get new courseid.
         $courseid = $this->task->get_courseid();
-
+        
+        $this->add_related_files('format_picturelink', 'picturelinkimage', $courseid);
+        $this->add_picturelink_image();
+        
         // Get visibleitems from course_format_options.
         $visibleitemsraw = $DB->get_record('course_format_options', array('courseid' => $courseid, 'format' => 'picturelink', 'name' => 'picturelinkvisibleitems'));
         if ($visibleitemsraw) {
@@ -186,5 +226,48 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
                 }
             }
         }
+        
+    }
+    
+    /**
+     * Add backuped picturelink image to a restored course
+     */
+    private function add_picturelink_image() {
+        global $USER, $DB;
+        
+        // Get new courseid.
+        $courseid = $this->task->get_courseid();
+        $fs = get_file_storage();
+        
+        $backupinfo = $this->connectionpoint->get_data();
+        $contenthash = $backupinfo['tags']['picturelinkimagehash']; // Get pathname of the image in backup
+        
+        $context = context_course::instance($courseid);
+        $contextid = $context->id;
+        
+        $file_record2 = array(
+                'contextid'   => $contextid,
+                'component'   => 'format_picturelink',
+                'filearea'    => 'picturelinkimage',
+                'itemid'      => $courseid,
+                'filepath'    => $backupinfo['tags']['picturelinkimagepath'],
+                'filename'    => $backupinfo['tags']['picturelinkimagename'],
+                'timecreated' => time(),
+                'timemodified'=> time(),
+                'userid'      => $USER->id,
+                'source'      => $backupinfo['tags']['picturelinkimagename'],
+                'author'      => $backupinfo['tags']['picturelinkimageauthor'],
+                'license'     => 'allrightsreserved',
+                'sortorder'   => 0
+            );
+        
+        $content = base64_decode($contenthash);
+        
+        $saved2 = $fs->create_file_from_string($file_record2, $content);
+        
+        $DB->set_field('course_format_options', 'value', $backupinfo['tags']['picturelinkimagehash'], array('courseid' => $courseid, 'name' => 'picturelinkimagehash'));
+        $DB->set_field('course_format_options', 'value', $backupinfo['tags']['picturelinkimagepath'], array('courseid' => $courseid, 'name' => 'picturelinkimagepath'));
+        $DB->set_field('course_format_options', 'value', $backupinfo['tags']['picturelinkimagename'], array('courseid' => $courseid, 'name' => 'picturelinkimagename'));
+        $DB->set_field('course_format_options', 'value', $backupinfo['tags']['picturelinkimageauthor'], array('courseid' => $courseid, 'name' => 'picturelinkimageauthor'));
     }
 }
