@@ -98,7 +98,7 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
         $data = (object) $data;
         
         /* We only process this information if the course we are restoring to
-           has '' format (target format can change depending of restore options). */
+           has 'picturelink' format (target format can change depending of restore options). */
         $format = $DB->get_field('course', 'format', array('id' => $this->task->get_courseid()));
         if ($format != 'picturelink') {
             return;
@@ -126,12 +126,18 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
      */
     public function after_restore_course() {
         global $DB;
+       
+        $data = $this->connectionpoint->get_data();
+        $backupinfo = $this->step->get_task()->get_info();
+        if ($backupinfo->original_course_format !== 'picturelink') {
+            // Backup from another course format.
+            return;
+        }
+        
+        $this->add_picturelink_image();
         
         // Get new courseid.
         $courseid = $this->task->get_courseid();
-        
-        $this->add_related_files('format_picturelink', 'picturelinkimage', $courseid);
-        $this->add_picturelink_image();
         
         // Get visibleitems from course_format_options.
         $visibleitemsraw = $DB->get_record('course_format_options', array('courseid' => $courseid, 'format' => 'picturelink', 'name' => 'picturelinkvisibleitems'));
@@ -204,13 +210,11 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
             return;
         }
 
-        $data = $this->connectionpoint->get_data();
-        $backupinfo = $this->step->get_task()->get_info();
-        if ($backupinfo->original_course_format !== 'topics' || !isset($data['tags']['numsections'])) {
+        if (!isset($data['tags']['numsections'])) {
             // Backup from another course format or backup file does not even have 'numsections'.
             return;
         }
-
+        
         $numsections = (int)$data['tags']['numsections'];
         foreach ($backupinfo->sections as $key => $section) {
             // For each section from the backup file check if it was restored and if was "orphaned" in the original
@@ -226,7 +230,6 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
                 }
             }
         }
-        
     }
     
     /**
