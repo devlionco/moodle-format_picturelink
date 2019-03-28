@@ -319,7 +319,23 @@ class format_picturelink extends format_base {
                     ),
                     'help' => "showcertificatestagdesc",
                     'help_component' => 'format_picturelink',
-                )
+                ),
+                'picturelinkimagehash' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                ),
+                'picturelinkimagepath' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                ),
+                'picturelinkimagename' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                ),
+                'picturelinkimageauthor' => array(
+                    'default' => '',
+                    'type' => PARAM_RAW,
+                ),
             );
 
             // define display or not "attendanceinfo show/hide setting"
@@ -386,9 +402,22 @@ class format_picturelink extends format_base {
                 ),
                 'picturelinkpinnedsections' => array(
                     'element_type' => 'hidden',
-                )
+                ),
+                'picturelinkimagehash' => array(
+                    'element_type' => 'hidden',
+                ),
+                'picturelinkimagepath' => array(
+                    'element_type' => 'hidden',
+                ),
+                'picturelinkimagename' => array(
+                    'element_type' => 'hidden',
+                ),
+                'picturelinkimageauthor' => array(
+                    'element_type' => 'hidden',
+                ),
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
+           
         }
         return $courseformatoptions;
     }
@@ -467,8 +496,11 @@ class format_picturelink extends format_base {
         //save picturelink image
         $course = $this->get_course();
         $context = context_course::instance($course->id);
+        $maxbytes = 10000000;
         file_save_draft_area_files($data->picturelinkimage, $context->id, 'format_picturelink', 'picturelinkimage',
         $course->id, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 1));
+        
+        $data = $this->add_image_info_for_backup_to_options($data);
         
         $data = (array)$data;
         if ($oldcourse !== null) {
@@ -485,6 +517,25 @@ class format_picturelink extends format_base {
         return $this->update_format_options($data);
     }
 
+    protected function add_image_info_for_backup_to_options($data) {
+        global $DB;
+       
+        $imagerecord = $DB->get_record_sql('SELECT * FROM {files} WHERE itemid = :itemid AND component = "user" AND filearea = "draft" AND filesize > 0', ['itemid' => $data->picturelinkimage]);
+
+        $imagepath = $this->get_fulldir_from_hash($imagerecord->contenthash) . '/' .  $imagerecord->contenthash; // Build fullpath of the image
+        
+        $imagedata = file_get_contents($imagepath);
+           
+        $base64imagedata = base64_encode($imagedata);
+       
+        $data->picturelinkimagehash = $base64imagedata;
+        $data->picturelinkimagepath = $imagerecord->filepath;
+        $data->picturelinkimagename = $imagerecord->filename;
+        $data->picturelinkimageauthor = $imagerecord->author;
+        
+        return $data;
+    }
+    
     /**
      * Whether this format allows to delete sections
      *
@@ -597,6 +648,36 @@ class format_picturelink extends format_base {
         // Return everything (nothing to hide).
         return $this->get_format_options();
     }
+    
+        
+    /**
+     * Get the full directory to the stored file, including the path to the
+     * filedir, and the directory which the file is actually in.
+     *
+     * Note: This function does not ensure that the file is present on disk.
+     *
+     * @param stored_file $file The file to fetch details for.
+     * @return string The full path to the content directory
+     */
+    protected function get_fulldir_from_hash($contenthash) {
+        global $CFG;
+        return $CFG->dataroot . '/filedir/' . $this->get_contentdir_from_hash($contenthash);
+    }
+
+    /**
+     * Get the content directory for the specified content hash.
+     * This is the directory that the file will be in, but without the
+     * fulldir.
+     *
+     * @param string $contenthash The content hash
+     * @return string The directory within filedir
+     */
+    protected function get_contentdir_from_hash($contenthash) {
+        $l1 = $contenthash[0] . $contenthash[1];
+        $l2 = $contenthash[2] . $contenthash[3];
+        return "$l1/$l2";
+    }
+    
 }
 
 /**
@@ -660,3 +741,5 @@ function format_picturelink_pluginfile($course, $cm, $context, $filearea, $args,
     // From Moodle 2.3, use send_stored_file instead.
     send_file($file, 86400, 0, $forcedownload, $options);
 }
+
+
