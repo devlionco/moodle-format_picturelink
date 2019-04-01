@@ -25,6 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot.'/course/format/picturelink/classes/restore_course_parser_processor.class.php');
+
 /**
  * Specialised restore for format_picturelink
  *
@@ -129,12 +131,23 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
        
         $data = $this->connectionpoint->get_data();
         $backupinfo = $this->step->get_task()->get_info();
+        error_log($backupinfo->original_course_format, 3, "/home/ice/proj/devlion/davidson/restore.log");
         if ($backupinfo->original_course_format !== 'picturelink') {
             // Backup from another course format.
             return;
         }
         
-        $this->add_picturelink_image();
+        $coursebackup = $this->connectionpoint->get_processing_object()->get_task();
+
+        // Load the entire course.xml file to in-memory array
+        $xmlparser = new progressive_parser();
+        $xmlparser->set_file($coursebackup->get_taskbasepath() . '/course.xml');
+        $xmlprocessor = new restore_course_parser_processor();
+        $xmlparser->set_processor($xmlprocessor);
+        $xmlparser->process();
+        $infoarr = $xmlprocessor->get_all_chunks();
+        
+        $this->add_picturelink_image($infoarr); 
         
         // Get new courseid.
         $courseid = $this->task->get_courseid();
@@ -235,42 +248,44 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
     /**
      * Add backuped picturelink image to a restored course
      */
-    private function add_picturelink_image() {
+    private function add_picturelink_image($infoarr) {
         global $USER, $DB;
-        
-        // Get new courseid.
-        $courseid = $this->task->get_courseid();
-        $fs = get_file_storage();
-        
-        $backupinfo = $this->connectionpoint->get_data();
-        $contenthash = $backupinfo['tags']['picturelinkimagehash']; // Get pathname of the image in backup
-        
-        $context = context_course::instance($courseid);
-        $contextid = $context->id;
-        
-        $file_record2 = array(
-                'contextid'   => $contextid,
-                'component'   => 'format_picturelink',
-                'filearea'    => 'picturelinkimage',
-                'itemid'      => $courseid,
-                'filepath'    => $backupinfo['tags']['picturelinkimagepath'],
-                'filename'    => $backupinfo['tags']['picturelinkimagename'],
-                'timecreated' => time(),
-                'timemodified'=> time(),
-                'userid'      => $USER->id,
-                'source'      => $backupinfo['tags']['picturelinkimagename'],
-                'author'      => $backupinfo['tags']['picturelinkimageauthor'],
-                'license'     => 'allrightsreserved',
-                'sortorder'   => 0
-            );
-        
-        $content = base64_decode($contenthash);
-        
-        $saved2 = $fs->create_file_from_string($file_record2, $content);
-        
-        $DB->set_field('course_format_options', 'value', $backupinfo['tags']['picturelinkimagehash'], array('courseid' => $courseid, 'name' => 'picturelinkimagehash'));
-        $DB->set_field('course_format_options', 'value', $backupinfo['tags']['picturelinkimagepath'], array('courseid' => $courseid, 'name' => 'picturelinkimagepath'));
-        $DB->set_field('course_format_options', 'value', $backupinfo['tags']['picturelinkimagename'], array('courseid' => $courseid, 'name' => 'picturelinkimagename'));
-        $DB->set_field('course_format_options', 'value', $backupinfo['tags']['picturelinkimageauthor'], array('courseid' => $courseid, 'name' => 'picturelinkimageauthor'));
+        try {
+            $courseid = $this->task->get_courseid();
+            $context = context_course::instance($courseid);
+            $contextid = $context->id;
+            $fs = get_file_storage();
+            if (isset($infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagepath']) and 
+                isset($infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagename']) and 
+                isset($infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimageauthor']) and 
+                isset($infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagelicense']) and 
+                isset($infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagehash'])) {
+
+                $DB->delete_records('files', array('itemid' => $courseid, 'component' => "format_picturelink", 'filearea' => "picturelinkimage", 'contextid' => $contextid));
+                //$DB->delete_records('course_format_options', array('courseid' => $courseid, 'format' => "picturelink", 'name' => "picturelinkimage"));
+                
+                $file_record = array(
+                        'contextid'   => $contextid,
+                        'component'   => 'format_picturelink',
+                        'filearea'    => 'picturelinkimage',
+                        'itemid'      => $courseid,
+                        'filepath'    => $infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagepath'],
+                        'filename'    => $infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagename'],
+                        'timecreated' => time(),
+                        'timemodified'=> time(),
+                        'userid'      => $USER->id,
+                        'source'      => $infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagename'],
+                        'author'      => $infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimageauthor'],
+                        'license'      => $infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagelicense'],
+                        'sortorder'   => 0
+                    );
+
+                $content = base64_decode($infoarr[0]['tags']['picturelinkimages']['picturelinkimage'][0]['picturelinkimagehash']);
+
+                $saved = $fs->create_file_from_string($file_record, $content);
+            }
+        } catch (Exception $exc) {
+            //echo $exc->getTraceAsString();
+        }
     }
 }
