@@ -228,6 +228,29 @@ class format_picturelink extends format_base {
     public function course_format_options($foreditform = false) {
         global $DB;
         static $courseformatoptions = false;
+
+        // Help contacts section
+        $roles = role_get_names(); // Get all system roles.
+        $defaultchoices = [3]; // By defaut - editingteacher role is defined.
+        $helprolessection = array();
+        $helprolessection['helpcontactroles_title'] = array(
+            'label' => get_string('helpcontactroles_label', 'format_picturelink'),
+            'element_type' => 'header',
+        );
+        foreach ($roles as $key => $value) { // Define roles list for help contact. 
+            $helprolessection['helpcontactroles_'.$key] = array(
+                'label' => $value->localname,
+                'element_type' => 'advcheckbox',
+                'default' => in_array($value->id, $defaultchoices) ? 1 : 0,
+                'element_attributes' => array(
+                    '',
+                    array('group' => 1), 
+                    array(0, 1)
+                ), 
+                'help_component' => 'format_picturelink',
+            );
+        }
+        
         $course = $this->get_course();
         if ($courseformatoptions === false) {
             $courseconfig = get_config('moodlecourse');
@@ -320,8 +343,13 @@ class format_picturelink extends format_base {
                     'help' => "showcertificatestagdesc",
                     'help_component' => 'format_picturelink',
                 ),
-               
+                'helpcontactroles' => array(
+                    'element_type' => 'hidden',
+                    'default' => '',
+                ),
             );
+
+            $courseformatoptions = array_merge_recursive($courseformatoptions, $helprolessection);
 
             // define display or not "attendanceinfo show/hide setting"
             $attmodid = $DB->get_record('modules', array('name' => 'attendance'), 'id')->id; // get attendance module id in system
@@ -388,11 +416,11 @@ class format_picturelink extends format_base {
                 'picturelinkpinnedsections' => array(
                     'element_type' => 'hidden',
                 ),
-        
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
            
         }
+
         return $courseformatoptions;
     }
 
@@ -473,6 +501,8 @@ class format_picturelink extends format_base {
         $maxbytes = 10000000;
         file_save_draft_area_files($data->picturelinkimage, $context->id, 'format_picturelink', 'picturelinkimage',
         $course->id, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 1));
+        
+        $data = $this->update_helpcontactroles($data);
 
         $data = (array)$data;
         if ($oldcourse !== null) {
@@ -488,6 +518,26 @@ class format_picturelink extends format_base {
         }
         return $this->update_format_options($data);
     }
+
+    /*
+     * Update helpcontactroles setting - implode all helpcontactroles settings in a string 
+     */
+    private function update_helpcontactroles($data) {
+        $roles = array();
+        foreach ($data as $key => $val) {
+            if ($val == '1') {
+                if (substr($key, 0, 17) === 'helpcontactroles_') {
+                    $num = substr($key, strpos($key, "_") + 1);
+                    $roles[] = $num;
+                }
+            }
+        }
+        $data->helpcontactroles = implode(',', $roles);
+        return $data;
+    }
+
+
+
 
     /**
      * Whether this format allows to delete sections
