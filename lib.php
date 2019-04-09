@@ -237,20 +237,20 @@ class format_picturelink extends format_base {
             'label' => get_string('helpcontactroles_label', 'format_picturelink'),
             'element_type' => 'header',
         );
-        foreach ($roles as $key => $value) { // Define roles list for help contact. 
+        foreach ($roles as $key => $value) { // Define roles list for help contact.
             $helprolessection['helpcontactroles_'.$key] = array(
                 'label' => $value->localname,
                 'element_type' => 'advcheckbox',
                 'default' => in_array($value->id, $defaultchoices) ? 1 : 0,
                 'element_attributes' => array(
                     '',
-                    array('group' => 1), 
+                    array('group' => 1),
                     array(0, 1)
-                ), 
+                ),
                 'help_component' => 'format_picturelink',
             );
         }
-        
+
         $course = $this->get_course();
         if ($courseformatoptions === false) {
             $courseconfig = get_config('moodlecourse');
@@ -349,8 +349,6 @@ class format_picturelink extends format_base {
                 ),
             );
 
-            $courseformatoptions = array_merge_recursive($courseformatoptions, $helprolessection);
-
             // define display or not "attendanceinfo show/hide setting"
             $attmodid = $DB->get_record('modules', array('name' => 'attendance'), 'id')->id; // get attendance module id in system
             $att = $DB->get_record('course_modules', array('course' => $course->id, 'module' => $attmodid, 'deletioninprogress' => 0), 'instance', IGNORE_MULTIPLE); // get first attedndance instance on current course
@@ -368,6 +366,7 @@ class format_picturelink extends format_base {
                         'help_component' => 'format_picturelink',
                     );
             }
+            $courseformatoptions = array_merge_recursive($courseformatoptions, $helprolessection);
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
             $courseformatoptionsedit = array(
@@ -418,7 +417,7 @@ class format_picturelink extends format_base {
                 ),
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
-           
+
         }
 
         return $courseformatoptions;
@@ -501,7 +500,7 @@ class format_picturelink extends format_base {
         $maxbytes = 10000000;
         file_save_draft_area_files($data->picturelinkimage, $context->id, 'format_picturelink', 'picturelinkimage',
         $course->id, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 1));
-        
+
         $data = $this->update_helpcontactroles($data);
 
         $data = (array)$data;
@@ -520,7 +519,7 @@ class format_picturelink extends format_base {
     }
 
     /*
-     * Update helpcontactroles setting - implode all helpcontactroles settings in a string 
+     * Update helpcontactroles setting - implode all helpcontactroles settings in a string
      */
     private function update_helpcontactroles($data) {
         $roles = array();
@@ -714,5 +713,3 @@ function format_picturelink_pluginfile($course, $cm, $context, $filearea, $args,
     // From Moodle 2.3, use send_stored_file instead.
     send_file($file, 86400, 0, $forcedownload, $options);
 }
-
-
