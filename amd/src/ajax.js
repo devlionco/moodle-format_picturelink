@@ -1,41 +1,24 @@
-define(['core/yui'], function(Y) {
+define(['core/ajax'], function(ajaxcall) {
 `use strict`;
 
   let ajax = {
-
-    url: '/course/format/picturelink/ajax/ajax.php',
-
     data: {},
-
+    method: '',
     sesskey: M.cfg.sesskey,
-
     courseid: document.querySelector(`.picturelink`).dataset.courseid,
 
     send: function(){
 
-      this.data.sesskey = this.sesskey;
-      this.data.courseid = this.courseid;
-      // this.data.method = `rewriteactivitiescoords`;
+        this.data.courseid = this.courseid;
 
-      Y.io(M.cfg.wwwroot + this.url, {
-          method: 'POST',
-          data: this.data,
-          headers: {
-              //'Content-Type': 'application/json'
-          },
-          on: {
-              success: function (id, response) {
-              },
-              failure: function () {
-                // popup.error();
-              }
-          }
-      });
-
+        ajaxcall.call([{
+            methodname: 'format_picturelink_' + this.method,
+            args: this.data,
+            done: {},
+            fail: {}
+        }]);
     }
-
-
-  }
+  };
 
   return ajax
 

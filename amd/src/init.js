@@ -123,7 +123,7 @@ define([
             targetActivity.dataset.visibility = Number(targetActivity.dataset.visibility) ? 0 : 1;
 
             ajax.data.visibleitems = getAllVisibleItems();
-            ajax.data.method = `rewritevisibleitems`;
+            ajax.method = `rewritevisibleitems`;
             ajax.send();
             return;
           }
@@ -154,7 +154,7 @@ define([
 
             // ajax.data.coords = '';
             ajax.data.pinnedsections = getAllPinnedItems();
-            ajax.data.method = `rewritepinnedsections`;
+            ajax.method = `rewritepinnedsections`;
             ajax.send();
             return;
           }

@@ -70,3 +70,5 @@ $string['cm_is_hidden'] = 'פעילות זו מוסתרת עבורך כעת.';
 $string['helpcontactroles_label'] = 'Help contact roles';
 $string['helpcontactroles_desc'] = 'Help contact roles for the course';
 $string['helpcontactrolesdesc_help'] = 'Help contact roles for the course';
+
+$string['picturelink:editcourseformat'] = 'Edit courseformat options.';

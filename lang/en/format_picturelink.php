@@ -73,3 +73,5 @@ $string['helpcontactrolesdesc_help'] = 'Help contact roles for the course';
 $string['new'] = ' (new) ';
 $string['activity_is_limited'] = 'Activity is limited';
 $string['cm_is_hidden'] = 'This activity is hidden for you right now.';
+
+$string['picturelink:editcourseformat'] = 'Edit courseformat options.';
