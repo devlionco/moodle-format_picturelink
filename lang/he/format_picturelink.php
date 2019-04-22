@@ -67,7 +67,8 @@ $string['showcertificatestagdesc_help'] = 'צלמית תעודות';
 $string['new'] = ' (חדש) ';
 $string['activity_is_limited'] = 'הפעילות מוגבלת';
 $string['cm_is_hidden'] = 'פעילות זו מוסתרת עבורך כעת.';
-
 $string['helpcontactroles_label'] = 'עזרה בתפקידים ליצירת קשר';
 $string['helpcontactroles_desc'] = 'עזרה תפקידי קשר עבור הקורס';
 $string['helpcontactrolesdesc_help'] = 'עזרה תפקידי קשר עבור הקורס';
+
+$string['picturelink:editcourseformat'] = 'ערוך את אפשרויות הקורס.';

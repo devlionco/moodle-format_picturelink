@@ -131,7 +131,6 @@ class restore_format_picturelink_plugin extends restore_format_plugin {
        
         $data = $this->connectionpoint->get_data();
         $backupinfo = $this->step->get_task()->get_info();
-        error_log($backupinfo->original_course_format, 3, "/home/ice/proj/devlion/davidson/restore.log");
         if ($backupinfo->original_course_format !== 'picturelink') {
             // Backup from another course format.
             return;

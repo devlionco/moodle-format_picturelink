@@ -15,16 +15,28 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Grid Format - A topics based format that uses a grid of user selectable images to popup a light box of the section.
  *
- * @package    format
- * @subpackage picturelink
- * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @package    course/format
+ * @subpackage grid
+ * @version    See the value of '$plugin->version' in version.php.
+ * @copyright  &copy; 2013 G J Barnard in respect to modifications of standard topics format.
+ * @author     G J Barnard - {@link http://about.me/gjbarnard} and
+ *                           {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2019040106;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2018050800;        // Requires this Moodle version.
-$plugin->component = 'format_picturelink';    // Full name of the plugin (used for diagnostics).
+$capabilities = array(
+
+    'format/picturelink:editcourseformat' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        )
+    ),
+
+);

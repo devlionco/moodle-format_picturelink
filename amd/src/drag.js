@@ -66,7 +66,7 @@ define(['format_picturelink/ajax'], function(ajax) {
       ball.dataset.coordx = ball.style.left.replace(/\D+/, '');
       ball.dataset.coordy = ball.style.top.replace(/\D+/, '');
 
-      ajax.data.method = `rewriteactivitiescoords`;
+      ajax.method = `rewriteactivitiescoords`;
       ajax.data.coords = getAllCoords();
       ajax.send();
     };
