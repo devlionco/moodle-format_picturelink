@@ -20,7 +20,7 @@ How to enable it:
 4) Locate activities and sections on uploaded image.
 [more](https://blog.devlion.co/moodle-course-format-picture-link/) 
 
-![alt Moodle](https://blog.devlion.co/wp-content/uploads/Picturelink.gif)
+![alt Moodle plugin - Course Format Picture Link](https://blog.devlion.co/wp-content/uploads/Course__Course1-1568x1100.png)
 
 Requirements
 ------------
