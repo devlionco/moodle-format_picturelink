@@ -17,7 +17,7 @@ How to enable it:
 1) Download and install plugin.
 2) Change type format of youre course to "Picturelink format".
 3) Upload background images.
-4) Locate activities and sections on uploaded image.
+4) Locate activities and topics on uploaded image.
 [more](https://blog.devlion.co/moodle-course-format-picture-link/) 
 
 ![alt Moodle plugin - Course Format Picture Link](https://blog.devlion.co/wp-content/uploads/Course__Course1-1568x1100.png)
