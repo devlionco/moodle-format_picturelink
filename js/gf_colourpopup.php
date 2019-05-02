@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Picturelink Format 
+ * Picturelink Format
  *
  * @package    course/format
  * @subpackage picturelink
@@ -25,6 +25,7 @@
  *                           {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 require_once("HTML/QuickForm/text.php");
 
 /**
@@ -33,7 +34,8 @@ require_once("HTML/QuickForm/text.php");
  * @author       Iain Checkland - modified from ColourPicker by Jamie Pratt [thanks]
  * @access       public
  */
-class MoodleQuickForm_gfcolourpopup extends HTML_QuickForm_text implements templatable {
+class moodlequickform_gfcolourpopup extends HTML_QuickForm_text implements templatable {
+
     use templatable_form_element {
         export_for_template as export_for_template_base;
     }
@@ -43,26 +45,28 @@ class MoodleQuickForm_gfcolourpopup extends HTML_QuickForm_text implements templ
      *
      * @var string
      */
-    public $_helpbutton = '';
-    public $_hiddenLabel = false;
 
-    public function __construct($elementName = null, $elementLabel = null, $attributes = null, $options = null) {
-        parent::__construct($elementName, $elementLabel, $attributes);
+    public $_helpbutton = '';
+    public $_hiddenlabel = false;
+
+    public function __construct($elementname = null, $elementlabel = null, $attributes = null, $options = null) {
+        parent::__construct($elementname, $elementlabel, $attributes);
         /* Pretend we are a 'static' MoodleForm element so that we get the core_form/element-static template where
-           we can render our own markup via core_renderer::mform_element() in lib/outputrenderers.php.
-           used in combination with 'use' statement above and export_for_template() method below. */
+          we can render our own markup via core_renderer::mform_element() in lib/outputrenderers.php.
+          used in combination with 'use' statement above and export_for_template() method below. */
         $this->setType('static');
     }
 
     /*
      * PHP4 constructor method, kept for compatibility
      */
-    public function MoodleQuickForm_gfcolourpopup($elementName = null, $elementLabel = null, $attributes = null, $options = null) {
-        self::__construct($elementName, $elementLabel, $attributes, $options);
+
+    public function moodlequickform_gfcolourpopup($elementname = null, $elementlabel = null, $attributes = null, $options = null) {
+        self::__construct($elementname, $elementlabel, $attributes, $options);
     }
 
-    public function setHiddenLabel($hiddenLabel) {
-        $this->_hiddenLabel = $hiddenLabel;
+    public function setHiddenLabel($hiddenlabel) {
+        $this->_hiddenlabel = $hiddenlabel;
     }
 
     public function toHtml() {
@@ -71,18 +75,13 @@ class MoodleQuickForm_gfcolourpopup extends HTML_QuickForm_text implements templ
         $PAGE->requires->js('/course/format/picturelink/js/gf_colourpopup.js');
         $PAGE->requires->js_init_call('M.util.init_gfcolour_popup', array($id));
         $colour = $this->getValue();
-        // SG -- we need # so we comment this original block
-        // if ((!empty($colour)) && ($colour[0] == '#')) {
-        //     $colour = substr($colour, 1);
-        // }
         $content = "<input size='8' name='" . $this->getName() . "' value='" . $colour . "'id='{$id}' type='text' " .
-                    $this->_getAttrString($this->_attributes) . " >";
+                $this->_getAttrString($this->_attributes) . " >";
         $content .= html_writer::tag('span', '&nbsp;', array('id' => 'colpicked_' . $id, 'tabindex' => '-1',
-                                     //'style' => 'background-color: #'.$colour. // see above - we use #
-                                     'style' => 'background-color: '.$colour.
-                                     '; cursor: pointer; margin: 0; padding: 0 8px; border: 1px solid black'));
-        $content .= html_writer::start_tag('div', array('id' => 'colpick_'.$id,
-                                           'style' => "display:none; position:absolute; z-index:500;",
+                    'style' => 'background-color: ' . $colour .
+                    '; cursor: pointer; margin: 0; padding: 0 8px; border: 1px solid black'));
+        $content .= html_writer::start_tag('div', array('id' => 'colpick_' . $id,
+                    'style' => "display:none; position:absolute; z-index:500;",
                     'class' => 'form-colourpicker defaultsnext'));
         $content .= html_writer::tag('div', '', array('class' => 'admin_colourpicker clearfix'));
         $content .= html_writer::end_tag('div');
@@ -146,4 +145,5 @@ class MoodleQuickForm_gfcolourpopup extends HTML_QuickForm_text implements templ
         $context['staticlabel'] = false; // Not a static label!
         return $context;
     }
+
 }

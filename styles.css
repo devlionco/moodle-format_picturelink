@@ -267,7 +267,6 @@
   padding: 0 22px;
   width: 170px;
   position: static;
-  /*rtl:ignore*/
   padding-right: 5px; }
 
 .format-picturelink .picturelink_item[data-visibility="0"] {

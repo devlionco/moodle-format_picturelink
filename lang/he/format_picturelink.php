@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,7 +21,6 @@
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 $string['pluginname'] = 'Picturelink format';
 $string['addsections'] = 'Add topics';
 $string['currentsection'] = 'This topic';
@@ -42,7 +40,7 @@ $string['moveitems'] = 'העבר פריטים';
 $string['sections'] = 'יחידות הוראה';
 $string['activities'] = 'פעילויות';
 
-// header blocks settings
+// Header blocks settings.
 $string['displayunits'] = 'משבצת יחידות';
 $string['displayunitsdesc'] = 'משבצת יחידות';
 $string['displayunitsdesc_help'] = 'משבצת יחידות';
