@@ -1,4 +1,4 @@
-// Javascript functions for Picturelink course format
+// Javascript functions for Picturelink course format.
 
 M.course = M.course || {};
 
@@ -16,12 +16,12 @@ M.course.format = M.course.format || {};
  *
  * @return {object} section list configuration
  */
-M.course.format.get_config = function() {
+M.course.format.get_config = function () {
     return {
-        container_node : 'ul',
-        container_class : 'picturelink',
-        section_node : 'li',
-        section_class : 'section'
+        container_node: 'ul',
+        container_class: 'picturelink',
+        section_node: 'li',
+        section_class: 'section'
     };
 }
 
@@ -33,15 +33,15 @@ M.course.format.get_config = function() {
  * @param {string} node2 node to swap with
  * @return {NodeList} section list
  */
-M.course.format.swap_sections = function(Y, node1, node2) {
+M.course.format.swap_sections = function (Y, node1, node2) {
     var CSS = {
-        COURSECONTENT : 'course-content',
-        SECTIONADDMENUS : 'section_add_menus'
+        COURSECONTENT: 'course-content',
+        SECTIONADDMENUS: 'section_add_menus'
     };
 
-    var sectionlist = Y.Node.all('.'+CSS.COURSECONTENT+' '+M.course.format.get_section_selector(Y));
+    var sectionlist = Y.Node.all('.' + CSS.COURSECONTENT + ' ' + M.course.format.get_section_selector(Y));
     // Swap menus.
-    sectionlist.item(node1).one('.'+CSS.SECTIONADDMENUS).swap(sectionlist.item(node2).one('.'+CSS.SECTIONADDMENUS));
+    sectionlist.item(node1).one('.' + CSS.SECTIONADDMENUS).swap(sectionlist.item(node2).one('.' + CSS.SECTIONADDMENUS));
 }
 
 /**
@@ -53,12 +53,12 @@ M.course.format.swap_sections = function(Y, node1, node2) {
  * @param {string} sectionto last affected section
  * @return void
  */
-M.course.format.process_sections = function(Y, sectionlist, response, sectionfrom, sectionto) {
+M.course.format.process_sections = function (Y, sectionlist, response, sectionfrom, sectionto) {
     var CSS = {
-        SECTIONNAME : 'sectionname'
+        SECTIONNAME: 'sectionname'
     },
     SELECTORS = {
-        SECTIONLEFTSIDE : '.left .section-handle .icon'
+        SECTIONLEFTSIDE: '.left .section-handle .icon'
     };
 
     if (response.action == 'move') {
@@ -75,12 +75,12 @@ M.course.format.process_sections = function(Y, sectionlist, response, sectionfro
         for (var i = sectionfrom; i <= sectionto; i++) {
             // Update section title.
             var content = Y.Node.create('<span>' + response.sectiontitles[i] + '</span>');
-            sectionlist.item(i).all('.'+CSS.SECTIONNAME).setHTML(content);
+            sectionlist.item(i).all('.' + CSS.SECTIONNAME).setHTML(content);
             // Update move icon.
             ele = sectionlist.item(i).one(SELECTORS.SECTIONLEFTSIDE);
             str = ele.getAttribute('alt');
             stridx = str.lastIndexOf(' ');
-            newstr = str.substr(0, stridx +1) + i;
+            newstr = str.substr(0, stridx + 1) + i;
             ele.setAttribute('alt', newstr);
             ele.setAttribute('title', newstr); // For FireFox as 'alt' is not refreshed.
         }

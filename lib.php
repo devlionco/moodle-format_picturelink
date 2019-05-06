@@ -22,11 +22,9 @@
  * @copyright 2009 Sam Hemelryk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot. '/course/format/lib.php');
-require_once($CFG->dirroot. '/course/format/lib.php');
-
+require_once($CFG->dirroot . '/course/format/lib.php');
+require_once($CFG->dirroot . '/course/format/lib.php');
 
 /**
  * Main class for the picturelink course format
@@ -56,7 +54,7 @@ class format_picturelink extends format_base {
      */
     public function get_section_name($section) {
         $section = $this->get_section($section);
-        if ((string)$section->name !== '') {
+        if ((string) $section->name !== '') {
             return format_string($section->name, true,
                     array('context' => context_course::instance($this->courseid)));
         } else {
@@ -126,7 +124,7 @@ class format_picturelink extends format_base {
                 if (empty($CFG->linkcoursesections) && !empty($options['navigation'])) {
                     return null;
                 }
-                $url->set_anchor('section-'.$sectionno);
+                $url->set_anchor('section-' . $sectionno);
             }
         }
         return $url;
@@ -154,7 +152,7 @@ class format_picturelink extends format_base {
      */
     public function extend_course_navigation($navigation, navigation_node $node) {
         global $PAGE;
-        // if section is specified in course/view.php, make sure it is expanded in navigation
+        // If section is specified in course/view.php, make sure it is expanded in navigation.
         if ($navigation->includesectionnum === false) {
             $selectedsection = optional_param('section', null, PARAM_INT);
             if ($selectedsection !== null && (!defined('AJAX_SCRIPT') || AJAX_SCRIPT == '0') &&
@@ -163,7 +161,7 @@ class format_picturelink extends format_base {
             }
         }
 
-        // check if there are callbacks to extend course navigation
+        // Check if there are callbacks to extend course navigation.
         parent::extend_course_navigation($navigation, $node);
 
         // We want to remove the general section if it is empty.
@@ -187,7 +185,7 @@ class format_picturelink extends format_base {
      *
      * @return array This will be passed in ajax respose
      */
-    function ajax_section_move() {
+    public function ajax_section_move() {
         global $PAGE;
         $titles = array();
         $course = $this->get_course();
@@ -239,7 +237,7 @@ class format_picturelink extends format_base {
         );
         foreach ($roles as $key => $value) { // Define roles list for help contact.
             if ($key != 16) { // Do not show Supporter role. It is used by default.
-                $helprolessection['helpcontactroles_'.$key] = array(
+                $helprolessection['helpcontactroles_' . $key] = array(
                     'label' => $value->localname,
                     'element_type' => 'advcheckbox',
                     'default' => in_array($value->id, $defaultchoices) ? 1 : 0,
@@ -262,7 +260,7 @@ class format_picturelink extends format_base {
                     'type' => PARAM_INT,
                 ),
                 'coursedisplay' => array(
-                    'default' => 1,             // SG -- force - 1 - COURSE_DISPLAY_MULTIPAGE - split pages into a page per section
+                    'default' => 1, // SG -- force - 1 - COURSE_DISPLAY_MULTIPAGE - split pages into a page per section.
                     'type' => PARAM_INT,
                 ),
                 'picturelinkbgcolor' => array(
@@ -306,7 +304,7 @@ class format_picturelink extends format_base {
                             0 => new lang_string('no'),
                         )
                     ),
-                    'help' =>"displaymessagesdesc",
+                    'help' => "displaymessagesdesc",
                     'help_component' => 'format_picturelink',
                 ),
                 'displaygrades' => array(
@@ -351,22 +349,28 @@ class format_picturelink extends format_base {
                 ),
             );
 
-            // define display or not "attendanceinfo show/hide setting"
-            $attmodid = $DB->get_record('modules', array('name' => 'attendance'), 'id')->id; // get attendance module id in system
-            $att = $DB->get_record('course_modules', array('course' => $course->id, 'module' => $attmodid, 'deletioninprogress' => 0), 'instance', IGNORE_MULTIPLE); // get first attedndance instance on current course
+            // Define display or not "attendanceinfo show/hide setting".
+            $attmodid = $DB->get_record('modules', array('name' => 'attendance'), 'id')->id; // Get attendance module id in system.
+            // Get first attedndance instance on current course.
+            $att = $DB->get_record('course_modules', array(
+                'course' => $course->id,
+                'module' => $attmodid,
+                'deletioninprogress' => 0
+                ),
+                'instance', IGNORE_MULTIPLE);
             if ($att) {
                 $courseformatoptions['displayattendanceinfo'] = array(
-                        'label' => get_string('displayattendanceinfo', 'format_picturelink'),
-                        'element_type' => 'select',
-                        'element_attributes' => array(
-                            array(
-                                1 => new lang_string('yes'),
-                                0 => new lang_string('no'),
-                            )
-                        ),
-                        'help' => "displayattendanceinfodesc",
-                        'help_component' => 'format_picturelink',
-                    );
+                    'label' => get_string('displayattendanceinfo', 'format_picturelink'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('yes'),
+                            0 => new lang_string('no'),
+                        )
+                    ),
+                    'help' => "displayattendanceinfodesc",
+                    'help_component' => 'format_picturelink',
+                );
             }
             $courseformatoptions = array_merge_recursive($courseformatoptions, $helprolessection);
         }
@@ -419,7 +423,6 @@ class format_picturelink extends format_base {
                 ),
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
-
         }
 
         return $courseformatoptions;
@@ -445,9 +448,9 @@ class format_picturelink extends format_base {
      */
     public function create_edit_form_elements(&$mform, $forsection = false) {
         global $COURSE, $CFG;
-        // import colorpicker form element
+        // Import colorpicker form element.
         MoodleQuickForm::registerElementType('gfcolourpopup', "$CFG->dirroot/course/format/picturelink/js/gf_colourpopup.php",
-        'MoodleQuickForm_gfcolourpopup');
+                'moodlequickform_gfcolourpopup');
 
         $elements = parent::create_edit_form_elements($mform, $forsection);
 
@@ -457,7 +460,7 @@ class format_picturelink extends format_base {
             // The "Number of sections" option is no longer available when editing course, instead teachers should
             // delete and add sections when needed.
             $courseconfig = get_config('moodlecourse');
-            $max = (int)$courseconfig->maxsections;
+            $max = (int) $courseconfig->maxsections;
             $element = $mform->addElement('select', 'numsections', get_string('numberweeks'), range(0, $max ?: 52));
             $mform->setType('numsections', PARAM_INT);
             if (is_null($mform->getElementValue('numsections'))) {
@@ -466,16 +469,16 @@ class format_picturelink extends format_base {
             array_unshift($elements, $element);
         }
 
-        // SG - show already uploaded picturelink image in filemanager
+        // SG - show already uploaded picturelink image in filemanager.
         $context = context_course::instance($COURSE->id);
         $picturelinkimagedraftid = file_get_submitted_draft_itemid('picturelinkimage');
         file_prepare_draft_area($picturelinkimagedraftid, $context->id, 'format_picturelink', 'picturelinkimage', $COURSE->id,
-                        array('subdirs' => false));
+                array('subdirs' => false));
         $mform->setDefault('picturelinkimage', $picturelinkimagedraftid);
 
-        // SG - allow only 1 file upload - ugly hack
+        // SG - allow only 1 file upload - ugly hack.
         foreach ($elements as $arr => $element) {
-            if (get_class($element) === 'MoodleQuickForm_filemanager'){
+            if (get_class($element) === 'MoodleQuickForm_filemanager') {
                 $element->setMaxfiles(1);
                 $element->setSubdirs(false);
             }
@@ -496,18 +499,18 @@ class format_picturelink extends format_base {
      * @return bool whether there were any changes to the options values
      */
     public function update_course_format_options($data, $oldcourse = null) {
-        //save picturelink image
+        // Save picturelink image.
         $course = $this->get_course();
         $context = context_course::instance($course->id);
         $maxbytes = 10000000;
         file_save_draft_area_files($data->picturelinkimage, $context->id, 'format_picturelink', 'picturelinkimage',
-        $course->id, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 1));
+                $course->id, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 1));
 
         $data = $this->update_helpcontactroles($data);
 
-        $data = (array)$data;
+        $data = (array) $data;
         if ($oldcourse !== null) {
-            $oldcourse = (array)$oldcourse;
+            $oldcourse = (array) $oldcourse;
             $options = $this->course_format_options();
             foreach ($options as $key => $unused) {
                 if (!array_key_exists($key, $data)) {
@@ -523,6 +526,7 @@ class format_picturelink extends format_base {
     /*
      * Update helpcontactroles setting - implode all helpcontactroles settings in a string
      */
+
     private function update_helpcontactroles($data) {
         $roles = array();
         foreach ($data as $key => $val) {
@@ -536,9 +540,6 @@ class format_picturelink extends format_base {
         $data->helpcontactroles = implode(',', $roles);
         return $data;
     }
-
-
-
 
     /**
      * Whether this format allows to delete sections
@@ -563,7 +564,7 @@ class format_picturelink extends format_base {
      * @return \core\output\inplace_editable
      */
     public function inplace_editable_render_section_name($section, $linkifneeded = true,
-                                                         $editable = null, $edithint = null, $editlabel = null) {
+            $editable = null, $edithint = null, $editlabel = null) {
         if (empty($edithint)) {
             $edithint = new lang_string('editsectionname', 'format_picturelink');
         }
@@ -606,10 +607,10 @@ class format_picturelink extends format_base {
             return null;
         }
 
-        // SG - rewrite format core function section_action, to allow hide/show for sec0
+        // SG - rewrite format core function section_action, to allow hide/show for sec0.
         $course = $this->get_course();
         $coursecontext = context_course::instance($course->id);
-        switch($action) {
+        switch ($action) {
             case 'hide':
             case 'show':
                 require_capability('moodle/course:sectionvisibility', $coursecontext);
@@ -635,8 +636,7 @@ class format_picturelink extends format_base {
 
         $rv = ['modules' => $modules];
         // SG - do not call parent section_action. Rewrite it right here
-        // // For show/hide actions call the parent method and return the new content for .section_availability element.
-        // $rv = parent::section_action($section, $action, $sr);
+        // For show/hide actions call the parent method and return the new content for .section_availability element.
         $renderer = $PAGE->get_renderer('format_picturelink');
         $rv['section_availability'] = $renderer->section_availability($this->get_section($section));
         return $rv;
@@ -652,6 +652,7 @@ class format_picturelink extends format_base {
         // Return everything (nothing to hide).
         return $this->get_format_options();
     }
+
 }
 
 /**
@@ -667,8 +668,8 @@ function format_picturelink_inplace_editable($itemtype, $itemid, $newvalue) {
     require_once($CFG->dirroot . '/course/lib.php');
     if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
         $section = $DB->get_record_sql(
-            'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
-            array($itemid, 'picturelink'), MUST_EXIST);
+                'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
+                array($itemid, 'picturelink'), MUST_EXIST);
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
 }
@@ -685,23 +686,22 @@ function format_picturelink_inplace_editable($itemtype, $itemid, $newvalue) {
  * @param array $options additional options affecting the file serving
  * @return bool false if the file not found, just send the file otherwise and do not return anything
  */
-function format_picturelink_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function format_picturelink_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
 
-    // Make sure the user is logged in and has access to the module (plugins that are not course modules should leave out the 'cm' part).
+    // Make sure the user is logged in and has access to the module
+    // (plugins that are not course modules should leave out the 'cm' part).
     require_login($course, true, $cm);
 
     // Leave this line out if you set the itemid to null in make_pluginfile_url (set $itemid to 0 instead).
     $itemid = array_shift($args); // The first item in the $args array.
-
     // Use the itemid to retrieve any relevant data records and perform any security checks to see if the
     // user really does have access to the file in question.
-
     // Extract the filename / filepath from the $args array.
     $filename = array_pop($args); // The last item in the $args array.
     if (!$args) {
-        $filepath = '/'; // $args is empty => the path is '/'
+        $filepath = '/'; // Variable $args is empty => the path is '/'.
     } else {
-        $filepath = '/'.implode('/', $args).'/'; // $args contains elements of the filepath
+        $filepath = '/' . implode('/', $args) . '/'; // Variable $args contains elements of the filepath.
     }
 
     // Retrieve the file from the Files API.

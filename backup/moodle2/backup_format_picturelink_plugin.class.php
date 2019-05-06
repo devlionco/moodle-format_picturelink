@@ -38,12 +38,9 @@ class backup_format_picturelink_plugin extends backup_format_plugin {
      */
     protected function define_course_plugin_structure() {
 
-        
-        //$this->add_file_to_db();
-        
         // Define the virtual plugin element with the condition to fulfill.
         $plugin = $this->get_plugin_element(null, '/course/format', 'picturelink');
-        
+
         // Create one standard named plugin element (the visible container).
         // The courseid not required as populated on restore.
         $pluginwrapper = new backup_nested_element('picturelinkimages');
@@ -51,31 +48,46 @@ class backup_format_picturelink_plugin extends backup_format_plugin {
         // Connect the visible container ASAP.
         $plugin->add_child($pluginwrapper);
 
-        // Add picture to course.xml
-        $picturelink = new backup_nested_element('picturelinkimage', null, array('picturelinkimagehash', 'picturelinkimagepath', 'picturelinkimagename', 'picturelinkimageauthor', 'picturelinkimagelicense'));
+        // Add picture to course.xml.
+        $picturelink = new backup_nested_element('picturelinkimage', null, array(
+            'picturelinkimagehash',
+            'picturelinkimagepath',
+            'picturelinkimagename',
+            'picturelinkimageauthor',
+            'picturelinkimagelicense'));
         $pluginwrapper->add_child($picturelink);
 
         $images = $this->get_picturelink_images();
-        $picturelink->set_source_array(array((object)$images));
+        $picturelink->set_source_array(array((object) $images));
 
         // Don't need to annotate ids nor files.
         return $plugin;
     }
 
-    
     protected function get_picturelink_images() {
         global $DB;
-       
+
         $courseid = $this->task->get_courseid();
         $context = context_course::instance($courseid);
         $contextid = $context->id;
 
-        $imagerecord = $DB->get_record_sql('SELECT * FROM {files} WHERE itemid = :courseid AND component = "format_picturelink" AND filearea = "picturelinkimage" AND contextid = :contextid AND filesize > 0 ORDER BY timemodified DESC LIMIT 1', ['courseid' => $courseid, 'contextid' => $contextid]);
+        $imagerecord = $DB->get_record_sql('
+            SELECT *
+            FROM {files}
+            WHERE itemid = :courseid
+                AND component = "format_picturelink"
+                AND filearea = "picturelinkimage"
+                AND contextid = :contextid
+                AND filesize > 0
+            ORDER BY timemodified
+            DESC LIMIT 1',
+            ['courseid' => $courseid, 'contextid' => $contextid]);
 
-        $imagepath = $this->get_fulldir_from_hash($imagerecord->contenthash) . '/' .  $imagerecord->contenthash; // Build fullpath of the image
+        // Build fullpath of the image.
+        $imagepath = $this->get_fulldir_from_hash($imagerecord->contenthash) . '/' . $imagerecord->contenthash;
 
         $imagedata = file_get_contents($imagepath);
-            
+
         $base64imagedata = base64_encode($imagedata);
 
         return array(
@@ -94,12 +106,11 @@ class backup_format_picturelink_plugin extends backup_format_plugin {
 
         // Define the virtual plugin element with the condition to fulfill.
         $plugin = $this->get_plugin_element(null, $this->get_format_condition(), 'picturelink');
-        
+
         // Don't need to annotate ids nor files.
         return $plugin;
     }
 
-    
     /**
      * Get the full directory to the stored file, including the path to the
      * filedir, and the directory which the file is actually in.
@@ -127,4 +138,5 @@ class backup_format_picturelink_plugin extends backup_format_plugin {
         $l2 = $contenthash[2] . $contenthash[3];
         return "$l1/$l2";
     }
+
 }

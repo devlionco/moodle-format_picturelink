@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,13 +21,14 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once($CFG->dirroot.'/backup/util/xml/parser/processors/grouped_parser_processor.class.php');
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot . '/backup/util/xml/parser/processors/grouped_parser_processor.class.php');
 
 /**
  * helper implementation of grouped_parser_processor that will
  * return all the information present in the course.xml file
  * accumulating it for later generation of controller->info
-*
+ *
  * TODO: Complete phpdocs
  */
 class restore_course_parser_processor extends grouped_parser_processor {
@@ -38,8 +38,8 @@ class restore_course_parser_processor extends grouped_parser_processor {
     public function __construct() {
         $this->accumchunks = array();
         parent::__construct();
-        // Let's add all the paths we are interested on
-        $this->add_path('/course', true); // Everything will be grouped below this
+        // Let's add all the paths we are interested on.
+        $this->add_path('/course', true); // Everything will be grouped below this.
         $this->add_path('/course/picturelinkimages');
         $this->add_path('/course/picturelinkimages/picturelinkimage');
     }
@@ -49,11 +49,11 @@ class restore_course_parser_processor extends grouped_parser_processor {
     }
 
     protected function notify_path_start($path) {
-        // nothing to do
+        // Nothing to do.
     }
 
     protected function notify_path_end($path) {
-        // nothing to do
+        // Nothing to do.
     }
 
     public function get_all_chunks() {
