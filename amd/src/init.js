@@ -6,7 +6,7 @@ define([
 ], function ($, dragBall, ajax) {
 
     const PARENTCLASS = 'picturelink';
-    const mainBlock = document.querySelector('.${PARENTCLASS}');
+    const mainBlock = document.querySelector(`.${PARENTCLASS}`);
     const pinnedBlock = mainBlock.querySelector('.picturelink_pinned');
     let dragIsOn = 0;
 
@@ -192,7 +192,7 @@ define([
                 while (!target.classList.contains(PARENTCLASS)) {
                     if (target.classList.contains('section-item')) {
                         targetid = target.dataset.topid;
-                        targetActivity = mainBlock.querySelector('[data-id="${targetid}"]');
+                        targetActivity = mainBlock.querySelector(`[data-id="${targetid}"]`);
                         targetActivity.style.border = '2px solid red';
                         target.addEventListener('mouseleave', function (e) {
                             targetActivity.style.border = '';
