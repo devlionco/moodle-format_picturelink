@@ -13,7 +13,7 @@ define(['jquery', 'core/str'], function ($, str) {
     function handlerIn() {
         let description = $(this).attr('data-description');
         let x = $(this).position();
-        let modal = $('<div class = "tooltipmodal" style = "top: ${x.top + 40}px; left: ${x.left - 120}px"><div class = "header">${titlePromise}</div><div class = "content">${description}</div></div>');
+        let modal = $(`<div class = "tooltipmodal" style = "top: ${x.top + 40}px; left: ${x.left - 120}px"><div class = "header">${titlePromise}</div><div class = "content">${description}</div></div>`);
         $('div.picturelink').append(modal);
     }
 

@@ -344,6 +344,7 @@ class format_picturelink extends format_base {
                     'help_component' => 'format_picturelink',
                 ),
                 'helpcontactroles' => array(
+                    'label' => '',
                     'element_type' => 'hidden',
                     'default' => '',
                 ),
@@ -413,12 +414,15 @@ class format_picturelink extends format_base {
                     ),
                 ),
                 'picturelinkcoords' => array(
+                    'label' => '',
                     'element_type' => 'hidden',
                 ),
                 'picturelinkvisibleitems' => array(
+                    'label' => '',
                     'element_type' => 'hidden',
                 ),
                 'picturelinkpinnedsections' => array(
+                    'label' => '',
                     'element_type' => 'hidden',
                 ),
             );
