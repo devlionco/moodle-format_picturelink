@@ -117,9 +117,13 @@ define([
                         }
 
                         targetid = target.parentNode.dataset.topid;
-                        targetActivity = mainBlock.querySelector('[data-id="${targetid}"]');
+                        targetActivity = mainBlock.querySelector(`[data-id="${targetid}"]`);
                         targetActivity.dataset.visibility = Number(targetActivity.dataset.visibility) ? 0 : 1;
 
+                        targetActivity.style.left = Math.floor(Math.random() * 100) + 'px';
+                        targetActivity.style.top = Math.floor(Math.random() * 100) + 'px';
+
+                        
                         ajax.data.visibleitems = getAllVisibleItems();
                         ajax.method = 'rewritevisibleitems';
                         ajax.send();
@@ -142,7 +146,7 @@ define([
                         }
 
                         targetid = target.parentNode.dataset.topid;
-                        targetActivity = mainBlock.querySelector('[data-id="${targetid}"]');
+                        targetActivity = mainBlock.querySelector(`[data-id="${targetid}"]`);
                         targetActivity.dataset.pinned = Number(targetActivity.dataset.pinned) ? 0 : 1;
                         if (Number(targetActivity.dataset.pinned)) {
                             pinnedBlock.appendChild(targetActivity);
