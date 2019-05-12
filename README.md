@@ -34,5 +34,5 @@ GPL v3 - http://www.gnu.org/copyleft/gpl.html
 Credits
 -------
 
-Was designed and funded by the [Department of science teaching](https://davidson.weizmann.ac.il) at the [Davidson institute of science education](https://davidson.weizmann.ac.il), israel.
+Was designed and funded by the [Davidson institute of science education](https://davidson.weizmann.ac.il), israel. Plugin was developed by Company [Devlion](https://devlion.co).
 
