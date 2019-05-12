@@ -351,7 +351,11 @@ class format_picturelink extends format_base {
             );
 
             // Define display or not "attendanceinfo show/hide setting".
-            $attmodid = $DB->get_record('modules', array('name' => 'attendance'), 'id')->id; // Get attendance module id in system.
+            $attmodid = $DB->get_record('modules', array('name' => 'attendance'), 'id');
+            if (!empty($attmodid)){
+                $attmodid=$attmodid->id;
+            }
+
             // Get first attedndance instance on current course.
             $att = $DB->get_record('course_modules', array(
                 'course' => $course->id,
