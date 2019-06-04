@@ -71,5 +71,8 @@ $string['helpcontactrolesdesc_help'] = 'Help contact roles for the course';
 $string['new'] = ' (new) ';
 $string['activity_is_limited'] = 'Activity is limited';
 $string['cm_is_hidden'] = 'This activity is hidden for you right now.';
+$string['showcoursefullname'] = 'Show course full name';
+$string['showcoursefullnamedesc'] = 'Show course full name';
+$string['showcoursefullnamedesc_help'] = 'This setting will show / hide course full name on the course header.';
 
 $string['picturelink:editcourseformat'] = 'Edit courseformat options.';

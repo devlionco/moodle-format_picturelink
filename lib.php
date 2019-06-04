@@ -343,6 +343,18 @@ class format_picturelink extends format_base {
                     'help' => "showcertificatestagdesc",
                     'help_component' => 'format_picturelink',
                 ),
+                'showcoursefullname' => array(
+                    'label' => get_string('showcoursefullname', 'format_picturelink'),
+                    'element_type' => 'advcheckbox',
+                    'default' => 1,
+                    'element_attributes' => array(
+                        '',
+                        array('group' => 1),
+                        array(0, 1)
+                    ),
+                    'help' => "showcoursefullnamedesc",
+                    'help_component' => 'format_picturelink',
+                ),
                 'helpcontactroles' => array(
                     'label' => '',
                     'element_type' => 'hidden',
