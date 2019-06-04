@@ -68,8 +68,8 @@ $string['cm_is_hidden'] = 'פעילות זו מוסתרת עבורך כעת.';
 $string['helpcontactroles_label'] = 'עזרה בתפקידים ליצירת קשר';
 $string['helpcontactroles_desc'] = 'עזרה תפקידי קשר עבור הקורס';
 $string['helpcontactrolesdesc_help'] = 'עזרה תפקידי קשר עבור הקורס';
-$string['showcoursefullname'] = 'Show course full name';
-$string['showcoursefullnamedesc'] = 'Show course full name';
-$string['showcoursefullnamedesc_help'] = 'This setting will show / hide course full name on the course header.';
+$string['showcoursefullname'] = 'הצג שם מלא של הקורס';
+$string['showcoursefullnamedesc'] = 'הצג שם מלא של הקורס';
+$string['showcoursefullnamedesc_help'] = 'הגדרה זו תציג / תסתיר שם קורס מלא על כותרת הקורס.';
 
 $string['picturelink:editcourseformat'] = 'ערוך את אפשרויות הקורס.';
