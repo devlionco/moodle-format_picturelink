@@ -75,4 +75,7 @@ $string['showcoursefullname'] = 'Show course full name';
 $string['showcoursefullnamedesc'] = 'Show course full name';
 $string['showcoursefullnamedesc_help'] = 'This setting will show / hide course full name on the course header.';
 
+$string['showactivityname'] = 'Show activity name';
+$string['showactivityname_help'] = 'This setting will show / hide activity name on the course page.';
+
 $string['picturelink:editcourseformat'] = 'Edit courseformat options.';

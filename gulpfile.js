@@ -7,7 +7,6 @@ var plumber = require("gulp-plumber");
 var postcss = require("gulp-postcss");
 var autoprefixer = require("autoprefixer");
 var mqpacker = require("css-mqpacker");
-var csso = require("gulp-csso");
 var sequence = require("gulp-sequence");
 var del = require("del");
 var shell = require('gulp-shell');
@@ -31,7 +30,7 @@ gulp.task("style", function () {
 
 });
 
-gulp.task('purge_caches', shell.task('cd /var/www/davidson/admin/cli && php purge_caches.php'))
+gulp.task('purge_caches', shell.task('cd /var/www/davidson/admin/cli && php purge_caches.php'));
 
 // Minify js.
 gulp.task('clean_js', function () {

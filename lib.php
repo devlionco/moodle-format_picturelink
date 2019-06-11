@@ -343,6 +343,19 @@ class format_picturelink extends format_base {
                     'help' => "showcertificatestagdesc",
                     'help_component' => 'format_picturelink',
                 ),
+                'showactivityname' => array(
+                    'label' => get_string('showactivityname', 'format_picturelink'),
+                    'element_type' => 'select',
+                    'default' => 0,
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('yes'),
+                            0 => new lang_string('no'),
+                        )
+                    ),
+                    'help' => "showactivityname",
+                    'help_component' => 'format_picturelink',
+                ),
                 'showcoursefullname' => array(
                     'label' => get_string('showcoursefullname', 'format_picturelink'),
                     'element_type' => 'advcheckbox',

@@ -1,7 +1,10 @@
-define(['core/ajax'], function (ajaxcall){
+define([
+  'core/ajax',
+  'core/notification'
+], function (Ajax, Notification){
     `use strict`;
 
-    let ajax = {
+    return {
         data: {},
         method: '',
         sesskey: M.cfg.sesskey,
@@ -11,15 +14,12 @@ define(['core/ajax'], function (ajaxcall){
 
             this.data.courseid = this.courseid;
 
-            ajaxcall.call([{
+            Ajax.call([{
                 methodname: 'format_picturelink_' + this.method,
                 args: this.data,
                 done: {},
-                fail: {}
+                fail: Notification.exception
             }]);
         }
     };
-
-    return ajax
-
 });

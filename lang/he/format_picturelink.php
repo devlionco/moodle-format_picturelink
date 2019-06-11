@@ -72,4 +72,7 @@ $string['showcoursefullname'] = 'הצג שם מלא של הקורס';
 $string['showcoursefullnamedesc'] = 'הצג שם מלא של הקורס';
 $string['showcoursefullnamedesc_help'] = 'הגדרה זו תציג / תסתיר שם קורס מלא על כותרת הקורס.';
 
+$string['showactivityname'] = 'הצג את שם הפעילות';
+$string['showactivityname_help'] = 'הגדרה זו תציג / תסתיר את שם הפעילות בדף הקורס.';
+
 $string['picturelink:editcourseformat'] = 'ערוך את אפשרויות הקורס.';

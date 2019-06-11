@@ -233,7 +233,8 @@ class format_picturelink_renderer extends format_section_renderer_base {
                 $newclass = ''; // SG - if created earlier than 7 days ago.
             }
 
-            $o .= html_writer::link($link, '', array(
+            $content = $course->showactivityname ? '<span class = "picturelink_itemcontent">'.$cm->name.'</span>' : '';
+            $o .= html_writer::link($link, $content, array(
                         'class' => 'picturelink_item drag' . $activeclass . $corevisibleclass . $availableclass . $newclass,
                         'data-id' => $cm->id,
                         'data-mod_name' => $cm->modname,
@@ -245,6 +246,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
                         'data-coordx' => isset($coords[$cm->id]->coordx) ? $coords[$cm->id]->coordx : '',
                         'data-coordy' => isset($coords[$cm->id]->coordy) ? $coords[$cm->id]->coordy : '',
             ));
+
         }
         // Show only unpinned section.
         foreach ($modinfo->sections as $section => $scms) {
