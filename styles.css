@@ -49,15 +49,15 @@
   margin-right: auto;
   margin-left: auto; }
   .format-picturelink .picturelink .picturelink_itemcontent {
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
     background-color: #fff;
-    position: absolute;
+    position: relative;
     top: 28px;
     z-index: 1;
     padding: 0 5px;
     border: 1px solid #ddd;
-    right: 0;
-    left: -52px;
-    width: 130px;
+    max-width: 150px;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -88,6 +88,10 @@
     margin-left: inherit;
     padding-left: 20px; }
   .format-picturelink .picturelink_item {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
     opacity: 0;
     position: absolute;
     background-color: #fff;
