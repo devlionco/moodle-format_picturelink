@@ -382,25 +382,28 @@ class format_picturelink extends format_base {
             }
 
             // Get first attedndance instance on current course.
-            $att = $DB->get_record('course_modules', array(
-                'course' => $course->id,
-                'module' => $attmodid,
-                'deletioninprogress' => 0
-                ),
-                'instance', IGNORE_MULTIPLE);
-            if ($att) {
-                $courseformatoptions['displayattendanceinfo'] = array(
-                    'label' => get_string('displayattendanceinfo', 'format_picturelink'),
-                    'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
-                            1 => new lang_string('yes'),
-                            0 => new lang_string('no'),
-                        )
+            if ($course) {
+                $att = $DB->get_record('course_modules', array(
+                    'course' => $course->id,
+                    'module' => $attmodid,
+                    'deletioninprogress' => 0
                     ),
-                    'help' => "displayattendanceinfodesc",
-                    'help_component' => 'format_picturelink',
-                );
+                    'instance', IGNORE_MULTIPLE);
+
+                if ($att) {
+                    $courseformatoptions['displayattendanceinfo'] = array(
+                        'label' => get_string('displayattendanceinfo', 'format_picturelink'),
+                        'element_type' => 'select',
+                        'element_attributes' => array(
+                            array(
+                                1 => new lang_string('yes'),
+                                0 => new lang_string('no'),
+                            )
+                        ),
+                        'help' => "displayattendanceinfodesc",
+                        'help_component' => 'format_picturelink',
+                    );
+                }
             }
             $courseformatoptions = array_merge_recursive($courseformatoptions, $helprolessection);
         }
