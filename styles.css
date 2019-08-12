@@ -66,12 +66,13 @@
     height: auto !important;
     width: 100%; }
   .format-picturelink .picturelink .picturelink_pinned {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     top: -94px;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-pack: space-evenly;
-        justify-content: space-evenly; }
+    justify-content: space-evenly; }
   .format-picturelink .picturelink_hide > .picturelink_item {
     opacity: 0 !important; }
   .format-picturelink .picturelink .far,

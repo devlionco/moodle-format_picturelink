@@ -40,7 +40,10 @@
             width: 100%;
         }
         .picturelink_pinned {
-            position: relative;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
             top: -94px;
             display: flex;
             justify-content: space-evenly;
