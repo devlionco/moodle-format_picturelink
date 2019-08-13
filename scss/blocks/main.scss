@@ -103,6 +103,11 @@
             overflow: hidden;
             color: #fff;
         }
+        &_section-title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
         & .completed {
             background: url([[pix:format_picturelink|completed]]) no-repeat center;
         }
