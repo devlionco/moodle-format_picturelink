@@ -118,6 +118,10 @@
     height: 40px;
     overflow: hidden;
     color: #fff; }
+  .format-picturelink .picturelink_section-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
   .format-picturelink .picturelink .completed {
     background: url([[pix:format_picturelink|completed]]) no-repeat center; }
   .format-picturelink .picturelink .p_hide {

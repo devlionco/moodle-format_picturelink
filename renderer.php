@@ -166,7 +166,7 @@ class format_picturelink_renderer extends format_section_renderer_base {
             if (!$issetpinnedsections) {
                 continue;
             }
-            $o .= html_writer::link($surl, $sname, array(
+            $o .= html_writer::link($surl, "<span class='picturelink_section-title'>" . $sname . "</span>", array(
                         'class' => 'picturelink_item picturelink_section drag',
                         'title' => $sname,
                         'data-id' => 's' . $sinfo->id,
