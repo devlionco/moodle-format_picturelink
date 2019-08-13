@@ -166,12 +166,6 @@ class format_picturelink_renderer extends format_section_renderer_base {
             if (!$issetpinnedsections) {
                 continue;
             }
-
-
-
-
-
-
             $o .= html_writer::link($surl, "<span class='picturelink_section-title'>" . $sname . "</span>", array(
                         'class' => 'picturelink_item picturelink_section drag',
                         'title' => $sname,
@@ -185,9 +179,6 @@ class format_picturelink_renderer extends format_section_renderer_base {
                         'data-coordx' => isset($coords[$sid]->coordx) ? $coords[$sid]->coordx : '',
                         'data-coordy' => isset($coords[$sid]->coordy) ? $coords[$sid]->coordy : '',
             ));
-
-
-            
         }
         $o .= html_writer::end_tag('div');
         $o .= html_writer::tag('img', '', array('src' => $picturelinkimage, 'class' => 'picturelink_img')); // Background image.
